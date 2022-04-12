@@ -1,22 +1,19 @@
 import React, { FunctionComponent } from 'react';
 
-import { CategoryWithThumbnail } from '../../../../helper/category/Category';
+import { Title } from 'components/Styled/text';
+import { Button } from 'components/UI/Button';
+import Spinner from 'components/UI/Spinner/Spinner';
 
-import { Title } from '../../../../components/Styled/text';
-import { Button } from '../../../../components/UI/Button';
-import InformationMessage from '../../../../components/UI/InformationMessage/InformationMessage';
-import Spinner from '../../../../components/UI/Spinner/Spinner';
-
-import GalleryPreviewList from './GalleryPreviewList/GalleryPreviewList';
+import { GalleryPreviewList, GalleryPreviewListProps } from './GalleryPreviewList/GalleryPreviewList';
 
 import styles from './GalleryPreview.module.css';
 
-interface GalleriesPreviewProps {
-    thumbnails: CategoryWithThumbnail[];
-    status: string;
+type GalleriesPreviewProps = {
+    thumbnails: GalleryPreviewListProps['thumbnails'];
+    loading: boolean;
 }
 
-const GalleriesPreview: FunctionComponent<GalleriesPreviewProps> = ({ thumbnails, status }) => {
+const GalleriesPreview: FunctionComponent<GalleriesPreviewProps> = ({ thumbnails, loading }) => {
     return (
         <div className={styles.galleriesPreviewContainer}>
             <div className={styles.row}>
@@ -25,14 +22,10 @@ const GalleriesPreview: FunctionComponent<GalleriesPreviewProps> = ({ thumbnails
                 </div>
             </div>
             <div className={styles.row}>
-                {(status === 'loading') ? (
+                {loading ? (
                     <Spinner centerHorizontal />
                 ) : (
-                    (status === 'failed') ? (
-                        <InformationMessage centerHorizontal messageType="error" message="Couldn't load galleries" />
-                    ) : (
-                        <GalleryPreviewList thumbnails={thumbnails} />
-                    )
+                    <GalleryPreviewList thumbnails={thumbnails} />
                 )}
             </div>
             <div className={styles.row}>

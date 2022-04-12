@@ -1,14 +1,15 @@
 import React, { FunctionComponent } from 'react';
-import styles from './Backdrop.module.css';
 import { CSSTransition } from 'react-transition-group';
 
-interface BackdropProps {
+import styles from './Backdrop.module.css';
+
+export type BackdropProps = {
     show: boolean;
     zIndex?: number;
     onClick?: () => void;
 }
 
-const Backdrop: FunctionComponent<BackdropProps> = ({ show, zIndex, onClick }) => {
+export const Backdrop: FunctionComponent<BackdropProps> = ({ show, zIndex, onClick }) => {
     return (
         <>
             <CSSTransition
@@ -28,5 +29,3 @@ const Backdrop: FunctionComponent<BackdropProps> = ({ show, zIndex, onClick }) =
         </>
     )
 }
-
-export default Backdrop;

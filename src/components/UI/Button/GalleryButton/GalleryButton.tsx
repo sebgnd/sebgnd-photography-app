@@ -1,31 +1,23 @@
 import React, { FunctionComponent } from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-import { Text } from '../../../Styled/text';
-import { ButtonContainer } from '../../../Styled/container';
-import ImageFade from '../../Image/ImageFade/ImageFade';
+import { Text } from 'components/Styled/text';
+import { ButtonContainer } from 'components/Styled/container';
+import { ImageFade } from 'components/UI/Image/ImageFade/ImageFade';
 
 import styles from './GalleryButton.module.css';
 
-import Paths from '../../../../helper/Paths';
-
-interface GalleryButtonProp extends RouteComponentProps {
+export type GalleryButtonProp = {
     src: string;
     imageId: string;
-    categoryId: string;
+	onClick: () => void;
     categoryDisplayName: string;
 }
 
-const GalleryButton: FunctionComponent<GalleryButtonProp> = ({ src, imageId, categoryId, categoryDisplayName, history }) => {
-    const goToGallery = () => {
-        const url = Paths.galleryWithId(categoryId);
-        history.push(url);
-    }
-
+export const GalleryButton: FunctionComponent<GalleryButtonProp> = ({ src, imageId, onClick, categoryDisplayName }) => {
     return (
         <div className={styles.galleryButtonContainer}>
             <div className={styles.galleryButtonWrapper}>
-                <ButtonContainer onClick={() => goToGallery()}>
+                <ButtonContainer onClick={() => onClick()}>
                     <div className={styles.galleryImage}>
                         <ImageFade className={styles.image} src={src} alt={imageId} />
                     </div>
@@ -33,11 +25,8 @@ const GalleryButton: FunctionComponent<GalleryButtonProp> = ({ src, imageId, cat
                     <div id="gallery-name" className={styles.galleryName}>
                         <Text size="medium" color="black" weight="normal">{categoryDisplayName}</Text>
                     </div>
-
                 </ButtonContainer>
             </div>
         </div>
     )
 }
-
-export default withRouter(GalleryButton);

@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
-import ImageFade from '../ImageFade/ImageFade';
+import { ImageFade } from 'components/UI/Image';
 
-const AdaptedImage = styled(ImageFade)<{ type: string }>`
+export const AdaptedImage = styled(ImageFade)<{ type: string }>`
     ${ props => props.type === 'landscape' && css`
         position: relative;
         border-radius: 15px;
@@ -21,5 +21,3 @@ const AdaptedImage = styled(ImageFade)<{ type: string }>`
         transform: translateX(-50%) translateY(-50%);
     ` }
 `;
-
-export default AdaptedImage;

@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
 
-import UserNavigation from '../components/Navigation/UserNavigation/UserNavigation';
-import Footer from '../components/UI/Footer/Footer';
+import UserNavigation from 'components/Navigation/UserNavigation/UserNavigation';
+import { Footer } from 'components/UI/Footer/Footer';
 
-const UserLayout: FunctionComponent = ({ children }) => {
+export const UserLayout: FunctionComponent = ({ children }) => {
     return (
         <>
             <UserNavigation />
@@ -14,5 +14,3 @@ const UserLayout: FunctionComponent = ({ children }) => {
         </>
     );
 }
-
-export default UserLayout;

@@ -1,5 +1,4 @@
 import React, { FunctionComponent, MouseEvent } from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
 import styles from './RoundButton.module.css';
 
 interface RoundButtonProp {
@@ -15,27 +14,16 @@ interface RoundButtonProp {
 }
 
 
-const RoundButton: FunctionComponent<RoundButtonProp & RouteComponentProps> = ({ 
+export const RoundButton: FunctionComponent<RoundButtonProp> = ({ 
     onClick, 
     icon, 
     disabled = false, 
-    isBranding = false, 
-    to, 
-    history,  
+    isBranding = false,
     label,
     size = 'medium',
     hoverStyle = 'scale',
     active
 }) => {
-    const handleClick = (event: MouseEvent) => {
-        if (onClick) {
-            onClick(event);
-        }
-        if (to) {
-            history.push(to);
-        }
-    }
-
     const getClassName = () => {
         const classes = [styles.roundButton, styles[size], styles[hoverStyle]];
         if (active) {
@@ -43,11 +31,12 @@ const RoundButton: FunctionComponent<RoundButtonProp & RouteComponentProps> = ({
         }
         return classes.join(' ');
     }
+
     return (
         <button 
             disabled={disabled} 
             className={getClassName()} 
-            onClick={(event) => handleClick(event)}
+            onClick={onClick}
         >
             <div className={styles.contentContainer}>
                 <div className={styles.content}>
@@ -62,5 +51,3 @@ const RoundButton: FunctionComponent<RoundButtonProp & RouteComponentProps> = ({
         </button>
     )
 }
-
-export default withRouter(RoundButton);

@@ -1,44 +1,52 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { GalleryButton } from '../../../../components/UI/Button';
-import Spinner from '../../../../components/UI/Spinner/Spinner';
-import InformationMessage from '../../../../components/UI/InformationMessage/InformationMessage';
-
-import CategoryService from '../../../../helper/category/CategoryService';
-import { CategoryWithThumbnail } from '../../../../helper/category/Category';
+import { GalleryButton } from 'components/UI/Button';
+import Spinner from 'components/UI/Spinner/Spinner';
 
 import styles from './GalleryList.module.css';
 
 interface GalleriesListProps {
-    thumbnails: CategoryWithThumbnail[];
-    status: string;
+    thumbnails: ReadonlyArray<{
+		imageId: string,
+		categoryId: string,
+		categoryName: string,
+		galleryName: string,
+	}>,
+    loading: boolean;
 }
 
-const GalleriesList: FunctionComponent<GalleriesListProps> = ({ thumbnails, status }) => {
+const GalleriesList: FunctionComponent<GalleriesListProps> = ({ thumbnails, loading }) => {
+	const navigate = useNavigate();
+
+	// TODO: Move that to a server or computed by API
+	const getThumbnailUrl = useCallback((imageId: string) => {
+		return `http://localhost:8000/api/file/images/thumbnail/400/${imageId}`;
+	}, []);
+	
+	const navigateToGalleryPage = useCallback((category: string) => () => {
+		navigate('/gallery/' + category);
+	}, [navigate]);
+
     return (
         <div className={styles.listContainer}>
-            {(status === 'loading') ? (
+            {(loading) ? (
                 <Spinner centerHorizontal centerVertical fullScreen />
             ) : (
-                (status === 'failed' ? (
-                    <InformationMessage messageType="error" centerHorizontal centerVertical fullScreen message="Couldn't load galleries"  />
-                ) : (
-                    <>
-                        {thumbnails.map(thumbnail => {
-                            return (
-                                <div key={thumbnail.category.id} className={styles.galleryButtonContainer}>
-                                    <GalleryButton
-                                        src={CategoryService.getThumbnailUrl(thumbnail, 'thumbnail_medium')}
-                                        imageId={thumbnail.image ? thumbnail.image.id.toString() : '-1'}
-                                        categoryId={thumbnail.category.id}
-                                        categoryDisplayName={thumbnail.category.displayName}   
-                                    />
-                                </div>
-                            )
-                        })}
-                    </>
-                ))
-
+                <>
+					{thumbnails.map(({ imageId, categoryId, galleryName, categoryName }) => {
+						return (
+							<div key={categoryId} className={styles.galleryButtonContainer}>
+								<GalleryButton
+									src={getThumbnailUrl(imageId)}
+									imageId={imageId}
+									onClick={navigateToGalleryPage(categoryName)}
+									categoryDisplayName={galleryName}   
+								/>
+							</div>
+						)
+					})}
+				</>
             )}
         </div>
     )

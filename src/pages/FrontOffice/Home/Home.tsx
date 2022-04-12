@@ -1,5 +1,10 @@
-import React, { useEffect, Fragment, FunctionComponent } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { Fragment, FunctionComponent, useMemo } from 'react';
+import { useSelector } from 'react-redux';
+
+import {
+	selectFirstThreeCategory,
+	selectIsCategoryListLoading,
+} from 'redux/slices/category/category.selector';
 
 import { Parallax } from '../../../components/UI/Parallax/Parallax';
 
@@ -7,20 +12,21 @@ import Landing from './Landing/Landing';
 import GalleriesPreview from './GalleryPreview/GalleryPreview';
 import About from './About/About';
 
-import { fetchCategories } from '../../../redux/slices/category';
-import { imagesEmptied } from '../../../redux/slices/image';
-import { selectCategoryStatus, selectAllCategoryThumbnails } from '../../../redux/selectors/category-selector';
 
+export const Home: FunctionComponent = () => {
+	const categories = useSelector(selectFirstThreeCategory);
+	const loading = useSelector(selectIsCategoryListLoading);
 
-const Home: FunctionComponent = () => {
-    const dispatch = useDispatch();
-    const thumbnails = useSelector(selectAllCategoryThumbnails);
-    const status = useSelector(selectCategoryStatus);
-
-    useEffect(() => {
-        dispatch(fetchCategories(3));
-        dispatch(imagesEmptied())
-    }, [dispatch]);
+	const thumbnails = useMemo(() => {
+		return categories.map((category) => {
+			return {
+				imageId: category.thumbnailId,
+				galleryName: category.displayName,
+				categoryId: category.id,
+				categoryName: category.name,
+			};
+		});
+	}, [categories]);
 
     return (
         <Fragment>
@@ -28,7 +34,7 @@ const Home: FunctionComponent = () => {
                 <Landing />
             </Parallax>
             <GalleriesPreview 
-                status={status} 
+                loading={loading}
                 thumbnails={thumbnails} 
             />
             <Parallax img="images/parallax-2.jpg" speed={0.5} >
@@ -36,6 +42,4 @@ const Home: FunctionComponent = () => {
             </Parallax>
         </Fragment>
     )
-}
-
-export default Home;
+};

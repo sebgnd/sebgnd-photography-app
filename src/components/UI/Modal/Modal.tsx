@@ -1,25 +1,26 @@
 import React, { FunctionComponent, MouseEvent } from 'react';
 import { CSSTransition } from 'react-transition-group';
+
+import { Button } from 'components/UI/Button/Button/Button';
+import { Backdrop } from 'components/UI/Backdrop/Backdrop';
+
 import styles from './Modal.module.css';
 
-import Button from '../Button/Button/Button';
-import Backdrop from '../Backdrop/Backdrop';
+export type ModalSize = 'small' | 'medium' | 'big';
 
-type Size = 'small' | 'medium' | 'big';
-
-interface ModalProps {
+export type ModalProps = {
     title: string;
     isOpen: boolean;
     cancelText?: string;
     confirmText?: string;
-    size?: Size;
+    size?: ModalSize;
     loading?: boolean;
     onConfirm?: (e?: MouseEvent) => void;
     onClose?: (e?: MouseEvent) => void;
     onCancel?: (e?: MouseEvent) => void;
 }
 
-const Modal: FunctionComponent<ModalProps> = ({ 
+export const Modal: FunctionComponent<ModalProps> = ({ 
     title,
     children,
     isOpen,
@@ -95,5 +96,3 @@ const Modal: FunctionComponent<ModalProps> = ({
         </>
     )
 }
-
-export default Modal;

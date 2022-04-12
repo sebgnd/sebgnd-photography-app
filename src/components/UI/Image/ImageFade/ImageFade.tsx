@@ -1,14 +1,15 @@
 import React, { useState, FunctionComponent, useEffect, useRef } from 'react';
+
 import styles from './ImageFade.module.css';
 
-interface ImageFadeProps {
+export type ImageFadeProps = {
     className?: string;
     src: string;
     alt: string;
     transitionTime?: number;
 }
 
-const ImageFade: FunctionComponent<ImageFadeProps> = ({ className, src, alt, transitionTime = .5 }) => {
+export const ImageFade: FunctionComponent<ImageFadeProps> = ({ className, src, alt, transitionTime = .5 }) => {
     const [show, setShow] = useState<boolean>(false);
     const previousImage = useRef(new Set<string>());
 
@@ -47,5 +48,3 @@ const ImageFade: FunctionComponent<ImageFadeProps> = ({ className, src, alt, tra
         />
     )
 };
-
-export default React.memo(ImageFade);

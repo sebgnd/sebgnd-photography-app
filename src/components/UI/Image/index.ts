@@ -1,9 +1,4 @@
-import SingleImage from './SingleImage/SingleImage';
-import RecentImage from './RecentImage/RecentImage';
-import ViewerImage from './ViewerImage/ViewerImage';
-
-export {
-    SingleImage,
-    RecentImage,
-    ViewerImage
-};
+export * from './ImageFade/ImageFade';
+export * from './RecentImage/RecentImage';
+export * from './SingleImage/SingleImage';
+export * from './ViewerImage/ViewerImage';

@@ -1,14 +1,15 @@
 import React, { FunctionComponent, MouseEvent } from 'react';
 
-import AdaptedImage from './AdaptedImage';
-import { Text } from '../../../Styled/text';
-import { ButtonContainerWidthWidth } from '../../../Styled/container';
-import { Button } from '../../Button';
-import ImageFade from '../ImageFade/ImageFade';
+import { Text } from 'components/Styled/text';
+import { Button } from 'components/UI/Button';
+import { ImageFade } from 'components/UI/Image';
+import { ButtonContainerWidthWidth } from 'components/Styled/container';
+
+import { AdaptedImage } from './AdaptedImage';
 
 import styles from './RecentImage.module.css';
 
-interface RecentImageProp {
+export type RecentImageProp = {
     date: string;
     src: string;
     imageType: string;
@@ -19,7 +20,7 @@ interface RecentImageProp {
     onGalleryClick: (event: MouseEvent, categoryId: string) => void;
 }
 
-const RecentImage: FunctionComponent<RecentImageProp> = ({ 
+export const RecentImage: FunctionComponent<RecentImageProp> = ({ 
     src, 
     date, 
     imageType, 
@@ -58,5 +59,3 @@ const RecentImage: FunctionComponent<RecentImageProp> = ({
         </div>
     )
 }
-
-export default RecentImage;

@@ -15,7 +15,7 @@ const TopNavigation: FunctionComponent<TopNavigationProps> = ({ onToggleMobile }
             <HamburgerButton onClick={onToggleMobile} />
             <div className={styles.sideMenu}>
                 <NavigationItem type="user" name="Home" url="/" />
-                <NavigationItem type="user" name="Galleries" url="/gallery" />
+                <NavigationItem type="user" name="Galleries" url="/galleries" />
             </div>
             <Logo imgSrc="/images/logo.png" imgAlt="logo" url="/" />
             <div className={styles.sideMenu}>

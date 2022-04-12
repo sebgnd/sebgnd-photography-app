@@ -1,7 +1,8 @@
 import React, { FunctionComponent } from 'react';
+
 import styles from './Footer.module.css';
 
-const Footer: FunctionComponent = () => {
+export const Footer: FunctionComponent = () => {
     return (
         <footer>
             <div className={styles.footer}>
@@ -15,5 +16,3 @@ const Footer: FunctionComponent = () => {
         </footer>
     );
 }
-
-export default Footer;

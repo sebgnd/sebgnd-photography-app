@@ -1,19 +1,18 @@
 import React, { FunctionComponent, MouseEvent } from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { ButtonContainer } from '../../../Styled/container';
-import ImageFade from '../ImageFade/ImageFade';
+import { ImageFade } from '../ImageFade/ImageFade';
 
 import styles from './SingleImage.module.css';
 
-interface SingleImageProp extends RouteComponentProps {
+type SingleImageProp = {
     src: string;
     imageId: string;
     categoryId: string;
     onClick?: (event: MouseEvent, imageId: string, categoryId: string) => void;
 }
 
-const SingleImage: FunctionComponent<SingleImageProp> = ({ src, imageId, categoryId, onClick }) => {
+export const SingleImage: FunctionComponent<SingleImageProp> = ({ src, imageId, categoryId, onClick }) => {
     const handleClick = (event: MouseEvent) => {
         if (onClick) {
             onClick(event, imageId, categoryId);
@@ -30,5 +29,3 @@ const SingleImage: FunctionComponent<SingleImageProp> = ({ src, imageId, categor
         </div>
     )
 }
-
-export default withRouter(SingleImage);

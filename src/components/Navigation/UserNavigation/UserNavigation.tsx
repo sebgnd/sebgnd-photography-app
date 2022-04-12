@@ -1,7 +1,7 @@
 import React, { useEffect, useState, FunctionComponent, useRef } from 'react';
 import { throttle } from 'lodash';
 
-import Backdrop from '../../UI/Backdrop/Backdrop';
+import { Backdrop } from 'components/UI/Backdrop/Backdrop';
 
 import TopNavigation from './TopNavigation/TopNavigation';
 import MobileNavigation from './MobileNavigation/MobileNavigation';

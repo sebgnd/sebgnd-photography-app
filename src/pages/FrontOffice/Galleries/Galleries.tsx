@@ -1,25 +1,27 @@
-import React, { FunctionComponent, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { FunctionComponent, useMemo } from 'react';
+import { useSelector } from 'react-redux';
+
+import {
+	selectCategoryList,
+	selectIsCategoryListLoading,
+} from 'redux/slices/category/category.selector';
 
 import GalleryList from './GalleryList/GalleryList';
 
-import { selectAllCategoryThumbnails, selectCategoryStatus } from '../../../redux/selectors/category-selector';
-import { fetchCategories } from '../../../redux/slices/category';
-import { imagesEmptied } from '../../../redux/slices/image';
+export const Galleries: FunctionComponent = () => {
+    const categories = useSelector(selectCategoryList);
+	const loading = useSelector(selectIsCategoryListLoading);
 
-const Galleries: FunctionComponent = () => {
-    const dispatch = useDispatch();
-    const thumbnails = useSelector(selectAllCategoryThumbnails);
-    const status = useSelector(selectCategoryStatus);
-
-    useEffect(() => {
-        dispatch(fetchCategories())
-        dispatch(imagesEmptied());
-    }, [dispatch]);
+    const thumbnails = useMemo(() => {
+		return categories.map((category) => ({
+			imageId: category.thumbnailId,
+			galleryName: category.displayName,
+			categoryId: category.id,
+			categoryName: category.name,
+		}));
+	}, [categories]);
 
     return (
-        <GalleryList status={status} thumbnails={thumbnails} />
-    );
+        <GalleryList loading={loading} thumbnails={thumbnails} />
+    )
 }
-
-export default Galleries;

@@ -1,9 +1,0 @@
-.listContainer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 80%;
-    margin: auto;
-    align-items: center;
-    justify-content: center;
-}

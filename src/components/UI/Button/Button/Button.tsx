@@ -1,5 +1,4 @@
 import React, { FunctionComponent, MouseEvent } from 'react';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
 import styles from './Button.module.css';
 
 interface ButtonProp {
@@ -14,23 +13,16 @@ interface ButtonProp {
     fullWidth?: boolean;
 }
 
-const Button: FunctionComponent<ButtonProp & RouteComponentProps> = ({ 
+export const Button: FunctionComponent<ButtonProp> = ({ 
     variant = 'classic', 
     size = 'medium', 
     label, 
     type, 
-    history, 
-    to,
     color = 'white',
     fullWidth,
     disabled,
     onClick, 
 }) => {
-    const handleClick = (event: MouseEvent) => {
-        if (onClick) onClick(event);
-        if (to) history.push(to);
-    }
-
     const getClassName = () => {
         const classes = [styles.button, styles[size], styles[variant]];
         if (fullWidth) {
@@ -43,7 +35,7 @@ const Button: FunctionComponent<ButtonProp & RouteComponentProps> = ({
         <button 
             disabled={disabled}
             className={getClassName()}
-            onClick={(event) => handleClick(event)}
+            onClick={onClick}
             type={type}
             style={{
                 backgroundColor: color
@@ -53,5 +45,3 @@ const Button: FunctionComponent<ButtonProp & RouteComponentProps> = ({
         </button>
     )
 }
-
-export default withRouter(Button);

@@ -1,16 +1,17 @@
 import React, { FunctionComponent } from 'react';
-import { Text } from '../../../Styled/text';
+
+import { Text } from 'components/Styled/text';
+import { ImageFade } from 'components/UI/Image';
 
 import styles from './ViewerImage.module.css';
-import ImageFade from '../ImageFade/ImageFade';
 
-interface ViewerImageProp {
+type ViewerImageProp = {
     src: string;
     imageId: string;
     imageInfo: string;
 }
 
-const ViewerImage: FunctionComponent<ViewerImageProp> = ({ imageInfo, imageId, src }) => {
+export const ViewerImage: FunctionComponent<ViewerImageProp> = ({ imageInfo, imageId, src }) => {
     return (
         <div className={styles.viewerImageContainer}>
             <div className={styles.viewerImageWrapper}>
@@ -27,5 +28,3 @@ const ViewerImage: FunctionComponent<ViewerImageProp> = ({ imageInfo, imageId, s
         </div>
     )
 }
-
-export default ViewerImage;
