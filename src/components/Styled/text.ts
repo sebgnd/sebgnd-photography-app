@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const getSize = (size: string): number => {
     switch (size) {
@@ -12,7 +12,7 @@ const getSize = (size: string): number => {
 export const Text = styled('p')<{ size: string, weight: string, color?: string, }>`
     font-family: "CooperHewitt Medium";
     font-size: ${props => getSize(props.size)}em !important;
-    margin: ${props => (props.size == 'small' ? 3 : 15)}px;
+    margin: ${props => (props.size === 'small' ? 3 : 15)}px;
     color: ${props => props.color ? props.color : 'black'};
     font-weight: ${props => props.weight};
 `

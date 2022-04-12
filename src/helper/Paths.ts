@@ -1,5 +1,3 @@
-import Image from "./image/Image";
-
 // TODO: Create the different paths
 
 abstract class Paths {

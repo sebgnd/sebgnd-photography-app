@@ -1,8 +1,8 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
+
+import withCentering, { CenteringProps } from '../../../hoc/withCentering';
+
 import styles from './Spinner.module.css';
-
-import withCentering, { CenteringProps } from '../../HOC/withCentering';
-
 interface SpinnerProps {
     size?: 'normal' | 'small' | 'tiny';
 }

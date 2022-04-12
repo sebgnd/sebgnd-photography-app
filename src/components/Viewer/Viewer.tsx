@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useCallback, useEffect, useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { initial } from 'lodash'
@@ -57,7 +57,7 @@ const Viewer: FunctionComponent<ViewerProps> = ({ imageId, categoryId, onClose, 
 
     // If info not present in state => fetch image
     // Else select the image from the state
-    const fetchImage = (id: number) => {
+    const fetchImage = useCallback((id: number) => {
         const sameCategory: boolean = categoryId ? true : false;
 
         if (image && allImagesLoaded && ImageService.hasAllInfo(image)) {
@@ -70,7 +70,7 @@ const Viewer: FunctionComponent<ViewerProps> = ({ imageId, categoryId, onClose, 
                 })
             );
         }
-    }
+    }, [image, allImagesLoaded, categoryId, dispatch]);
 
     // Change loading to false when the selected image update
     // (to not see previous selected image on component mount)
@@ -79,13 +79,13 @@ const Viewer: FunctionComponent<ViewerProps> = ({ imageId, categoryId, onClose, 
         if (showLoading && currentImage && currentImage.id === imageId) {
             setShowLoading(false);
         }
-    }, [currentImage]);
+    }, [currentImage, showLoading, imageId]);
 
     // Fetch image on load and when image update
     // Updated when imageId route param props change
     useEffect(() => {
         fetchImage(imageId);
-    }, [image]);
+    }, [fetchImage, imageId]);
 
     return (
         <div className={styles.fixedContainer}>

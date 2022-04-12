@@ -1,7 +1,5 @@
-import { property } from 'lodash';
 import React, { FunctionComponent } from 'react';
-import Image from '../../../../helper/image/Image';
-import ImageService from '../../../../helper/image/ImageService';
+
 import styles from './ImageRow.module.css';
 
 interface ImageRowProps {

@@ -4,7 +4,6 @@ import styles from './Modal.module.css';
 
 import Button from '../Button/Button/Button';
 import Backdrop from '../Backdrop/Backdrop';
-import Spinner from '../../UI/Spinner/Spinner';
 
 type Size = 'small' | 'medium' | 'big';
 

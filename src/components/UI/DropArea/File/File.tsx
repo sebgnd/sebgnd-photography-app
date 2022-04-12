@@ -1,8 +1,10 @@
 import React, { FunctionComponent } from 'react';
-import withActionBadge, { WithActionBadgeProps } from '../../../HOC/withActionBadge';
-import styles from './File.module.css';
+
+import withActionBadge, { WithActionBadgeProps } from '../../../../hoc/withActionBadge';
 
 import Spinner from '../../Spinner/Spinner';
+
+import styles from './File.module.css';
 
 interface FileProps {
     previewIcon?: string;

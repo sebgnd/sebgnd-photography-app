@@ -1,6 +1,8 @@
 import React, { FunctionComponent } from 'react';
+
+import withCentering, { CenteringProps } from '../../../hoc/withCentering';
+
 import styles from './InformationMessage.module.css';
-import withCentering, { CenteringProps } from '../../HOC/withCentering'
 
 interface InformationMessageProps {
     message: string;

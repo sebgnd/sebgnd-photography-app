@@ -1,4 +1,4 @@
-import React, { FunctionComponent, MouseEvent, useState } from 'react';
+import React, { FunctionComponent, MouseEvent } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { ButtonContainer } from '../../../Styled/container';

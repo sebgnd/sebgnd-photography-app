@@ -96,7 +96,7 @@ const DropArea: FunctionComponent<DropAreaProps> = ({
         if (files.length && onFilesChange) {
             onFilesChange(files);
         }
-    }, [files]);
+    }, [files, onFilesChange]);
 
     return (
         <div 

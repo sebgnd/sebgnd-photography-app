@@ -1,6 +1,7 @@
-import React, { Component, useEffect, useRef, useState, RefObject, FunctionComponent } from 'react';
-import ParallaxContainer from './ParallaxContainer';
+import React, { useEffect, useRef, useState, useCallback, FunctionComponent } from 'react';
 import { throttle } from 'lodash';
+
+import ParallaxContainer from './ParallaxContainer';
 
 interface ParallaxProp {
     img: string;
@@ -13,7 +14,7 @@ interface BackgroundStyle {
 }
 
 
-const Parallax: FunctionComponent<ParallaxProp> = ({ img, speed, children }) => {
+export const Parallax: FunctionComponent<ParallaxProp> = ({ img, speed, children }) => {
     const parallaxElemRef = useRef<HTMLDivElement>(null);
     const topOffset = useRef<number>(0);
     const height = useRef<number>(0);
@@ -56,16 +57,17 @@ const Parallax: FunctionComponent<ParallaxProp> = ({ img, speed, children }) => 
         }
     }
 
-    const getTopOffset = (): number => {
+    const getTopOffset = useCallback((): number => {
         return window.innerHeight * speed;
-    }
+    }, [speed]);
 
-    const getNewTop = (): number => {
+    const getNewTop = useCallback((): number => {
         const bottomPageOffset = window.scrollY + window.innerHeight;
         const intoElementOffset = bottomPageOffset - parallaxElemRef.current!.offsetTop;
         const newTop = topOffset.current - intoElementOffset * speed;
+
         return newTop;
-    }
+    }, [speed]);
 
     const updatePosition = (): void => {
         if (!isElementVisible()) {
@@ -90,26 +92,27 @@ const Parallax: FunctionComponent<ParallaxProp> = ({ img, speed, children }) => 
         updateBackgroundSize();
         updatePosition();
     }
+	
     const handleResizeThrottled = throttle(handleResize, throttleTime);
 
-    const handleBackgroundLoad = () => {
+    const handleBackgroundLoad = useCallback(() => {
         const image = new Image();
         
         image.src = img;
         image.onload = () => {
             setBackgroundLoaded(true);
         }
-    }
+    }, [img]);
 
-    const addEventListener = (): void => {
+    const addEventListener = useCallback((): void => {
         window.addEventListener('scroll', handleScrollThrottled);
         window.addEventListener('resize', handleResizeThrottled);
-    }
+    }, [handleScrollThrottled, handleResizeThrottled]);
 
-    const removeEventListener = (): void => {
+    const removeEventListener = useCallback((): void => {
         window.removeEventListener('scroll', handleScrollThrottled);
         window.removeEventListener('resize', handleResizeThrottled);
-    }
+    }, [handleScrollThrottled, handleResizeThrottled]);
 
     useEffect(() => {
         topOffset.current = getTopOffset();
@@ -126,7 +129,13 @@ const Parallax: FunctionComponent<ParallaxProp> = ({ img, speed, children }) => 
         return () => {
             removeEventListener();
         };
-    }, []);
+    }, [
+		handleBackgroundLoad, 
+		getNewTop,
+		addEventListener,
+		removeEventListener,
+		getTopOffset,
+	]);
 
     return (
         <ParallaxContainer ref={parallaxElemRef} style={{...backgroundStyle}} backgroundImage={img} opacity={backgroundLoaded ? 1 : 0}>
@@ -134,5 +143,3 @@ const Parallax: FunctionComponent<ParallaxProp> = ({ img, speed, children }) => 
         </ParallaxContainer>
     )
 }
-
-export default Parallax;
