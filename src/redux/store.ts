@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { reducer as categoryReducer } from './slices/category/category.slice';
+import { reducer as galleryReducer } from './slices/gallery/gallery.slice';
 
 export const store = configureStore({
     reducer: {
-        category: categoryReducer,
+        gallery: galleryReducer,
     }
 });
 

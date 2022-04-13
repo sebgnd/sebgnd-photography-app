@@ -2,7 +2,7 @@ import React, { FunctionComponent, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { GalleryButton } from 'components/UI/Button';
-import Spinner from 'components/UI/Spinner/Spinner';
+import { Spinner } from 'components/UI/Spinner/Spinner';
 
 import styles from './GalleryList.module.css';
 

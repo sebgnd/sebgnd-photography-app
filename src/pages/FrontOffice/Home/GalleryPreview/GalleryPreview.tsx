@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 
 import { Title } from 'components/Styled/text';
 import { Button } from 'components/UI/Button';
-import Spinner from 'components/UI/Spinner/Spinner';
+import { Spinner } from 'components/UI/Spinner/Spinner';
 
 import { GalleryPreviewList, GalleryPreviewListProps } from './GalleryPreviewList/GalleryPreviewList';
 
@@ -13,7 +13,7 @@ type GalleriesPreviewProps = {
     loading: boolean;
 }
 
-const GalleriesPreview: FunctionComponent<GalleriesPreviewProps> = ({ thumbnails, loading }) => {
+export const GalleriesPreview: FunctionComponent<GalleriesPreviewProps> = ({ thumbnails, loading }) => {
     return (
         <div className={styles.galleriesPreviewContainer}>
             <div className={styles.row}>
@@ -36,5 +36,3 @@ const GalleriesPreview: FunctionComponent<GalleriesPreviewProps> = ({ thumbnails
         </div>
     )
 };
-
-export default GalleriesPreview;

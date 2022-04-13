@@ -7,7 +7,7 @@ import { Galleries } from 'pages/FrontOffice/Galleries/Galleries';
 
 import { UserLayout } from 'layouts/UserLayout';
 
-import { fetchAllCategories } from 'redux/slices/category/category.thunk';
+import { fetchAllCategories } from 'redux/slices/gallery/category.thunk';
 
 export const App: FunctionComponent = () => {
 	const dispatch = useDispatch();

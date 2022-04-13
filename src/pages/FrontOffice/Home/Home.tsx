@@ -4,13 +4,13 @@ import { useSelector } from 'react-redux';
 import {
 	selectFirstThreeCategory,
 	selectIsCategoryListLoading,
-} from 'redux/slices/category/category.selector';
+} from 'redux/slices/gallery/gallery.selector';
 
-import { Parallax } from '../../../components/UI/Parallax/Parallax';
+import { Parallax } from 'components/UI/Parallax/Parallax';
 
-import Landing from './Landing/Landing';
-import GalleriesPreview from './GalleryPreview/GalleryPreview';
-import About from './About/About';
+import { Landing } from './Landing/Landing';
+import { GalleriesPreview } from './GalleryPreview/GalleryPreview';
+import { About } from './About/About';
 
 
 export const Home: FunctionComponent = () => {

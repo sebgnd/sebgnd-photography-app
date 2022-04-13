@@ -2,10 +2,10 @@ import { createSelector } from '@reduxjs/toolkit';
 
 import { RootState } from 'redux/store';
 
-import { categoryAdapter } from './category.slice';
+import { categoryAdapter } from './gallery.slice';
 
 const categorySelectors = categoryAdapter.getSelectors<RootState>(
-	(state) => state.category.list.items
+	({ gallery }) => gallery.category.list.items
 );
 
 export const selectCategoryList = categorySelectors.selectAll;
@@ -15,4 +15,4 @@ export const selectFirstThreeCategory = createSelector(
 		return categories.slice(0, 3);
 	}
 )
-export const selectIsCategoryListLoading = (state: RootState) => state.category.list.loading;
+export const selectIsCategoryListLoading = ({ gallery }: RootState) => gallery.category.list.loading;

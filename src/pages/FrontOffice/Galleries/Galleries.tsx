@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import {
 	selectCategoryList,
 	selectIsCategoryListLoading,
-} from 'redux/slices/category/category.selector';
+} from 'redux/slices/gallery/gallery.selector';
 
 import GalleryList from './GalleryList/GalleryList';
 

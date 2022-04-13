@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 
 import withActionBadge, { WithActionBadgeProps } from '../../../../hoc/withActionBadge';
 
-import Spinner from '../../Spinner/Spinner';
+import { Spinner } from 'components/UI/Spinner/Spinner';
 
 import styles from './File.module.css';
 

@@ -5,7 +5,7 @@ import { Title, Text } from '../../../../components/Styled/text';
 
 import styles from './About.module.css';
 
-const About: FunctionComponent = () => {
+export const About: FunctionComponent = () => {
     return (
 		<div className={styles.aboutContainer}>
 			<div className={styles.titleContainer}>
@@ -36,5 +36,3 @@ const About: FunctionComponent = () => {
 		</div>
     )
 }
-
-export default About;

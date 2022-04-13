@@ -4,7 +4,7 @@ import { Button } from '../../../../components/UI/Button';
 
 import styles from './Landing.module.css';
 
-const Landing: FunctionComponent = () => {
+export const Landing: FunctionComponent = () => {
     return (
         <div className={styles.landingContainer}>
             <div className={styles.landingButtonContainer}>
@@ -13,5 +13,3 @@ const Landing: FunctionComponent = () => {
         </div>
     );
 };
-
-export default Landing;

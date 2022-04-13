@@ -6,14 +6,11 @@ import styles from './Spinner.module.css';
 interface SpinnerProps {
     size?: 'normal' | 'small' | 'tiny';
 }
-
-const Spinner: FunctionComponent<SpinnerProps & CenteringProps> = ({ 
+export const Spinner: FunctionComponent<SpinnerProps & CenteringProps> = withCentering(({
     zIndex,
     size = 'normal'
 }) => {
     return (
         <div className={[styles.spinner, styles[size]].join(' ')} style={{ zIndex }} />
     )
-}
-
-export default withCentering(Spinner);
+});
