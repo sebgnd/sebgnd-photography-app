@@ -4,6 +4,7 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 
 import { Home } from 'pages/FrontOffice/Home/Home';
 import { Galleries } from 'pages/FrontOffice/Galleries/Galleries';
+import { Gallery } from 'pages/FrontOffice/Gallery/Gallery';
 
 import { UserLayout } from 'layouts/UserLayout';
 
@@ -22,6 +23,7 @@ export const App: FunctionComponent = () => {
 				<Routes>
 					<Route index element={<Home />} />
 					<Route path="galleries" element={<Galleries />} />
+					<Route path="gallery/:name" element={<Gallery />} />
 				</Routes>
 			</UserLayout>
 		</BrowserRouter>

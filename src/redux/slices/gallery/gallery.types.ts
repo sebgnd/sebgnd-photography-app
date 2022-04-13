@@ -13,6 +13,15 @@ export type FetchAllCategoriesResponse = {
 	}>,
 }
 
+export type FetchImagesFromCategoryResponse = {
+	items: ReadonlyArray<{
+		id: string,
+		categoryId: string,
+		createdAt: string,
+		updatedAt: string,
+	}>
+}
+
 export type CategoryItem = {
 	id: string,
 	name: string,
@@ -42,6 +51,7 @@ export type GalleryState = {
 			items: EntityState<CategoryItem>,
 			loading: boolean,
 		},
+		selectedCategoryName: string | null,
 	},
 	image: {
 		list: {

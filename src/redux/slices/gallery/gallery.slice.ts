@@ -1,6 +1,6 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
-import { fetchAllCategories } from './category.thunk';
+import {fetchAllCategories, fetchImagesFromCategory} from './category.thunk';
 import { GalleryState, CategoryItem, ImageItem } from './gallery.types';
 
 export const categoryAdapter = createEntityAdapter<CategoryItem>({
@@ -24,6 +24,7 @@ const initialState: GalleryState = {
 			items: categoryAdapter.getInitialState(),
 			loading: false,
 		},
+		selectedCategoryName: null,
 	},
 	image: {
 		list: {
@@ -40,7 +41,11 @@ const initialState: GalleryState = {
 const gallerySlice = createSlice({
     name: 'gallery',
     initialState,
-	reducers: {},
+	reducers: {
+		clearImageList: ({ image }) => {
+			imageAdapter.removeAll(image.list.items);
+		},
+	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchAllCategories.pending, (state) => {
 			state.category.list.loading = true;
@@ -53,6 +58,17 @@ const gallerySlice = createSlice({
 				name: item.name,
 				thumbnailId: item.thumbnail.id,
 			})));
+		});
+		builder.addCase(fetchImagesFromCategory.pending, ({ image }) => {
+			image.list.loading = true;
+		});
+		builder.addCase(fetchImagesFromCategory.fulfilled, ({ image }, { payload }) => {
+			image.list.loading = false;
+			imageAdapter.setAll(image.list.items, payload.items.map((item) => ({
+				id: item.id,
+				categoryId: item.categoryId,
+				createdAt: item.createdAt,
+			})))
 		});
 	}
 });

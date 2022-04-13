@@ -1,6 +1,8 @@
 import React, { FunctionComponent, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { getImageUrl } from 'libs/image/get-image-url';
+
 import { GalleryButton } from 'components/UI/Button';
 import { Spinner } from 'components/UI/Spinner/Spinner';
 
@@ -19,10 +21,11 @@ interface GalleriesListProps {
 const GalleriesList: FunctionComponent<GalleriesListProps> = ({ thumbnails, loading }) => {
 	const navigate = useNavigate();
 
-	// TODO: Move that to a server or computed by API
-	const getThumbnailUrl = useCallback((imageId: string) => {
-		return `http://localhost:8000/api/file/images/thumbnail/400/${imageId}`;
-	}, []);
+	// TODO: Maybe move that to the api response
+	const getThumbnailUrl = useCallback((imageId: string) => getImageUrl(imageId, {
+		size: 'medium',
+		thumbnail: true,
+	}), []);
 	
 	const navigateToGalleryPage = useCallback((category: string) => () => {
 		navigate('/gallery/' + category);
