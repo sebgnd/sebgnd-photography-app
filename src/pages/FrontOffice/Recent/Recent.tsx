@@ -5,7 +5,6 @@ import { getImageUrl } from 'libs/image/get-image-url';
 
 import { useEndPageReached } from 'hooks/useEndPageReached';
 
-import { FlexColumn, FlexContainer } from 'components/Styled/container';
 import { RecentImage } from 'components/UI/Image';
 
 import { actions } from 'redux/slices/gallery/gallery.slice';
@@ -60,7 +59,7 @@ export const Recent: FunctionComponent = () => {
                     categoryDisplayName="Landscape"
                     onImageClick={() => {}}
                     onGalleryClick={() => {}}
-                    imageType="landscape"
+                    imageType={img.type}
                 />
             ))}
         </div>

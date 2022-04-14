@@ -34,7 +34,7 @@ export const useEndPageReached = (config: UseEndPageReachedConfig = defaultConfi
         return () => {
             window.removeEventListener('scroll', handleScroll);
         }
-    }, []);
+    }, [handleScroll]);
 
     return reached;
 }

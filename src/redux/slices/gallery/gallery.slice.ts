@@ -70,6 +70,7 @@ const gallerySlice = createSlice({
 			image.list.loading = false;
 			imageAdapter.setAll(image.list.items, payload.items.map((item) => ({
 				id: item.id,
+				type: item.type,
 				categoryId: item.categoryId,
 				createdAt: item.createdAt,
 			})))
@@ -100,6 +101,7 @@ const gallerySlice = createSlice({
 			image.list.total = payload.total;
 			imageAdapter.addMany(image.list.items, payload.items.map((img) => ({
 				id: img.id,
+				type: img.type,
 				createdAt: img.createdAt,
 				categoryId: img.categoryId,
 			})));

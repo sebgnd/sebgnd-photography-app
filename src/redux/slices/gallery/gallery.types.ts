@@ -16,6 +16,7 @@ export type FetchAllCategoriesResponse = {
 export type FetchImagesFromCategoryResponse = {
 	items: ReadonlyArray<{
 		id: string,
+		type: 'landscape' | 'portrait',
 		categoryId: string,
 		createdAt: string,
 		updatedAt: string,
@@ -40,6 +41,7 @@ export type FetchImagesPaginatedResponse = {
 		categoryId: string,
 		createdAt: string,
 		updatedAt: string,
+		type: 'landscape' | 'portrait',
 	}>
 	total: number,
 	limit: number,
@@ -55,6 +57,7 @@ export type CategoryItem = {
 
 export type ImageItem = {
 	id: string,
+	type: 'landscape' | 'portrait',
 	createdAt: string,
 	categoryId: string,
 }
