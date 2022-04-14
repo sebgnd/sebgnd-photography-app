@@ -1,6 +1,6 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
-import {fetchAllCategories, fetchImagesFromCategory} from './category.thunk';
+import {fetchAllCategories, fetchImage, fetchImagesFromCategory, fetchImagesPaginated} from './gallery.thunk';
 import { GalleryState, CategoryItem, ImageItem } from './gallery.types';
 
 export const categoryAdapter = createEntityAdapter<CategoryItem>({
@@ -30,6 +30,7 @@ const initialState: GalleryState = {
 		list: {
 			items: imageAdapter.getInitialState(),
 			loading: false,
+			total: null,
 		},
 		selection: {
 			item: null,
@@ -44,6 +45,9 @@ const gallerySlice = createSlice({
 	reducers: {
 		clearImageList: ({ image }) => {
 			imageAdapter.removeAll(image.list.items);
+		},
+		clearImageSelection: ({ image }) => {
+			image.selection.item = null;
 		},
 	},
 	extraReducers: (builder) => {
@@ -69,6 +73,36 @@ const gallerySlice = createSlice({
 				categoryId: item.categoryId,
 				createdAt: item.createdAt,
 			})))
+		});
+		builder.addCase(fetchImage.pending, ({ image }) => {
+			image.selection.item = null;
+			image.selection.loading = true;
+		});
+		builder.addCase(fetchImage.fulfilled, ({ image }, { payload }) => {
+			image.selection.item = {
+				id: payload.id,
+				exif: payload.exif
+					? {
+						iso: payload.exif.iso,
+						shutterSpeed: payload.exif.shutterSpeed,
+						focalLength: payload.exif.focalLength,
+						aperture: payload.exif.aperture,
+					}
+					: undefined,
+			};
+			image.selection.loading = false;
+		});
+		builder.addCase(fetchImagesPaginated.pending, ({ image }) => {
+			image.list.loading = true;
+		});
+		builder.addCase(fetchImagesPaginated.fulfilled, ({ image }, { payload }) => {
+			image.list.loading = false;
+			image.list.total = payload.total;
+			imageAdapter.addMany(image.list.items, payload.items.map((img) => ({
+				id: img.id,
+				createdAt: img.createdAt,
+				categoryId: img.categoryId,
+			})));
 		});
 	}
 });

@@ -9,10 +9,11 @@ import { AdaptedImage } from './AdaptedImage';
 
 import styles from './RecentImage.module.css';
 
+export type RecentImageType = 'portrait' | 'landscape';
 export type RecentImageProp = {
     date: string;
     src: string;
-    imageType: string;
+    imageType: RecentImageType;
     imageId: string;
     categoryId: string;
     categoryDisplayName: string;

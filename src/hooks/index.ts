@@ -5,5 +5,5 @@ import useEventListener from './useEventListener';
 export {
     useToggle,
     usePrevious,
-    useEventListener
+    useEventListener,
 }

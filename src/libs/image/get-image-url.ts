@@ -6,7 +6,7 @@ export type ImageConfig = {
 
 export const IMAGE_SIZES: Record<ImageSize, string> = {
 	'medium': '400',
-	'full': 'fhd',
+	'full': '1080',
 }
 
 export const getImageUrl = (id: string, config: ImageConfig) => {

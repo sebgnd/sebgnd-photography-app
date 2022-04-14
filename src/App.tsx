@@ -5,10 +5,11 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { Home } from 'pages/FrontOffice/Home/Home';
 import { Galleries } from 'pages/FrontOffice/Galleries/Galleries';
 import { Gallery } from 'pages/FrontOffice/Gallery/Gallery';
+import { Recent } from 'pages/FrontOffice/Recent/Recent';
 
 import { UserLayout } from 'layouts/UserLayout';
 
-import { fetchAllCategories } from 'redux/slices/gallery/category.thunk';
+import { fetchAllCategories } from 'redux/slices/gallery/gallery.thunk';
 
 export const App: FunctionComponent = () => {
 	const dispatch = useDispatch();
@@ -24,6 +25,7 @@ export const App: FunctionComponent = () => {
 					<Route index element={<Home />} />
 					<Route path="galleries" element={<Galleries />} />
 					<Route path="gallery/:name" element={<Gallery />} />
+					<Route path="recent" element={<Recent />} />
 				</Routes>
 			</UserLayout>
 		</BrowserRouter>

@@ -22,6 +22,30 @@ export type FetchImagesFromCategoryResponse = {
 	}>
 }
 
+export type FetchImageResponse = {
+	id: string,
+	createdAt: string,
+	updatedAt: string,
+	exif: null | {
+		iso: number,
+		shutterSpeed: number,
+		focalLength: number,
+		aperture: number,
+	}
+}
+
+export type FetchImagesPaginatedResponse = {
+	items: ReadonlyArray<{
+		id: string,
+		categoryId: string,
+		createdAt: string,
+		updatedAt: string,
+	}>
+	total: number,
+	limit: number,
+	offset: number,
+};
+
 export type CategoryItem = {
 	id: string,
 	name: string,
@@ -37,11 +61,11 @@ export type ImageItem = {
 
 export type SelectedImage = {
 	id: string,
-	exif: {
+	exif?: {
 		iso: number,
-		shutterSpeed: string,
-		aperture: string,
-		focalLength: string,
+		shutterSpeed: number,
+		aperture: number,
+		focalLength: number,
 	},
 }
 
@@ -57,6 +81,7 @@ export type GalleryState = {
 		list: {
 			items: EntityState<ImageItem>,
 			loading: boolean,
+			total: number | null,
 		},
 		selection: {
 			item: SelectedImage | null,
