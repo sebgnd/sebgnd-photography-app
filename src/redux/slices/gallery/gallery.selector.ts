@@ -22,6 +22,9 @@ export const selectFirstThreeCategory = createSelector(
 	}
 )
 export const selectIsCategoryListLoading = ({ gallery }: RootState) => gallery.category.list.loading;
+export const selectIsCategoryListFailed = ({ gallery }: RootState) => gallery.category.list.error;
+
 export const selectIsImageListLoading = ({ gallery }: RootState) => gallery.image.list.loading;
 export const selectSelectedImage = ({ gallery }: RootState) => gallery.image.selection.item;
 export const selectTotalImageList = ({ gallery }: RootState) => gallery.image.list.total;
+export const selectIsImageListFailed = ({ gallery }: RootState) => gallery.image.list.error;

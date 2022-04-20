@@ -5,5 +5,7 @@
 }
 
 .imageList {
-	margin-bottom: 64px;
+	margin-bottom: 32px !important;
+	max-width: 1950px;
+	margin: auto;
 }

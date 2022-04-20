@@ -1,4 +1,4 @@
-import React, { FunctionComponent, MouseEvent } from 'react';
+import React, { FunctionComponent, MouseEvent, useMemo } from 'react';
 
 import { Text } from 'components/Styled/text';
 import { Button } from 'components/UI/Button';
@@ -32,6 +32,15 @@ export const RecentImage: FunctionComponent<RecentImageProp> = ({
     onGalleryClick 
 }) => {
     const isPortrait = imageType === 'portrait';
+
+	const dateString = useMemo(() => {
+		return new Date(date).toLocaleDateString('en-US', {
+			weekday: 'long',
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+		});
+	}, [date]);
     
     return (
         <div className={styles.recentImageContainer}>
@@ -44,7 +53,7 @@ export const RecentImage: FunctionComponent<RecentImageProp> = ({
 
                 <div className={styles.infoContainer}>
                     <div className={styles.date}>
-                        <Text size="small" color="#7E7E7E" weight="bold">{date}</Text>
+                        <Text size="small" color="#7E7E7E" weight="bold">{dateString}</Text>
                     </div>
                 </div>
             </div>

@@ -77,6 +77,7 @@ export type GalleryState = {
 		list: {
 			items: EntityState<CategoryItem>,
 			loading: boolean,
+			error: boolean,
 		},
 		selectedCategoryName: string | null,
 	},
@@ -84,6 +85,7 @@ export type GalleryState = {
 		list: {
 			items: EntityState<ImageItem>,
 			loading: boolean,
+			error: boolean,
 			total: number | null,
 		},
 		selection: {

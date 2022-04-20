@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 import {
 	selectFirstThreeCategory,
+	selectIsCategoryListFailed,
 	selectIsCategoryListLoading,
 } from 'redux/slices/gallery/gallery.selector';
 
@@ -16,6 +17,7 @@ import { About } from './About/About';
 export const Home: FunctionComponent = () => {
 	const categories = useSelector(selectFirstThreeCategory);
 	const loading = useSelector(selectIsCategoryListLoading);
+	const error = useSelector(selectIsCategoryListFailed);
 
 	const thumbnails = useMemo(() => {
 		return categories.map((category) => {
@@ -35,6 +37,7 @@ export const Home: FunctionComponent = () => {
             </Parallax>
             <GalleriesPreview 
                 loading={loading}
+				error={error}
                 thumbnails={thumbnails} 
             />
             <Parallax img="images/parallax-2.jpg" speed={0.5} >

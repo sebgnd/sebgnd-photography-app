@@ -7,10 +7,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+	z-index: 1000;
 }
 
 .imageContainer {
-    z-index: 101;
-    padding-top: 20%;
-    padding-bottom: 15%;
+	z-index: 101;
+	margin: 16px;
 }

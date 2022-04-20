@@ -14,7 +14,7 @@ export const imageAdapter = createEntityAdapter<ImageItem>({
 		const dateA = new Date(a.createdAt);
 		const dateB = new Date(b.createdAt);
 
-		return dateA.getTime() - dateB.getTime();
+		return dateB.getTime() - dateA.getTime();
 	}
 })
 
@@ -23,6 +23,7 @@ const initialState: GalleryState = {
 		list: {
 			items: categoryAdapter.getInitialState(),
 			loading: false,
+			error: false,
 		},
 		selectedCategoryName: null,
 	},
@@ -30,6 +31,7 @@ const initialState: GalleryState = {
 		list: {
 			items: imageAdapter.getInitialState(),
 			loading: false,
+			error: false,
 			total: null,
 		},
 		selection: {
@@ -51,8 +53,9 @@ const gallerySlice = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
-		builder.addCase(fetchAllCategories.pending, (state) => {
-			state.category.list.loading = true;
+		builder.addCase(fetchAllCategories.pending, ({ category }) => {
+			category.list.loading = true;
+			category.list.error = false;
 		});
 		builder.addCase(fetchAllCategories.fulfilled, ({ category }, { payload }) => {
 			category.list.loading = false;
@@ -63,8 +66,14 @@ const gallerySlice = createSlice({
 				thumbnailId: item.thumbnail.id,
 			})));
 		});
+		builder.addCase(fetchAllCategories.rejected, ({ category }) => {
+			category.list.error = true;
+			category.list.loading = false;
+			
+		})
 		builder.addCase(fetchImagesFromCategory.pending, ({ image }) => {
 			image.list.loading = true;
+			image.list.error = false;
 		});
 		builder.addCase(fetchImagesFromCategory.fulfilled, ({ image }, { payload }) => {
 			image.list.loading = false;
@@ -75,6 +84,10 @@ const gallerySlice = createSlice({
 				createdAt: item.createdAt,
 			})))
 		});
+		builder.addCase(fetchImagesFromCategory.rejected, ({ image }) => {
+			image.list.error = true;
+			image.list.loading = false;
+		})
 		builder.addCase(fetchImage.pending, ({ image }) => {
 			image.selection.item = null;
 			image.selection.loading = true;
@@ -99,7 +112,7 @@ const gallerySlice = createSlice({
 		builder.addCase(fetchImagesPaginated.fulfilled, ({ image }, { payload }) => {
 			image.list.loading = false;
 			image.list.total = payload.total;
-			imageAdapter.addMany(image.list.items, payload.items.map((img) => ({
+			imageAdapter.upsertMany(image.list.items, payload.items.map((img) => ({
 				id: img.id,
 				type: img.type,
 				createdAt: img.createdAt,

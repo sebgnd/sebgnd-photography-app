@@ -1,6 +1,8 @@
-import React, { FunctionComponent, useEffect, useCallback, MouseEvent } from 'react';
+import React, { FunctionComponent, useEffect, useCallback, MouseEvent, useMemo } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { getImageUrl } from 'libs/image/get-image-url';
 
 import { useScrolling } from 'hooks/useScrolling';
 
@@ -9,19 +11,23 @@ import { SingleImage } from 'components/UI/Image';
 import { FlexContainer } from 'components/Styled/container';
 import { ImageViewer } from 'components/ImageViewer/ImageViewer';
 
+import { Spinner } from 'components/UI/Spinner/Spinner';
+
 import { RootState } from 'redux/store';
 import { fetchImage, fetchImagesFromCategory } from 'redux/slices/gallery/gallery.thunk';
 import { actions } from 'redux/slices/gallery/gallery.slice';
 import {
 	selectCategoryByName,
 	selectImageList,
+	selectIsCategoryListFailed,
 	selectIsCategoryListLoading,
+	selectIsImageListFailed,
 	selectIsImageListLoading,
 	selectSelectedImage,
 } from 'redux/slices/gallery/gallery.selector';
-import { getImageUrl } from 'libs/image/get-image-url';
 
 import style from './Gallery.module.css';
+import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
 
 export const Gallery: FunctionComponent = () => {
     const dispatch = useDispatch();
@@ -43,6 +49,8 @@ export const Gallery: FunctionComponent = () => {
 	const categoryLoading = useSelector(selectIsCategoryListLoading);
 	const imagesLoading = useSelector(selectIsImageListLoading);
 	const selectedImage = useSelector(selectSelectedImage);
+	const categoryError = useSelector(selectIsCategoryListFailed);
+	const imagesError = useSelector(selectIsImageListFailed);
 
 	const handleImageClick = useCallback((_: MouseEvent, imageId: string) => {
 		setSearch({ image: imageId });
@@ -53,6 +61,18 @@ export const Gallery: FunctionComponent = () => {
 		setScroll(true);
 		setSearch({});
 	}, [search, dispatch]);
+
+	const canShowList = useMemo(
+		() => {
+			return (
+				!categoryLoading
+				&& !imagesLoading
+				&& !categoryError
+				&& !imagesError
+			)
+		},
+		[categoryLoading, imagesLoading, categoryError, imagesError]
+	);
 
     useEffect(
 		() => {
@@ -78,7 +98,7 @@ export const Gallery: FunctionComponent = () => {
 
     return (
         <div>
-			{(!categoryLoading && !imagesLoading) && (
+			{canShowList && (
 				<div>
 					<Title className={style.title} color="#000">{selectedCategory?.displayName}</Title>
 					<FlexContainer
@@ -108,6 +128,18 @@ export const Gallery: FunctionComponent = () => {
 						/>
 					)}
 				</div>
+			)}
+			{(categoryLoading || imagesLoading) && (
+				<Spinner centerHorizontal centerVertical fullScreen />
+			)}
+			{(categoryError || imagesError) && (
+				<InformationMessage
+					centerHorizontal
+					centerVertical
+					fullScreen
+					messageType="error"
+					message="Something went wrong"
+				/>
 			)}
         </div>
     )

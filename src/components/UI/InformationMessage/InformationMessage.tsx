@@ -16,12 +16,12 @@ interface IconMap {
     [key: string]: string;
 }
 
-const ErrorMessage: FunctionComponent<InformationMessageProps & CenteringProps> = ({ 
+const InformationMessageWithoutCentering: FunctionComponent<InformationMessageProps & CenteringProps> = ({ 
     message, 
     color, 
     messageType,
     size = 'medium',
-    noIcon
+    noIcon = false
 }) => {
     const icons: IconMap = {
         error: 'exclamation-circle',
@@ -46,4 +46,4 @@ const ErrorMessage: FunctionComponent<InformationMessageProps & CenteringProps> 
     )
 };
 
-export default withCentering(ErrorMessage);
+export const InformationMessage = withCentering(InformationMessageWithoutCentering);

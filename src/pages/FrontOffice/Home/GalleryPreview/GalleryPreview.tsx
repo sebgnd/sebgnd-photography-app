@@ -7,13 +7,15 @@ import { Spinner } from 'components/UI/Spinner/Spinner';
 import { GalleryPreviewList, GalleryPreviewListProps } from './GalleryPreviewList/GalleryPreviewList';
 
 import styles from './GalleryPreview.module.css';
+import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
 
 type GalleriesPreviewProps = {
     thumbnails: GalleryPreviewListProps['thumbnails'];
     loading: boolean;
+	error: boolean;
 }
 
-export const GalleriesPreview: FunctionComponent<GalleriesPreviewProps> = ({ thumbnails, loading }) => {
+export const GalleriesPreview: FunctionComponent<GalleriesPreviewProps> = ({ thumbnails, loading, error }) => {
     return (
         <div className={styles.galleriesPreviewContainer}>
             <div className={styles.row}>
@@ -22,11 +24,19 @@ export const GalleriesPreview: FunctionComponent<GalleriesPreviewProps> = ({ thu
                 </div>
             </div>
             <div className={styles.row}>
-                {loading ? (
+                {loading && (
                     <Spinner centerHorizontal />
-                ) : (
-                    <GalleryPreviewList thumbnails={thumbnails} />
                 )}
+				{error && (
+					<InformationMessage
+						message="Something went wrong"
+						messageType="error"
+						centerHorizontal
+					/>
+				)}
+				{(!error && !loading) && (
+					<GalleryPreviewList thumbnails={thumbnails} />
+				)}
             </div>
             <div className={styles.row}>
                 <div className={styles.buttonContainer}>

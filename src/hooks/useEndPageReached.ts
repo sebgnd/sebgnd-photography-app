@@ -18,11 +18,9 @@ export const useEndPageReached = (config: UseEndPageReachedConfig = defaultConfi
         const scrollYBottom = Math.round(window.scrollY + window.innerHeight);
         const pageHeight = document.body.scrollHeight;
 
-        console.log({ scrollYBottom, pageHeight });
-
         const isBottomReachedWithOffset = scrollYBottom > pageHeight - offsetThreshold;
 
-        if (isBottomReachedWithOffset && isBottomReachedWithOffset !== endWindowRef.current) {
+        if (isBottomReachedWithOffset !== endWindowRef.current) {
             setReached(isBottomReachedWithOffset);
             endWindowRef.current = isBottomReachedWithOffset;
         }
