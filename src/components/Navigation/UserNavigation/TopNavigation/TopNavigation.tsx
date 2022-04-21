@@ -20,7 +20,6 @@ const TopNavigation: FunctionComponent<TopNavigationProps> = ({ onToggleMobile }
             <Logo imgSrc="/images/logo.png" imgAlt="logo" url="/" />
             <div className={styles.sideMenu}>
                 <NavigationItem type="user" name="Recent" url="/recent" />
-                <NavigationItem type="user" name="Contact" url="/contact" />
             </div>
         </div>
     )

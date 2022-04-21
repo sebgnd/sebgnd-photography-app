@@ -20,11 +20,11 @@ export const useImageSelection = (urlParam: string = 'image') => {
 		dispatch(actions.clearImageSelection());
 		setScroll(true);
 		setSearch({});
-	}, []);
+	}, [dispatch, setScroll, setSearch]);
 
 	const selectImage = useCallback((imageId: string) => {
 		setSearch({ [urlParam]: imageId });
-	}, []);
+	}, [urlParam, setSearch]);
 
 	useEffect(() => {
 		const imageId = search.get(urlParam);
@@ -33,7 +33,7 @@ export const useImageSelection = (urlParam: string = 'image') => {
 			setScroll(false);
 			dispatch(fetchImage(imageId));
 		}
-	}, [search, dispatch]);
+	}, [search, dispatch, urlParam, setScroll]);
 
 	return {
 		selection: selectedImage,

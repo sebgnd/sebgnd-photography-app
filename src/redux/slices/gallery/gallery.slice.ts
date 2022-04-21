@@ -45,18 +45,19 @@ const gallerySlice = createSlice({
     name: 'gallery',
     initialState,
 	reducers: {
-		clearImageList: ({ image }) => {
-			imageAdapter.removeAll(image.list.items);
-		},
 		clearImageSelection: ({ image }) => {
 			image.selection.item = null;
 		},
+		clearImageList: ({ image }) => {
+			imageAdapter.removeAll(image.list.items);
+		}
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchAllCategories.pending, ({ category }) => {
 			category.list.loading = true;
 			category.list.error = false;
 		});
+
 		builder.addCase(fetchAllCategories.fulfilled, ({ category }, { payload }) => {
 			category.list.loading = false;
 			categoryAdapter.setAll(category.list.items, payload.items.map((item) => ({
@@ -66,15 +67,18 @@ const gallerySlice = createSlice({
 				thumbnailId: item.thumbnail.id,
 			})));
 		});
+
 		builder.addCase(fetchAllCategories.rejected, ({ category }) => {
 			category.list.error = true;
 			category.list.loading = false;
-			
-		})
+		});
+
 		builder.addCase(fetchImagesFromCategory.pending, ({ image }) => {
 			image.list.loading = true;
 			image.list.error = false;
+			imageAdapter.removeAll(image.list.items);
 		});
+
 		builder.addCase(fetchImagesFromCategory.fulfilled, ({ image }, { payload }) => {
 			image.list.loading = false;
 			imageAdapter.setAll(image.list.items, payload.items.map((item) => ({
@@ -82,16 +86,19 @@ const gallerySlice = createSlice({
 				type: item.type,
 				categoryId: item.categoryId,
 				createdAt: item.createdAt,
-			})))
+			})));
 		});
+
 		builder.addCase(fetchImagesFromCategory.rejected, ({ image }) => {
 			image.list.error = true;
 			image.list.loading = false;
-		})
+		});
+
 		builder.addCase(fetchImage.pending, ({ image }) => {
 			image.selection.item = null;
 			image.selection.loading = true;
 		});
+
 		builder.addCase(fetchImage.fulfilled, ({ image }, { payload }) => {
 			image.selection.item = {
 				id: payload.id,
@@ -106,9 +113,15 @@ const gallerySlice = createSlice({
 			};
 			image.selection.loading = false;
 		});
-		builder.addCase(fetchImagesPaginated.pending, ({ image }) => {
+
+		builder.addCase(fetchImagesPaginated.pending, ({ image }, { meta }) => {
 			image.list.loading = true;
+			
+			if (meta.arg.offset === 0) {
+				imageAdapter.removeAll(image.list.items);
+			}
 		});
+
 		builder.addCase(fetchImagesPaginated.fulfilled, ({ image }, { payload }) => {
 			image.list.loading = false;
 			image.list.total = payload.total;

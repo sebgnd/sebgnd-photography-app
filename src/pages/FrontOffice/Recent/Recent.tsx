@@ -39,14 +39,17 @@ export const Recent: FunctionComponent = () => {
 
 	const handleCategoryClick = useCallback((categoryId: string) => {
 		navigate(`/gallery/${categoryId}`);
-	}, []);
+	}, [navigate]);
 
     useEffect(() => {
         if (images.length === total) {
             return;
         }
 
-        if (reached && !loading && canLoad.current || (images.length === 0 && !loading)) {
+		const fetchIfBottomReached = reached && !loading && canLoad.current;
+		const fetchIfFirstRender = images.length === 0 && !loading;
+
+        if (fetchIfBottomReached || fetchIfFirstRender) {
             dispatch(fetchImagesPaginated({
                 limit: 10,
                 offset: images.length,
@@ -67,10 +70,14 @@ export const Recent: FunctionComponent = () => {
 			 * are feched, there is a small time when loading is false and reached is still true which
 			 * causes another batch of images to be feched.
 			 */
-			setTimeout(() => {
+			const timeoutId = setTimeout(() => {
 				canLoad.current = true;
-			}, [250])
+			}, [250]);
+
+			return () => clearTimeout(timeoutId);
 		}
+
+		return () => {};
 	}, [loading]);
 
     return (

@@ -16,7 +16,6 @@ const MobileNavigation: FunctionComponent<MobileNavigationProps> = ({ opened, cl
             <NavigationItem type="user" onClick={clicked} name="Home" url="/" />
             <NavigationItem type="user" onClick={clicked} name="Galleries" url="/galleries" />
             <NavigationItem type="user" onClick={clicked} name="Recent" url="/recent" />
-            <NavigationItem type="user" onClick={clicked} name="Contact" url="/contact" />
         </div>
     )
 }

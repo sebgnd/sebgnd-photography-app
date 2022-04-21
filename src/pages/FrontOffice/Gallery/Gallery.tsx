@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useMemo } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -16,7 +16,6 @@ import { Spinner } from 'components/UI/Spinner/Spinner';
 
 import { RootState } from 'redux/store';
 import { fetchImagesFromCategory } from 'redux/slices/gallery/gallery.thunk';
-import { actions } from 'redux/slices/gallery/gallery.slice';
 import {
 	selectCategoryById,
 	selectImageList,
@@ -48,22 +47,13 @@ export const Gallery: FunctionComponent = () => {
 	const categoryError = useSelector(selectIsCategoryListFailed);
 	const imagesError = useSelector(selectIsImageListFailed);
 
-	const canShowList = useMemo(
-		() => {
-			return (
-				!categoryLoading
-				&& !imagesLoading
-				&& !categoryError
-				&& !imagesError
-			)
-		},
-		[categoryLoading, imagesLoading, categoryError, imagesError]
-	);
+	const canShowList = !categoryLoading
+		&& !imagesLoading
+		&& !categoryError
+		&& !imagesError;
 
     useEffect(
 		() => {
-			dispatch(actions.clearImageList());
-
 			if (!selectedCategory) {
 				return;
 			}
@@ -74,7 +64,7 @@ export const Gallery: FunctionComponent = () => {
 	);
 
     return (
-        <div>
+        <>
 			{canShowList && (
 				<div>
 					<Title className={style.title} color="#000">{selectedCategory?.displayName}</Title>
@@ -118,6 +108,6 @@ export const Gallery: FunctionComponent = () => {
 					message="Something went wrong"
 				/>
 			)}
-        </div>
+        </>
     )
 }

@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useMemo, useCallback } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { getImageUrl } from 'libs/image/get-image-url';

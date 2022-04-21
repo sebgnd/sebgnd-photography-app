@@ -1,3 +1,69 @@
+.landingContainer {
+    height: calc(100vh - 81px);
+}
+
+.landingButtonContainer {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+}
+
+.galleriesPreviewContainer {
+    background-color: white;
+    display: block;
+    width: 100%;
+}
+
+.row {
+    text-align: center;
+    width: 100%;
+}
+
+.titleContainer {
+    margin: 10px 0px;
+    width: 100%;
+    text-align: center;
+}
+
+.seeAllGalleriesButton {
+    margin: 40px 0px;
+}
+
+.galleryButtonContainer {
+    margin: 0 4vw;
+}
+
+.listContainer {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    margin: auto;
+}
+
+@media (max-width: 2000px) {
+    .galleryButtonContainer {
+        margin: 0 2vw;
+    }
+}
+
+@media (max-width: 1000px) {
+    .galleryButtonContainer {
+        margin: 0 10px;
+    }
+}
+
+@media (max-width: 850px) {
+    .galleryButtonContainer {
+        max-width: 350px;
+    }
+
+    .listContainer {
+        flex-direction: column;
+    }
+}
+
 .aboutContainer {
     height: auto;
     box-sizing: content-box;
