@@ -2,10 +2,10 @@ import React, { FunctionComponent, useRef, useState, useEffect } from 'react';
 import _ from 'lodash';
 import styles from './DropdownButton.module.css';
 
-import Separator from '../../../UI/Separator/Separator';
-import InformationMessage from '../../InformationMessage/InformationMessage';
+import Separator from 'components/UI/Separator/Separator';
+import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
 
-import useEventListener from '../../../../hooks/useEventListener';
+import useEventListener from 'hooks/useEventListener';
 
 export interface DropdownButtonOption {
     value: any;

@@ -17,8 +17,8 @@ export type RecentImageProp = {
     imageId: string;
     categoryId: string;
     categoryDisplayName: string;
-    onImageClick: (event: MouseEvent, imageId: string) => void;
-    onGalleryClick: (event: MouseEvent, categoryId: string) => void;
+    onImageClick: (imageId: string) => void;
+    onGalleryClick: (categoryId: string) => void;
 }
 
 export const RecentImage: FunctionComponent<RecentImageProp> = ({ 
@@ -47,7 +47,7 @@ export const RecentImage: FunctionComponent<RecentImageProp> = ({
             <div className={styles.info}>
                 <div className={styles.infoContainer}>
                     <div className={styles.galleryName}>
-                        <Button variant="light" size="small" onClick={(event) => onGalleryClick(event, categoryId)} label={categoryDisplayName} />
+                        <Button variant="light" size="small" onClick={() => onGalleryClick(categoryId)} label={categoryDisplayName} />
                     </div>
                 </div>
 
@@ -59,7 +59,7 @@ export const RecentImage: FunctionComponent<RecentImageProp> = ({
             </div>
             
             <div className={styles.imageContainer}>
-                <ButtonContainerWidthWidth width="100%" onClick={(event) => onImageClick(event, imageId)}>
+                <ButtonContainerWidthWidth width="100%" onClick={() => onImageClick(imageId)}>
                     { isPortrait && (
                         <ImageFade className={styles.fillerImage} src={src} alt={imageId} />
                     )}

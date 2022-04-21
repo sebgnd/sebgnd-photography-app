@@ -12,7 +12,8 @@ const imageSelectors = imageAdapter.getSelectors<RootState>(
 )
 
 export const selectCategoryList = categorySelectors.selectAll;
-export const selectCategoryByName = categorySelectors.selectById;
+export const selectCategoryById = categorySelectors.selectById;
+export const selectCategoryMap = categorySelectors.selectEntities;
 export const selectImageList = imageSelectors.selectAll;
 
 export const selectFirstThreeCategory = createSelector(

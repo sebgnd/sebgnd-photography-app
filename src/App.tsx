@@ -24,7 +24,7 @@ export const App: FunctionComponent = () => {
 				<Routes>
 					<Route index element={<Home />} />
 					<Route path="galleries" element={<Galleries />} />
-					<Route path="gallery/:name" element={<Gallery />} />
+					<Route path="gallery/:id" element={<Gallery />} />
 					<Route path="recent" element={<Recent />} />
 				</Routes>
 			</UserLayout>

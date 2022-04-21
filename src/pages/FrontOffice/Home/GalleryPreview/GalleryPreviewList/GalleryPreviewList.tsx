@@ -37,7 +37,7 @@ export const GalleryPreviewList: FunctionComponent<GalleryPreviewListProps> = ({
                         <GalleryButton 
                             src={getThumbnailUrl(imageId)}
                             imageId={imageId}
-                            onClick={navigateToGalleryPage(categoryName)}
+                            onClick={navigateToGalleryPage(categoryId)}
                             categoryDisplayName={galleryName}    
                         />
                     </div>

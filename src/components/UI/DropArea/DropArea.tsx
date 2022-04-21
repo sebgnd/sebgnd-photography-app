@@ -1,7 +1,7 @@
 import React, { FunctionComponent, DragEvent, useState, useEffect } from 'react';
 import styles from './DropArea.module.css';
 
-import InformationMessage from '../InformationMessage/InformationMessage';
+import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
 import File from './File/File';
 
 export type FileState = 'idle' | 'loading';

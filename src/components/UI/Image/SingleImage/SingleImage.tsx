@@ -9,13 +9,13 @@ type SingleImageProp = {
     src: string;
     imageId: string;
     categoryId: string;
-    onClick?: (event: MouseEvent, imageId: string, categoryId: string) => void;
+    onClick?: (imageId: string, categoryId: string) => void;
 }
 
 export const SingleImage: FunctionComponent<SingleImageProp> = ({ src, imageId, categoryId, onClick }) => {
     const handleClick = (event: MouseEvent) => {
         if (onClick) {
-            onClick(event, imageId, categoryId);
+            onClick(imageId, categoryId);
         }
     }
 

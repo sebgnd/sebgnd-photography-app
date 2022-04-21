@@ -1,66 +1,52 @@
-import React, { FunctionComponent, useEffect, useCallback, MouseEvent, useMemo } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import React, { FunctionComponent, useEffect, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getImageUrl } from 'libs/image/get-image-url';
 
-import { useScrolling } from 'hooks/useScrolling';
+import { useImageSelection } from 'hooks/useImageSelection';
 
 import { Title } from 'components/Styled/text';
 import { SingleImage } from 'components/UI/Image';
 import { FlexContainer } from 'components/Styled/container';
 import { ImageViewer } from 'components/ImageViewer/ImageViewer';
+import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
 
 import { Spinner } from 'components/UI/Spinner/Spinner';
 
 import { RootState } from 'redux/store';
-import { fetchImage, fetchImagesFromCategory } from 'redux/slices/gallery/gallery.thunk';
+import { fetchImagesFromCategory } from 'redux/slices/gallery/gallery.thunk';
 import { actions } from 'redux/slices/gallery/gallery.slice';
 import {
-	selectCategoryByName,
+	selectCategoryById,
 	selectImageList,
 	selectIsCategoryListFailed,
 	selectIsCategoryListLoading,
 	selectIsImageListFailed,
 	selectIsImageListLoading,
-	selectSelectedImage,
 } from 'redux/slices/gallery/gallery.selector';
 
 import style from './Gallery.module.css';
-import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
 
 export const Gallery: FunctionComponent = () => {
     const dispatch = useDispatch();
     
-	const { name } = useParams();
-	const [search, setSearch] = useSearchParams();
-
-	const [, setScroll] = useScrolling();
+	const { id } = useParams();
+	const { resetSelection, selectImage, selection } = useImageSelection();
 
     const selectedCategory = useSelector((state: RootState) => {
-        if (!name) {
+        if (!id) {
             return null;
         }
 
-        return selectCategoryByName(state, name)
+        return selectCategoryById(state, id)
     });
 	const images = useSelector(selectImageList);
 
 	const categoryLoading = useSelector(selectIsCategoryListLoading);
 	const imagesLoading = useSelector(selectIsImageListLoading);
-	const selectedImage = useSelector(selectSelectedImage);
 	const categoryError = useSelector(selectIsCategoryListFailed);
 	const imagesError = useSelector(selectIsImageListFailed);
-
-	const handleImageClick = useCallback((_: MouseEvent, imageId: string) => {
-		setSearch({ image: imageId });
-	}, []);
-
-	const handleBackdropClick = useCallback(() => {
-		dispatch(actions.clearImageSelection());
-		setScroll(true);
-		setSearch({});
-	}, [search, dispatch]);
 
 	const canShowList = useMemo(
 		() => {
@@ -87,15 +73,6 @@ export const Gallery: FunctionComponent = () => {
 		[selectedCategory, dispatch]
 	);
 
-	useEffect(() => {
-		const imageId = search.get('image');
-
-		if (imageId) {
-			setScroll(false);
-			dispatch(fetchImage(imageId));
-		}
-	}, [search, dispatch]);
-
     return (
         <div>
 			{canShowList && (
@@ -114,17 +91,17 @@ export const Gallery: FunctionComponent = () => {
 									size: 'medium'
 								})}
 								key={img.id}
-								onClick={handleImageClick}
+								onClick={selectImage}
 								imageId={img.id}
 								categoryId={img.categoryId}
 							/>
 						))}
 					</FlexContainer>
-					{selectedImage && (
+					{selection && (
 						<ImageViewer
-							onBackdropClick={handleBackdropClick}
-							imageId={selectedImage.id}
-							exif={selectedImage.exif}
+							onBackdropClick={resetSelection}
+							imageId={selection.id}
+							exif={selection.exif}
 						/>
 					)}
 				</div>

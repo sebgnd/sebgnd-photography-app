@@ -58,13 +58,13 @@ export const Galleries: FunctionComponent = () => {
 			)}
 			{(!loading && !error) && (
 				 <>
-					{thumbnails.map(({ imageId, categoryId, galleryName, categoryName }) => {
+					{thumbnails.map(({ imageId, categoryId, galleryName }) => {
 						return (
 							<div key={categoryId} className={styles.galleryButtonContainer}>
 								<GalleryButton
 									src={getThumbnailUrl(imageId)}
 									imageId={imageId}
-									onClick={navigateToGalleryPage(categoryName)}
+									onClick={navigateToGalleryPage(categoryId)}
 									categoryDisplayName={galleryName}   
 								/>
 							</div>

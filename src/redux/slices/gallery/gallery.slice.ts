@@ -4,7 +4,7 @@ import {fetchAllCategories, fetchImage, fetchImagesFromCategory, fetchImagesPagi
 import { GalleryState, CategoryItem, ImageItem } from './gallery.types';
 
 export const categoryAdapter = createEntityAdapter<CategoryItem>({
-	selectId: (category) => category.name,
+	selectId: (category) => category.id,
 	sortComparer: (a, b) => a.displayName.localeCompare(b.displayName),
 });
 
