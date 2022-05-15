@@ -23,7 +23,7 @@ interface DropdownButtonProps {
 	onClick: (e: React.MouseEvent, value: any) => void;
 }
 
-const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
+export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 	options, 
 	size,
 	fullWidth,
@@ -102,5 +102,3 @@ const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 		</div>
 	);
 };
-
-export default DropdownButton;

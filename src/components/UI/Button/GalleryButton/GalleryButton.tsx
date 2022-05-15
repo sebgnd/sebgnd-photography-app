@@ -19,7 +19,11 @@ export const GalleryButton: FunctionComponent<GalleryButtonProp> = ({ src, image
 			<div className={styles.galleryButtonWrapper}>
 				<ButtonContainer onClick={() => onClick()}>
 					<div className={styles.galleryImage}>
-						<ImageFade className={styles.image} src={src} alt={imageId} />
+						<ImageFade
+							className={styles.image}
+							src={src}
+							alt={imageId}
+						/>
 					</div>
 
 					<div id="gallery-name" className={styles.galleryName}>
