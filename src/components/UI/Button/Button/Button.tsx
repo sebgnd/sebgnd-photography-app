@@ -1,48 +1,47 @@
-import React, { FunctionComponent, MouseEvent } from 'react';
+import React, { FunctionComponent, MouseEvent, useMemo } from 'react';
 import styles from './Button.module.css';
 
+export type ButtonVariant = 'classic' | 'light';
+export type ButtonColor = 'default' | 'success' | 'destructive';
+
 export type ButtonProp = {
-	onClick?: (event: MouseEvent) => void;
-	type?: 'button' | 'submit' | 'reset';
-	variant?: 'classic' | 'light';
-	size?: 'medium' | 'small' | 'big';
-	disabled?: boolean;
+	onClick: (event: MouseEvent) => void;
 	label: string;
-	color?: string;
-	to?: string;
+	disabled?: boolean;
 	fullWidth?: boolean;
+	color?: ButtonColor;
+	variant?: ButtonVariant;
 }
 
 export const Button: FunctionComponent<ButtonProp> = ({ 
-    variant = 'classic', 
-    size = 'medium', 
-    label, 
-    type, 
-    color = 'white',
-    fullWidth,
-    disabled,
-    onClick, 
+	label,
+	onClick, 
+	disabled = false,
+	fullWidth = false,
+	color = 'default',
+	variant = 'classic', 
 }) => {
-    const getClassName = () => {
-			const classes = [styles.button, styles[size], styles[variant]];
+	const className = useMemo(() => {
+		const classes = [
+			styles.button,
+			styles[variant],
+			fullWidth ? styles.fullWidth : '',
+			variant === 'classic' ? styles[color] : '',
+		];
 
-			if (fullWidth) {
-				classes.push(styles.fullWidth);
-			}
-			return classes.join(' ');
-    };
+		return classes.join(' ');
+	}, [fullWidth, variant]);
 
-    return (
-			<button 
-				disabled={disabled}
-				className={getClassName()}
-				onClick={onClick}
-				type={type}
-				style={{
-						backgroundColor: color
-				}}
-			>
-				{label}
-			</button>
-    );
+	return (
+		<button 
+			disabled={disabled}
+			className={className}
+			onClick={onClick}
+			style={{
+					backgroundColor: color
+			}}
+		>
+			{label}
+		</button>
+	);
 }

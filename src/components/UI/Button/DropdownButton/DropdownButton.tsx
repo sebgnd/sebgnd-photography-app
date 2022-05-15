@@ -1,52 +1,51 @@
-import React, { FunctionComponent, useRef, useState, useEffect } from 'react';
-import _ from 'lodash';
+import React, { FunctionComponent, useRef, useState, useLayoutEffect, useMemo } from 'react';
 import styles from './DropdownButton.module.css';
 
 import Separator from 'components/UI/Separator/Separator';
 import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
 
 import useEventListener from 'hooks/useEventListener';
+import { CSSProperties } from 'styled-components';
 
 export interface DropdownButtonOption {
 	value: any;
 	label: string;
 }
 
-type Sizes = 'small' | 'big' | 'medium';
-
 interface DropdownButtonProps {
-	options: DropdownButtonOption[];
-	size: Sizes;
 	label: string;
-	activeValue?: any;
+	options: DropdownButtonOption[];
+	onClick: (value: any) => void;
 	fullWidth?: boolean;
-	onClick: (e: React.MouseEvent, value: any) => void;
+	dropDuration?: number,
 }
 
 export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
-	options, 
-	size,
-	fullWidth,
 	label,
-	activeValue,
+	options, 
 	onClick,
+	fullWidth = false,
+	dropDuration = 250,
 }) => {
 	const [showDropdown, setShowDropdown] = useState<boolean>(false);
+	const [buttonRendered, setButtonRendered] = useState(false);
+	const [dropDownWidth, setDropDownWidth] = useState(0);
+
+	const mainButtonRef = useRef<HTMLButtonElement>(null);
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const dropdownMenuRef = useRef<HTMLDivElement>(null);
-	const showDropdownRef = useRef<boolean>(false);
 
 	const toggleDropdownMenu = () => {
 		setShowDropdown(prevShow => !prevShow);
 	}
 
-	const handleClick = (e: React.MouseEvent, value: any) => {
-		onClick(e, value);
+	const makeClickHandler = (value: any) => () => {
+		onClick(value);
 		toggleDropdownMenu();
 	}
 
 	const handleClickOutside = (event: MouseEvent) => {
-		if (!dropdownRef.current || !showDropdownRef.current) {
+		if (!dropdownRef.current || !showDropdown) {
 			return;
 		}
 	
@@ -55,39 +54,95 @@ export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 		if (outsideDropdown) {
 			toggleDropdownMenu();
 		}
-	}   
+	}
 
-	useEventListener('mousedown', handleClickOutside);
+	const handleResize = () => {
+		if (!mainButtonRef.current) {
+			return;
+		}
 
-	useEffect(() => {
-		showDropdownRef.current = showDropdown;
+		setDropDownWidth(mainButtonRef.current.scrollWidth);
+	};
+
+	const containerClassName = useMemo(() => {
+		const classes = [
+			styles.dropdown,
+			fullWidth ? styles.fullWidth : '',
+		];
+
+		return classes.join(' ');
+	}, [fullWidth]);
+
+	const dropDownStyle = useMemo((): CSSProperties => {
+		return {
+			transition: `max-height ${dropDuration}ms`,
+			maxHeight: !showDropdown ? 0 : dropdownMenuRef.current?.scrollHeight,
+			top: mainButtonRef.current ? mainButtonRef.current.scrollHeight : 0,
+			left: 0,
+		};
 	}, [showDropdown]);
 
+	const dropdownBackgroundStyle = useMemo((): CSSProperties => {
+		if (!buttonRendered || !mainButtonRef.current || !dropdownMenuRef.current) {
+			return {};
+		}
+
+		const buttonHeight = mainButtonRef.current.scrollHeight;
+		const buttonWidth = mainButtonRef.current.scrollWidth;
+		const dropDownHeight = dropdownMenuRef.current.scrollHeight;
+
+		console.log({
+			scrollWidth: mainButtonRef.current.scrollWidth,
+			offsetWidth: mainButtonRef.current.offsetWidth,
+			clientWidth: mainButtonRef.current.clientWidth,
+		})
+
+		return {
+			transition: `height ${dropDuration}ms`,
+			width: dropDownWidth || buttonWidth,
+			height: showDropdown
+				? buttonHeight + dropDownHeight
+				: buttonHeight,
+		};
+	}, [showDropdown, dropDuration, buttonRendered, dropDownWidth]);
+
+	useEventListener('mousedown', handleClickOutside);
+	useEventListener('resize', handleResize);
+
+	useLayoutEffect(() => {
+		setButtonRendered(true);
+	}, []);
+
+	const emptyOptions = options.length === 0
+
 	return (
-		<div ref={dropdownRef} className={`${styles.dropdown} ${styles[size]} ${fullWidth ? styles.fullWidth : ''}`}>
-			<button 
+		<div
+			ref={dropdownRef}
+			className={containerClassName}
+		>
+			<button
+				ref={mainButtonRef}
 				className={styles.button}
-				onClick={() => toggleDropdownMenu()}
+				onClick={toggleDropdownMenu}
 			>
 				{label}
 			</button>
+			<div
+				className={styles.dropdownBackground}
+				style={dropdownBackgroundStyle}
+			/>
 			<div 
 				ref={dropdownMenuRef} 
 				className={styles.dropdownMenu}
-				style={{
-						maxHeight: !showDropdown ? 0 : dropdownMenuRef.current?.scrollHeight
-				}}
+				style={dropDownStyle}
 			>
-				{(options.length !== 0) ? (
+				{(!emptyOptions) ? (
 					<>
 						<Separator size="big" />
 						{options.map((option: DropdownButtonOption) => {
-							if (_.isEqual(option.value, activeValue)) {
-								return null;
-							}
 							return (
 								<button
-									onClick={(e: React.MouseEvent) => handleClick(e, option.value)}
+									onClick={makeClickHandler(option.value)}
 									className={styles.dropdownButton}
 								>
 									{option.label}
@@ -96,7 +151,12 @@ export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 						})}
 					</>
 				) : (
-					<InformationMessage noIcon messageType="information" size="small" message="No option." />
+					<InformationMessage
+						noIcon
+						messageType="information"
+						size="small"
+						message="No option."
+					/>
 				)}
 			</div>
 		</div>

@@ -51,7 +51,7 @@ export const Home: FunctionComponent = () => {
 					<Parallax img="images/parallax-1.jpg" speed={0.5}>
 						<div className={styles.landingContainer}>
 							<div className={styles.landingButtonContainer}>
-								<Button variant="classic" size="medium" label="See this photo" onClick={() => {}} />
+								<Button variant="classic" label="See this photo" onClick={() => {}} />
 							</div>
 						</div>
 					</Parallax>
@@ -91,7 +91,7 @@ export const Home: FunctionComponent = () => {
 						</div>
 						<div className={styles.row}>
 							<div className={styles.seeAllGalleriesButton}>
-								<Button size="medium" variant="classic" to="/gallery" label="See all galleries" />
+								<Button variant="classic" onClick={() => {}} label="See all galleries" />
 							</div>
 						</div>
 					</div>
@@ -108,7 +108,7 @@ export const Home: FunctionComponent = () => {
 										include technology, video games, cars, cinema … I am studying in Computer Science.
 									</Text>
 									<div className={styles.contactButtonContainer}>
-										<Button variant="classic" size="medium" to="/contact" label="Contact me" />
+										<Button variant="classic" onClick={() => {}} label="Contact me" />
 									</div>
 								</div>
 								<div className={`${styles.textContainer} ${styles.gear}`}>

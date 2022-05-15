@@ -12,22 +12,19 @@ export const Home: FunctionComponent = () => {
 				<div className={styles.controlBar}>
 					<Button
 						variant="classic"
-						size="medium"
-						color="#B6FFAD"
+						color="success"
 						fullWidth
 						label="Upload"
 						onClick={() => {}}
 					/>
 					<Button
 						variant="classic"
-						size="medium"
-						color="#FFADAD"
+						color="destructive"
 						fullWidth
 						label="Delete"
 						onClick={() => {}}
 					/>
 					<DropdownButton
-						size="medium"
 						options={[
 							{ value: 'landscape', label: 'Landscape' },
 							{ value: 'architecture', label: 'Architecture' },

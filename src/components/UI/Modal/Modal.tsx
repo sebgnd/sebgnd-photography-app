@@ -69,8 +69,7 @@ export const Modal: FunctionComponent<ModalProps> = ({
 									disabled={loading}
 									fullWidth
 									variant="classic"
-									size="medium"
-									color="#FFC6C6"
+									color="destructive"
 									label={cancelText}
 									onClick={onCancel}
 								/>
@@ -82,8 +81,7 @@ export const Modal: FunctionComponent<ModalProps> = ({
 									disabled={loading}
 									fullWidth
 									variant="classic"
-									size="medium"
-									color="#A5FFA5"
+									color="success"
 									label={confirmText}
 									onClick={onConfirm}
 								/>

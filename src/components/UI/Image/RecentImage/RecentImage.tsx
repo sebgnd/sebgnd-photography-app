@@ -47,7 +47,7 @@ export const RecentImage: FunctionComponent<RecentImageProp> = ({
 			<div className={styles.info}>
 				<div className={styles.infoContainer}>
 					<div className={styles.galleryName}>
-						<Button variant="light" size="small" onClick={() => onGalleryClick(categoryId)} label={categoryDisplayName} />
+						<Button variant="light" onClick={() => onGalleryClick(categoryId)} label={categoryDisplayName} />
 					</div>
 				</div>
 
