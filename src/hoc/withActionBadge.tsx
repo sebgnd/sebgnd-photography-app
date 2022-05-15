@@ -16,40 +16,40 @@ export type BadgeStyle = {
 }
 
 const withActionBadge = <T, P extends object>(WrappedComponent: ComponentType<P>, icon: Icon, style: BadgeStyle = {}) => {
-    const ComponentWithActionBadge: FunctionComponent<P & WithActionBadgeProps> = (props: P & WithActionBadgeProps) => {
-        const { isBranding, name: iconName } = icon;
-        const { onBadgeClick } = props;
+	const ComponentWithActionBadge: FunctionComponent<P & WithActionBadgeProps> = (props: P & WithActionBadgeProps) => {
+		const { isBranding, name: iconName } = icon;
+		const { onBadgeClick } = props;
 
-        const handleClick = useCallback((event: MouseEvent<HTMLDivElement>) => {
-            if (onBadgeClick) {
-                onBadgeClick(event);
-            }
-        }, [onBadgeClick]);
+		const handleClick = useCallback((event: MouseEvent<HTMLDivElement>) => {
+			if (onBadgeClick) {
+				onBadgeClick(event);
+			}
+		}, [onBadgeClick]);
 
-        const getColorStyle = useCallback((styleProp: string | undefined, defaultColor: string) => {
-            return styleProp ? styleProp : defaultColor;
-        }, []);
+		const getColorStyle = useCallback((styleProp: string | undefined, defaultColor: string) => {
+			return styleProp ? styleProp : defaultColor;
+		}, []);
 
-        return (
-            <div className={styles.componentContainer}>
-                <WrappedComponent {...props} />
-                <div className={styles.badge}>
-                    <div 
-                        style={{ backgroundColor: getColorStyle(style.backgroundColor, '#000000') }} 
-                        className={styles.iconContainer} 
-                        onClick={handleClick}
-                    >
-                        <i 
-                            style={{ color: getColorStyle(style.iconColor, '#FFFFFF') }} 
-                            className={`${isBranding ? 'fab' : 'fas'} fa-${iconName}`} 
-                        />
-                    </div>
-                </div>
-            </div>
-        )
-    }
+		return (
+			<div className={styles.componentContainer}>
+				<WrappedComponent {...props} />
+				<div className={styles.badge}>
+					<div 
+						style={{ backgroundColor: getColorStyle(style.backgroundColor, '#000000') }} 
+						className={styles.iconContainer} 
+						onClick={handleClick}
+					>
+						<i 
+							style={{ color: getColorStyle(style.iconColor, '#FFFFFF') }} 
+							className={`${isBranding ? 'fab' : 'fas'} fa-${iconName}`} 
+						/>
+					</div>
+				</div>
+			</div>
+		)
+	}
 
-    return ComponentWithActionBadge;
+	return ComponentWithActionBadge;
 }
 
 export default withActionBadge;

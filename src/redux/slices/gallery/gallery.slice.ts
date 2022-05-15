@@ -42,8 +42,8 @@ const initialState: GalleryState = {
 };
 
 const gallerySlice = createSlice({
-    name: 'gallery',
-    initialState,
+	name: 'gallery',
+	initialState,
 	reducers: {
 		clearImageSelection: ({ image }) => {
 			image.selection.item = null;

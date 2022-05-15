@@ -3,7 +3,7 @@ import usePrevious from './usePrevious';
 import useEventListener from './useEventListener';
 
 export {
-    useToggle,
-    usePrevious,
-    useEventListener,
+	useToggle,
+	usePrevious,
+	useEventListener,
 }

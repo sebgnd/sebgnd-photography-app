@@ -25,7 +25,7 @@ export const getThumbnailUrl = (imageId: string) => getImageUrl(imageId, {
 export const Galleries: FunctionComponent = () => {
 	const navigate = useNavigate();
 
-    const categories = useSelector(selectCategoryList);
+	const categories = useSelector(selectCategoryList);
 	const loading = useSelector(selectIsCategoryListLoading);
 	const error = useSelector(selectIsCategoryListFailed);
 
@@ -42,11 +42,11 @@ export const Galleries: FunctionComponent = () => {
 		}));
 	}, [categories]);
 
-    return (
-        <div className={styles.listContainer}>
-            {(loading) && (
-                <Spinner centerHorizontal centerVertical fullScreen />
-            )}
+	return (
+		<div className={styles.listContainer}>
+			{(loading) && (
+					<Spinner centerHorizontal centerVertical fullScreen />
+			)}
 			{(error) && (
 				<InformationMessage
 					message="Something went wrong"
@@ -57,7 +57,7 @@ export const Galleries: FunctionComponent = () => {
 				/>
 			)}
 			{(!loading && !error) && (
-				 <>
+				<>
 					{thumbnails.map(({ imageId, categoryId, galleryName }) => {
 						return (
 							<div key={categoryId} className={styles.galleryButtonContainer}>
@@ -70,8 +70,8 @@ export const Galleries: FunctionComponent = () => {
 							</div>
 						)
 					})}
-			 	</>
+				</>
 			)}
-        </div>
-    )
+		</div>
+	)
 }
