@@ -30,7 +30,7 @@ export const Button: FunctionComponent<ButtonProp> = ({
 		];
 
 		return classes.join(' ');
-	}, [fullWidth, variant]);
+	}, [fullWidth, variant, color]);
 
 	return (
 		<button 

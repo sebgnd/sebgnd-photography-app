@@ -1,29 +1,36 @@
+.dataTableHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	direction: row;
+	width: 100%;
+}
+
+.arrowsContainer {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	direction: row;
+}
+
 .dataTableContainer {
-    display: flex;
-    flex-direction: column;
-    margin: 0px 10px;
+	width: 100%;
 }
 
-.dataTablePagination {
-    display: flex;
-    flex-direction: row-reverse;
-    padding: 10px;
+.noItemsContainer {
+	height: 400px;
+	width: 100%;
+	position: relative;
 }
 
-.dataTable {
-    background-color: white;
-    height: auto;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.10);
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
+.listContainer {
+	width: 100%;
+	height: 500px;
+	border: 1px solid #E7E7E7;
+	border-radius: 5px;
+	overflow: hidden;
 }
 
-.dataLoading {
-    margin: 35px 0px;
-}
-
-.noData {
-    margin: 50px 0px;
+.arrowButtonContainer {
+	margin: 5px;
 }

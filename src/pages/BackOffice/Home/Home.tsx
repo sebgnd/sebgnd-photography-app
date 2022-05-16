@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
 
+import { DataTable } from 'components/UI/DataTable/DataTable';
 import { Button, DropdownButton } from 'components/UI/Button';
 
 import styles from './Home.module.css';
-import { stubArray } from 'lodash';
 
 export const Home: FunctionComponent = () => {
 	return (
@@ -36,7 +36,14 @@ export const Home: FunctionComponent = () => {
 					/>
 				</div>
 				<div className={styles.imageList}>
-					<div className={styles.temp} />
+					<DataTable
+						items={[]}
+						totalPage={10}
+						currentPage={2}
+						renderRow={() => null}
+						onNextClick={() => {}}
+						onPreviousClick={() => {}}
+					/>
 				</div>
 			</div>
 		</div>
