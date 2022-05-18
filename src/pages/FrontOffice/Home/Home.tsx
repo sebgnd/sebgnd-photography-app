@@ -125,5 +125,5 @@ export const Home: FunctionComponent = () => {
 						</div>
         	</Parallax>
         </>
-    )
+    );
 };

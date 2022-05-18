@@ -1,7 +1,7 @@
 .separator {
     height: 1px;
     display: inline-block;
-    background-color: black;
+    background-color: #E7E7E7;
 }
 
 .bigWidth {

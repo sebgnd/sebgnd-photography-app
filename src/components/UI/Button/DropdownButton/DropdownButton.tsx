@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useRef, useState, useLayoutEffect, useMemo } from 'react';
 import styles from './DropdownButton.module.css';
 
-import Separator from 'components/UI/Separator/Separator';
+import { Separator } from 'components/UI/Separator/Separator';
 import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
 
 import useEventListener from 'hooks/useEventListener';
@@ -80,7 +80,7 @@ export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 			top: mainButtonRef.current ? mainButtonRef.current.scrollHeight : 0,
 			left: 0,
 		};
-	}, [showDropdown]);
+	}, [showDropdown, dropDuration]);
 
 	const dropdownBackgroundStyle = useMemo((): CSSProperties => {
 		if (!buttonRendered || !mainButtonRef.current || !dropdownMenuRef.current) {

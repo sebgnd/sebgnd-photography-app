@@ -1,12 +1,13 @@
-export type ImageSize = 'medium' | 'full';
+export type ImageSize = 'medium' | 'full' | 'small';
 export type ImageConfig = {
 	thumbnail: boolean,
-	size: 'medium' | 'full',
+	size: ImageSize,
 };
 
 export const IMAGE_SIZES: Record<ImageSize, string> = {
 	'medium': '400',
 	'full': '1080',
+	'small': '80',
 }
 
 export const getImageUrl = (id: string, config: ImageConfig) => {

@@ -1,40 +1,29 @@
-import React, { FunctionComponent, FormEvent, ChangeEvent } from 'react';
+import React, { FunctionComponent } from 'react';
 import styles from './Checkbox.module.css';
 
 interface CheckboxProps {
-    id?: string;
-    name: string;
-    label?: string;
-    checked?: boolean;
-    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-    onBlur?: (event: FormEvent<HTMLInputElement>) => void;
+  label?: string;
+  checked?: boolean;
+  onToggle?: () => void;
 }
 
-const Checkbox: FunctionComponent<CheckboxProps> = ({
-    id,
-    name,
-    label = '',
+export const Checkbox: FunctionComponent<CheckboxProps> = ({
+    label,
     checked,
-    onChange,
-    onBlur
+    onToggle,
 }) => {
-    return (
-        <div className={styles.checkbox}>
-            <input 
-                type="checkbox"
-                id={id || name}
-                name={name}
-                checked={checked} 
-                onChange={onChange}
-                onBlur={onBlur} 
-            />
-            {label && (
-                <label className={styles.checkboxLabel}>
-                    <p>{label}</p>
-                </label>
-            )}
-        </div>
-    )
+  return (
+    <div className={styles.checkbox}>
+      <input 
+        type="checkbox"
+        checked={checked} 
+        onChange={onToggle}
+      />
+      {label && (
+        <label className={styles.checkboxLabel}>
+          <p>{label}</p>
+        </label>
+      )}
+    </div>
+  );
 }
-
-export default Checkbox;

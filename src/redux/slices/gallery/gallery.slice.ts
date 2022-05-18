@@ -1,6 +1,6 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
-import {fetchAllCategories, fetchImage, fetchImagesFromCategory, fetchImagesPaginated} from './gallery.thunk';
+import { fetchAllCategories, fetchImage, fetchImagesFromCategory, fetchImagesPaginated } from './gallery.thunk';
 import { GalleryState, CategoryItem, ImageItem } from './gallery.types';
 
 export const categoryAdapter = createEntityAdapter<CategoryItem>({

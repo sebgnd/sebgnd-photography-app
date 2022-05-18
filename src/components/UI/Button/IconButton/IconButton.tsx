@@ -11,7 +11,7 @@ interface IconButtonProp {
 	disabled?: boolean;
 }
 
-const IconButton: FunctionComponent<IconButtonProp> = ({ 
+export const IconButton: FunctionComponent<IconButtonProp> = ({ 
 	onClick, 
 	icon, 
 	disabled = false, 
@@ -37,5 +37,3 @@ const IconButton: FunctionComponent<IconButtonProp> = ({
 		</ButtonContainer>
 	);
 };
-
-export default IconButton;

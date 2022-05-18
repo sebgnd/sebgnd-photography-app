@@ -1,12 +1,15 @@
 import React, { FunctionComponent } from 'react';
+
+import withCentering from 'hoc/withCentering';
+
 import style from './Separator.module.css';
 
 interface SeparatorProp {
-    size: 'small' | 'medium' | 'big' | 'tiny';
-    orientation?: 'vertical' | 'horizontal';
+	size: 'small' | 'medium' | 'big' | 'tiny';
+	orientation?: 'vertical' | 'horizontal';
 }
 
-const classes: any = {
+const classes = {
 	horizontal: {
 		tiny: 'tinyWidth',
 		small: 'smallWidth',
@@ -21,15 +24,13 @@ const classes: any = {
 	}
 }
 
-const Separator: FunctionComponent<SeparatorProp> = ({ size, orientation = 'horizontal' }) => {
-	const separatorClasses = [style.separator];
+const SeparatorWithoutCentering: FunctionComponent<SeparatorProp> = ({ size, orientation = 'horizontal' }) => {
 	const styleClass = classes[orientation][size];
-
-	separatorClasses.push(style[styleClass]);
+	const separatorClasses = [style.separator, style[styleClass]];
 
 	return (
 		<div className={separatorClasses.join(' ')} />
 	);
 };
 
-export default Separator;
+export const Separator = withCentering(SeparatorWithoutCentering);
