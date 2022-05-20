@@ -6,7 +6,7 @@ import { actions } from 'redux/slices/gallery/gallery.slice';
 import { fetchImage } from 'redux/slices/gallery/gallery.thunk';
 import { selectSelectedImage } from 'redux/slices/gallery/gallery.selector';
 
-import { useScrolling } from './useScrolling';
+import { useScrolling } from '../useScrolling';
 
 export const useImageSelection = (urlParam: string = 'image') => {
 	const dispatch = useDispatch();

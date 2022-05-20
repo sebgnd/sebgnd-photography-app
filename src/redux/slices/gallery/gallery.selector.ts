@@ -29,3 +29,7 @@ export const selectIsImageListLoading = ({ gallery }: RootState) => gallery.imag
 export const selectSelectedImage = ({ gallery }: RootState) => gallery.image.selection.item;
 export const selectTotalImageList = ({ gallery }: RootState) => gallery.image.list.total;
 export const selectIsImageListFailed = ({ gallery }: RootState) => gallery.image.list.error;
+
+export const selectPaginationOffset = ({ gallery }: RootState) => gallery.image.list.currentOffset;
+export const selectHasNext = ({ gallery }: RootState) => gallery.image.list.hasNext;
+export const selectHasPrevious = ({ gallery }: RootState) => gallery.image.list.hasPrevious;

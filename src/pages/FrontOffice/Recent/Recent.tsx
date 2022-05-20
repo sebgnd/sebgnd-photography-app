@@ -6,21 +6,22 @@ import { getImageUrl } from 'libs/image/get-image-url';
 
 import { useEndPageReached } from 'hooks/useEndPageReached';
 
+import { useImageSelection } from 'hooks/gallery/useImageSelection';
+import { usePaginatedImageList } from 'hooks/gallery/usePaginatedImageList';
+
 import { RecentImage } from 'components/UI/Image';
 import { Spinner } from 'components/UI/Spinner/Spinner';
+import { ImageViewer } from 'components/ImageViewer/ImageViewer';
 
-import { actions } from 'redux/slices/gallery/gallery.slice';
 import {
-	selectCategoryMap,
 	selectImageList,
+	selectCategoryMap,
+	selectTotalImageList,
 	selectIsImageListLoading,
-	selectTotalImageList
 } from 'redux/slices/gallery/gallery.selector';
-import { fetchImagesPaginated } from 'redux/slices/gallery/gallery.thunk';
+
 
 import styles from './Recent.module.css';
-import { useImageSelection } from 'hooks/useImageSelection';
-import { ImageViewer } from 'components/ImageViewer/ImageViewer';
 
 export const Recent: FunctionComponent = () => {
 	const dispatch = useDispatch();
@@ -29,6 +30,7 @@ export const Recent: FunctionComponent = () => {
 	const canLoad = useRef(true);
 
 	const { selectImage, resetSelection, selection } = useImageSelection();
+	const { fetchNextPage } = usePaginatedImageList({ limit: 10 });
 
 	const categoryMap = useSelector(selectCategoryMap);
 	const loading = useSelector(selectIsImageListLoading);
@@ -43,25 +45,18 @@ export const Recent: FunctionComponent = () => {
 
 	useEffect(() => {
 		if (images.length === total) {
-				return;
+			return;
 		}
 
 		const fetchIfBottomReached = reached && !loading && canLoad.current;
 		const fetchIfFirstRender = images.length === 0 && !loading;
 
 		if (fetchIfBottomReached || fetchIfFirstRender) {
-				dispatch(fetchImagesPaginated({
-					limit: 10,
-					offset: images.length,
-				}));
+			fetchNextPage();
 
 			canLoad.current = false
 		}
-	}, [dispatch, images, total, reached, loading, canLoad]);
-
-	useEffect(() => {
-			dispatch(actions.clearImageList());
-	}, [dispatch]);
+	}, [dispatch, fetchNextPage, images, total, reached, loading, canLoad]);
 
 	useEffect(() => {
 		if (!loading) {
@@ -80,36 +75,36 @@ export const Recent: FunctionComponent = () => {
 		return () => {};
 	}, [loading]);
 
-    return (
-			<div className={styles.imageListContainer}>
-				{images.map((img) => (
-					<RecentImage
-						key={img.id}
-						date={img.createdAt}
-						src={getImageUrl(img.id, {
-								size: 'medium',
-								thumbnail: false,
-						})}
-						imageId={img.id}
-						categoryId={img.categoryId}
-						categoryDisplayName={categoryMap[img.categoryId]?.displayName || "Unknown"}
-						onImageClick={selectImage}
-						onGalleryClick={handleCategoryClick}
-						imageType={img.type}
-					/>
-				))}
-				{loading && (
-					<div className={styles.spinnerContainer}>
-						<Spinner centerHorizontal />
-					</div>
-				)}
-				{selection && (
-					<ImageViewer
-						imageId={selection.id}
-						onBackdropClick={resetSelection}
-						exif={selection.exif}
-					/>
-				)}
-			</div>
-    );
+	return (
+		<div className={styles.imageListContainer}>
+			{images.map((img) => (
+				<RecentImage
+					key={img.id}
+					date={img.createdAt}
+					src={getImageUrl(img.id, {
+							size: 'medium',
+							thumbnail: false,
+					})}
+					imageId={img.id}
+					categoryId={img.categoryId}
+					categoryDisplayName={categoryMap[img.categoryId]?.displayName || "Unknown"}
+					onImageClick={selectImage}
+					onGalleryClick={handleCategoryClick}
+					imageType={img.type}
+				/>
+			))}
+			{loading && (
+				<div className={styles.spinnerContainer}>
+					<Spinner centerHorizontal />
+				</div>
+			)}
+			{selection && (
+				<ImageViewer
+					imageId={selection.id}
+					onBackdropClick={resetSelection}
+					exif={selection.exif}
+				/>
+			)}
+		</div>
+	);
 };

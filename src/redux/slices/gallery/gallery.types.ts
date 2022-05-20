@@ -36,16 +36,25 @@ export type FetchImageResponse = {
 }
 
 export type FetchImagesPaginatedResponse = {
-	items: ReadonlyArray<{
-		id: string,
-		categoryId: string,
-		createdAt: string,
-		updatedAt: string,
-		type: 'landscape' | 'portrait',
-	}>
-	total: number,
+	result: {
+		items: ReadonlyArray<{
+			id: string,
+			categoryId: string,
+			createdAt: string,
+			updatedAt: string,
+			type: 'landscape' | 'portrait',
+		}>
+		total: number,
+		limit: number,
+		offset: number,
+	},
+	resetList: boolean,
+};
+
+export type FetchImagesPaginatedPayload = {
 	limit: number,
 	offset: number,
+	resetList: boolean,
 };
 
 export type CategoryItem = {
@@ -83,10 +92,13 @@ export type GalleryState = {
 	},
 	image: {
 		list: {
-			items: EntityState<ImageItem>,
-			loading: boolean,
 			error: boolean,
+			loading: boolean,
+			hasNext: boolean,
+			hasPrevious: boolean,
 			total: number | null,
+			currentOffset: number,
+			items: EntityState<ImageItem>,
 		},
 		selection: {
 			item: SelectedImage | null,

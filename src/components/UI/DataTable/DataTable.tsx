@@ -3,15 +3,14 @@ import React, { FunctionComponent, ReactNode } from 'react';
 import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
 import { RoundButton } from 'components/UI/Button';
 import { Separator } from 'components/UI/Separator/Separator';
-import { Text } from 'components/Styled/text';
 
 import styles from './DataTable.module.css';
 
 export type DataTableProps = {
 	items: any[],
-	totalPage: number,
 	separator?: boolean,
-	currentPage: number,
+	disableNextButton?: boolean,
+	disablePreviousButton?: boolean,
 	onNextClick: () => void | Promise<void>,
 	onPreviousClick: () => void | Promise<void>,
 	renderRow: (item: any, key: string) => ReactNode,
@@ -20,17 +19,16 @@ export type DataTableProps = {
 }
 
 export const DataTable: FunctionComponent<DataTableProps> = ({
-	separator = false,
 	items,
-	totalPage,
-	currentPage,
+	separator = false,
+	disableNextButton = false,
+	disablePreviousButton = false,
 	renderRow,
 	onNextClick,
 	generateRowKey,
 	onPreviousClick,
 }) => {
 	const isEmpty = items.length === 0;
-	const pageIndication = `${currentPage}/${totalPage}`;
 
 	return (
 		<div className={styles.dataTableContainer}>
@@ -41,6 +39,7 @@ export const DataTable: FunctionComponent<DataTableProps> = ({
 							size="small"
 							icon="arrow-left"
 							onClick={onPreviousClick}
+							disabled={disablePreviousButton}
 						/>
 					</div>
 					<div className={styles.arrowButtonContainer}>
@@ -48,10 +47,10 @@ export const DataTable: FunctionComponent<DataTableProps> = ({
 							size="small"
 							icon="arrow-right"
 							onClick={onNextClick}
+							disabled={disableNextButton}
 						/>
 					</div>
 				</div>
-				<Text weight="normal" size="small" color="#9C9C9C">{pageIndication}</Text>
 			</div>
 			<div className={styles.listContainer}>
 				{items.map((item, index) => {

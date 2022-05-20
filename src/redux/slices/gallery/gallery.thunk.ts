@@ -4,6 +4,7 @@ import {
 	FetchAllCategoriesResponse,
 	FetchImageResponse,
 	FetchImagesFromCategoryResponse,
+	FetchImagesPaginatedPayload,
 	FetchImagesPaginatedResponse
 } from './gallery.types';
 
@@ -29,14 +30,17 @@ export const fetchImagesFromCategory = createAsyncThunk<FetchImagesFromCategoryR
 	}
 )
 
-export const fetchImagesPaginated = createAsyncThunk<FetchImagesPaginatedResponse, { limit: number, offset: number }>(
+export const fetchImagesPaginated = createAsyncThunk<FetchImagesPaginatedResponse, FetchImagesPaginatedPayload>(
 	'gallery/fetchImagesPaginated',
-	async ({ limit, offset }) => {
+	async ({ limit, offset, resetList }) => {
 		const response = await fetch(`http://localhost:8000/api/images?limit=${limit}&offset=${offset}`, {
 			method: 'GET',
 		});
 
-		return response.json();
+		return {
+			result: await response.json(),
+			resetList,
+		};
 	}
 )
 

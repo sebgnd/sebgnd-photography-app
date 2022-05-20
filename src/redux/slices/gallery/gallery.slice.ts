@@ -30,7 +30,10 @@ const initialState: GalleryState = {
 	image: {
 		list: {
 			items: imageAdapter.getInitialState(),
+			hasPrevious: true,
+			currentOffset: 0,
 			loading: false,
+			hasNext: true,
 			error: false,
 			total: null,
 		},
@@ -50,7 +53,7 @@ const gallerySlice = createSlice({
 		},
 		clearImageList: ({ image }) => {
 			imageAdapter.removeAll(image.list.items);
-		}
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchAllCategories.pending, ({ category }) => {
@@ -123,14 +126,31 @@ const gallerySlice = createSlice({
 		});
 
 		builder.addCase(fetchImagesPaginated.fulfilled, ({ image }, { payload }) => {
+			const { result, resetList } = payload;
+			const { offset, total, limit } = result;
+
+			if (offset >= total || offset + limit <= 0) {
+				return;
+			}
+
+			image.list.total = total;
 			image.list.loading = false;
-			image.list.total = payload.total;
-			imageAdapter.upsertMany(image.list.items, payload.items.map((img) => ({
+			image.list.currentOffset = offset;
+			image.list.hasPrevious = offset !== 0;
+			image.list.hasNext = offset + limit < total;
+
+			const newItems = result.items.map((img) => ({
 				id: img.id,
 				type: img.type,
 				createdAt: img.createdAt,
 				categoryId: img.categoryId,
-			})));
+			}));
+
+			if (resetList) {
+				imageAdapter.setAll(image.list.items, newItems);
+			} else {
+				imageAdapter.upsertMany(image.list.items, newItems);	
+			}
 		});
 	}
 });
