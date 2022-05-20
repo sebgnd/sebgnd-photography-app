@@ -12,8 +12,9 @@ export type UsePaginatedImageListConfig = {
 };
 
 export type UsePaginatedList = (config: UsePaginatedImageListConfig) => {
-  fetchNextPage: () => void,
-  fetchPreviousPage: () => void,
+  fetchNextPage: (categoryId?: string) => void,
+  fetchPreviousPage: (categoryId?: string) => void,
+  fetchFromScratch: (categoryId?: string) => void,
 }
 
 export const usePaginatedImageList: UsePaginatedList = ({
@@ -25,21 +26,33 @@ export const usePaginatedImageList: UsePaginatedList = ({
 
   const currentOffset = useSelector(selectPaginationOffset);
 
-  const fetchNextPage = useCallback(() => {
+  const fetchNextPage = useCallback((categoryId?: string) => {
     dispatch(fetchImagesPaginated({
       offset: currentOffset + limit,
       resetList: resetListOnFetch,
+      categoryId,
       limit,
     }));
   }, [dispatch, limit, resetListOnFetch, currentOffset]);
 
-  const fetchPreviousPage = useCallback(() => {
+  const fetchPreviousPage = useCallback((categoryId?: string) => {
     dispatch(fetchImagesPaginated({
       offset: currentOffset - limit,
       resetList: resetListOnFetch,
+      categoryId,
       limit,
     }));
   }, [dispatch, limit, resetListOnFetch, currentOffset]);
+
+  const fetchFromScratch = useCallback((categoryId?: string) => {
+    dispatch(actions.clearImageList());
+    dispatch(fetchImagesPaginated({
+      resetList: resetListOnFetch,
+      offset: 0,
+      categoryId,
+      limit,
+    }));
+  }, [dispatch, limit, resetListOnFetch]);
 
   useEffect(() => {
     dispatch(actions.clearImageList());
@@ -53,5 +66,5 @@ export const usePaginatedImageList: UsePaginatedList = ({
     }
   }, [dispatch, limit, fetchOnMount])
 
-  return { fetchNextPage, fetchPreviousPage };
+  return { fetchNextPage, fetchPreviousPage, fetchFromScratch };
 };

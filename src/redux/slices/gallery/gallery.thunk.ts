@@ -32,8 +32,14 @@ export const fetchImagesFromCategory = createAsyncThunk<FetchImagesFromCategoryR
 
 export const fetchImagesPaginated = createAsyncThunk<FetchImagesPaginatedResponse, FetchImagesPaginatedPayload>(
 	'gallery/fetchImagesPaginated',
-	async ({ limit, offset, resetList }) => {
-		const response = await fetch(`http://localhost:8000/api/images?limit=${limit}&offset=${offset}`, {
+	async ({ limit, offset, resetList, categoryId }) => {
+		const queryParams = new URLSearchParams({
+			limit: limit.toString(),
+			offset: offset.toString(),
+			...(categoryId ? { categoryId } : {}),
+		});
+
+		const response = await fetch(`http://localhost:8000/api/images?${queryParams.toString()}`, {
 			method: 'GET',
 		});
 

@@ -55,6 +55,7 @@ export type FetchImagesPaginatedPayload = {
 	limit: number,
 	offset: number,
 	resetList: boolean,
+	categoryId?: string,
 };
 
 export type CategoryItem = {
