@@ -1,6 +1,8 @@
 import React, { FunctionComponent, MouseEvent } from 'react';
 
-import { ButtonContainer } from '../../../Styled/container';
+import { ButtonContainer } from 'components/Styled/container';
+import { Icon } from 'components/UI/Icon/Icon';
+
 import styles from './IconButton.module.css';
 
 interface IconButtonProp {
@@ -32,7 +34,7 @@ export const IconButton: FunctionComponent<IconButtonProp> = ({
 			style={{ color }}
 		>
 			<div className={[styles.icon, size].join(' ')}>
-				<i className={`fas fa-${icon}`} />
+				<Icon name={icon} />
 			</div>
 		</ButtonContainer>
 	);

@@ -1,26 +1,26 @@
 @font-face {
     font-family: "CooperHewitt Medium";
-    src: url("../fonts/CooperHewitt-Medium.ttf");
+    src: url("../fonts/cooper-hewitt/CooperHewitt-Medium.ttf");
   }
   
   @font-face {
     font-family: "../CooperHewitt MediumItalic";
-    src: url("../fonts/CooperHewitt-MediumItalic.ttf");
+    src: url("../fonts/cooper-hewitt/CooperHewitt-MediumItalic.ttf");
   }
   
   @font-face {
     font-family: "CooperHewitt Light";
-    src: url("../fonts/CooperHewitt-Light.ttf");
+    src: url("../fonts/cooper-hewitt/CooperHewitt-Light.ttf");
   }
   
   @font-face {
     font-family: "CooperHewitt SemiboldItalic";
-    src: url("../fonts/CooperHewitt-SemiboldItalic.ttf");
+    src: url("../fonts/cooper-hewitt/CooperHewitt-SemiboldItalic.ttf");
   }
   
   @font-face {
     font-family: "CooperHewitt Semibold";
-    src: url("../fonts/CooperHewitt-Semibold.ttf");
+    src: url("../fonts/cooper-hewitt/CooperHewitt-Semibold.ttf");
   }
   
   h1 {

@@ -1,4 +1,7 @@
 import React, { FunctionComponent, MouseEvent } from 'react';
+
+import { Icon } from 'components/UI/Icon/Icon';
+
 import styles from './RoundButton.module.css';
 
 interface RoundButtonProp {
@@ -7,8 +10,6 @@ interface RoundButtonProp {
 	icon?: string;
 	label?: string;
 	disabled?: boolean;
-	isBranding?: boolean;
-	to?: string;
 	hoverStyle?: 'scale' | 'bgColor';
 	active?: boolean;
 }
@@ -18,7 +19,6 @@ export const RoundButton: FunctionComponent<RoundButtonProp> = ({
 	onClick, 
 	icon, 
 	disabled = false, 
-	isBranding = false,
 	label,
 	size = 'medium',
 	hoverStyle = 'scale',
@@ -41,7 +41,7 @@ export const RoundButton: FunctionComponent<RoundButtonProp> = ({
 				<div className={styles.contentContainer}>
 					<div className={styles.content}>
 						{(!label && icon) && (
-								<i className={`${isBranding ? 'fab' : 'fas'} fa-${icon}`} />
+								<Icon name={icon} />
 						)}
 						{(!icon && label) && (
 								<p>{label}</p>
