@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { selectPaginationOffset } from 'redux/slices/gallery/gallery.selector';
@@ -26,23 +26,28 @@ export const usePaginatedImageList: UsePaginatedList = ({
 
   const currentOffset = useSelector(selectPaginationOffset);
 
+  const paginationSettings = useMemo(() => {
+    return {
+      resetList: resetListOnFetch,
+      limit,
+    };
+  }, [resetListOnFetch, limit])
+
   const fetchNextPage = useCallback((categoryId?: string) => {
     dispatch(fetchImagesPaginated({
+      ...paginationSettings,
       offset: currentOffset + limit,
-      resetList: resetListOnFetch,
       categoryId,
-      limit,
     }));
-  }, [dispatch, limit, resetListOnFetch, currentOffset]);
+  }, [dispatch, paginationSettings, limit, currentOffset]);
 
   const fetchPreviousPage = useCallback((categoryId?: string) => {
     dispatch(fetchImagesPaginated({
+      ...paginationSettings,
       offset: currentOffset - limit,
-      resetList: resetListOnFetch,
       categoryId,
-      limit,
     }));
-  }, [dispatch, limit, resetListOnFetch, currentOffset]);
+  }, [dispatch, limit, paginationSettings, currentOffset]);
 
   const fetchFromScratch = useCallback((categoryId?: string) => {
     dispatch(actions.clearImageList());

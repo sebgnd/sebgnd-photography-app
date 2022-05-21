@@ -2,6 +2,8 @@ import React, { FunctionComponent, useCallback, useEffect, useMemo } from 'react
 import { useSearchParams} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import { usePaginatedImageList } from 'hooks/gallery';
+
 import { ImageRow } from 'components/UI/DataTable/ImageRow/ImageRow';
 import { DataTable } from 'components/UI/DataTable/DataTable';
 import { Button, DropdownButton } from 'components/UI/Button';
@@ -10,7 +12,6 @@ import { selectCategoryList, selectCategoryMap, selectHasNext, selectHasPrevious
 import { ImageItem } from 'redux/slices/gallery/gallery.types';
 
 import styles from './Home.module.css';
-import { usePaginatedImageList } from 'hooks/gallery/usePaginatedImageList';
 
 export const Home: FunctionComponent = () => {
 	const [searchParams, setSearchParams] = useSearchParams();

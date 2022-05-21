@@ -4,10 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { getImageUrl } from 'libs/image/get-image-url';
 
-import { useEndPageReached } from 'hooks/useEndPageReached';
-
-import { useImageSelection } from 'hooks/gallery/useImageSelection';
-import { usePaginatedImageList } from 'hooks/gallery/usePaginatedImageList';
+import { useEndPageReached } from 'hooks';
+import { useImageSelection, usePaginatedImageList } from 'hooks/gallery';
 
 import { RecentImage } from 'components/UI/Image';
 import { Spinner } from 'components/UI/Spinner/Spinner';

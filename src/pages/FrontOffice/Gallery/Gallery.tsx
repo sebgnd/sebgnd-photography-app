@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getImageUrl } from 'libs/image/get-image-url';
 
-import { useImageSelection } from 'hooks/gallery/useImageSelection';
+import { useImageSelection } from 'hooks/gallery';
 
 import { Title } from 'components/Styled/text';
 import { SingleImage } from 'components/UI/Image';

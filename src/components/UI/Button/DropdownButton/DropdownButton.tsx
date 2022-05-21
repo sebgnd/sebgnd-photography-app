@@ -44,7 +44,7 @@ export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 		toggleDropdownMenu();
 	}
 
-	const handleClickOutside = (event: MouseEvent) => {
+	const handleClickOutside = (event: Event) => {
 		if (!dropdownRef.current || !showDropdown) {
 			return;
 		}

@@ -1,4 +1,6 @@
-import { useEffect, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
+
+import { useEventListener } from 'hooks';
 
 export const useScrolling = () => {
 	const [enabled, setScroll] = useState(true);
@@ -9,15 +11,9 @@ export const useScrolling = () => {
 		}
 	}, [enabled]);
 
-	useEffect(() => {
-		window.addEventListener('wheel', handleScroll, {
-			passive: false,
-		});
-
-		return () => {
-			window.removeEventListener('wheel', handleScroll);
-		}
-	}, [handleScroll])
+	useEventListener('wheel', handleScroll, {
+		passive: false,
+	});
 
 	return [enabled, setScroll] as const;
 };
