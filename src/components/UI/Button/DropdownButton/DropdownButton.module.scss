@@ -8,6 +8,10 @@
 	transition: transform .5s;
 	position: relative;
 	font-size: 1em;
+
+	&:hover {
+		transform: scale(1.025);
+	}
 }
 
 .dropdownBackground {
@@ -20,25 +24,18 @@
 	background-color: white;
 }
 
-.dropdown:hover {
-	transform: scale(1.025);
-}
-
 .button {
-	font-weight: normal;
-	font-size: inherit;
-	font-family: inherit;
 	width: 100%;
 	background-color: transparent;
-	padding: .75rem 1.5rem;
+	padding: 8px 16px;
 	border: none;
 	cursor: pointer;
 	z-index: 10;
-	position: relative
-}
+	position: relative;
 
-.button:focus {
-	outline: 0;
+	&:focus {
+		outline: 0;
+	}
 }
 
 .dropdownMenu {
@@ -59,14 +56,14 @@
 	background-color: transparent;
 	padding: .75rem 1.5rem;
 	z-index: 10;
-}
 
-.dropdownButton:hover {
-	background-color: #f0f0f0;
-}
+	&:hover {
+		background-color: #f0f0f0;
+	}
 
-.dropdownButton:focus {
-	outline: 0;
+	&:focus {
+		outline: 0;
+	}
 }
 
 .fullWidth {

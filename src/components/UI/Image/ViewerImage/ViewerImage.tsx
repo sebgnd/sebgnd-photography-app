@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
 
-import { Text } from 'components/Styled/text';
+import { Text } from 'components/UI/Content/Text/Text';
 import { ImageFade } from 'components/UI/Image';
 
-import styles from './ViewerImage.module.css';
+import styles from './ViewerImage.module.scss';
 
 type ViewerImageProp = {
 	src: string;
@@ -22,7 +22,7 @@ export const ViewerImage: FunctionComponent<ViewerImageProp> = ({ imageInfo, ima
 					transitionTime={.15} 
 				/>
 				<div className={styles.imageInfo}>
-					<Text size="medium" color="black" weight="normal">{imageInfo}</Text>
+					<Text size="regular" text={imageInfo} />
 				</div>
 			</div>
 		</div>

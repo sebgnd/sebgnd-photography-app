@@ -31,7 +31,8 @@ const initialState: GalleryState = {
 		list: {
 			items: imageAdapter.getInitialState(),
 			hasPrevious: true,
-			currentOffset: 0,
+			nextOffset: 0,
+			previousOffset: 0,
 			loading: false,
 			hasNext: true,
 			error: false,
@@ -53,6 +54,13 @@ const gallerySlice = createSlice({
 		},
 		clearImageList: ({ image }) => {
 			imageAdapter.removeAll(image.list.items);
+			image.list.hasNext = true;
+			image.list.hasPrevious = true;
+			image.list.nextOffset = 0;
+			image.list.previousOffset = 0;
+			image.list.total = null;
+			image.list.error = false;
+			image.list.loading = false;
 		},
 	},
 	extraReducers: (builder) => {
@@ -129,13 +137,15 @@ const gallerySlice = createSlice({
 			const { result, resetList } = payload;
 			const { offset, total, limit } = result;
 
+			image.list.loading = false;
+
 			if (offset >= total || offset + limit <= 0) {
 				return;
 			}
 
 			image.list.total = total;
-			image.list.loading = false;
-			image.list.currentOffset = offset;
+			image.list.nextOffset = offset + limit;
+			image.list.previousOffset = Math.max(offset - limit, 0);
 			image.list.hasPrevious = offset !== 0;
 			image.list.hasNext = offset + limit < total;
 

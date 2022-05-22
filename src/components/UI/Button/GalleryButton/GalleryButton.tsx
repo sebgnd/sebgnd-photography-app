@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from 'react';
 
-import { Text } from 'components/Styled/text';
+import { Text } from 'components/UI/Content/Text/Text';
 import { ButtonContainer } from 'components/Styled/container';
 import { ImageFade } from 'components/UI/Image/ImageFade/ImageFade';
 
-import styles from './GalleryButton.module.css';
+import styles from './GalleryButton.module.scss';
 
 export type GalleryButtonProp = {
 	src: string;
@@ -27,7 +27,7 @@ export const GalleryButton: FunctionComponent<GalleryButtonProp> = ({ src, image
 					</div>
 
 					<div id="gallery-name" className={styles.galleryName}>
-						<Text size="medium" color="black" weight="normal">{categoryDisplayName}</Text>
+						<Text text={categoryDisplayName} />
 					</div>
 				</ButtonContainer>
 			</div>

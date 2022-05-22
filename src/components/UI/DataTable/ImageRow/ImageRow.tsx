@@ -1,11 +1,12 @@
 import React, { FunctionComponent, useCallback,useMemo } from 'react';
 
-import { IconButton } from 'components/UI/Button';
-import { Text } from 'components/Styled/text';
-
-import styles from './ImageRow.module.css';
 import { getImageUrl } from 'libs/image/get-image-url';
+
+import { IconButton } from 'components/UI/Button';
+import { Text } from 'components/UI/Content/Text/Text';
 import { Checkbox } from 'components/UI/Form/Checkbox/Checkbox';
+
+import styles from './ImageRow.module.scss';
 
 export type ImageRowProps = {
   imageId: string,
@@ -50,7 +51,7 @@ export const ImageRow: FunctionComponent<ImageRowProps> = ({
           <img src={imageUrl} alt={imageId} />
         </div>
         <div className={styles.imageId}>
-          <Text weight="normal" size="small">{imageId}</Text>
+          <Text size="small" text={`#${imageId}`} />
         </div>
       </div>
       <div className={styles.sideContainer}>

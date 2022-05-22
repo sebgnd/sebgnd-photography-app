@@ -1,8 +1,11 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useMemo } from 'react';
 
-import withCentering, { CenteringProps } from '../../../hoc/withCentering';
+import withCentering, { CenteringProps } from 'hoc/withCentering';
 
-import styles from './InformationMessage.module.css';
+import { Icon } from 'components/UI/Content/Icon/Icon';
+import { Text } from 'components/UI/Content/Text/Text';
+
+import styles from './InformationMessage.module.scss';
 
 interface InformationMessageProps {
 	message: string;
@@ -22,28 +25,35 @@ const icons: IconMap = {
 };
 
 const InformationMessageWithoutCentering: FunctionComponent<InformationMessageProps & CenteringProps> = ({ 
-    message, 
-    color, 
-    messageType,
-    size = 'medium',
-    noIcon = false
+	message, 
+	color, 
+	messageType,
+	size = 'medium',
+	noIcon = false
 }) => {
-    const getColor = () => {
-			switch (color) {
-				case 'white': return '#FFFFFF';
-				case 'black': return '#000000';
-				default: return '#858585'
-			}
-    };
+	const colorHex = useMemo(() => {
+		switch (color) {
+			case 'white': return '#FFFFFF';
+			case 'black': return '#000000';
+			default: return '#858585'
+		}
+	}, [color]);
 
-    return (
-			<div style={{ color: getColor() }} className={[styles.informationMessageContainer, styles[size]].join(' ')}>
-				{!noIcon && (
-					<i className={`fas fa-${icons[messageType]}`} />
-				)}
-				<p>{message}</p>
-			</div>
-    );
+	const contentSize = size === 'small' ? 'small' : 'regular';
+
+	return (
+		<div style={{ color: colorHex }} className={[styles.informationMessageContainer, styles[size]].join(' ')}>
+			{!noIcon && (
+				<Icon size={contentSize} name={icons[messageType]} />
+			)}
+			<Text
+				className={styles.informationMessage}
+				size={contentSize}
+				type="p"
+				text={message}
+			/>
+		</div>
+	);
 };
 
 export const InformationMessage = withCentering(InformationMessageWithoutCentering);

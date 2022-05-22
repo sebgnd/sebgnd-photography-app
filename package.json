@@ -5,6 +5,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
     "lodash": "^4.17.21",
+    "node-sass": "^7.0.1",
     "react": "^16.13.0",
     "react-addons-transition-group": "^15.6.2",
     "react-dom": "^16.13.0",

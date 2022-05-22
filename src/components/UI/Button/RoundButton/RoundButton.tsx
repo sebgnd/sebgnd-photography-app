@@ -1,8 +1,8 @@
 import React, { FunctionComponent, MouseEvent } from 'react';
 
-import { Icon } from 'components/UI/Icon/Icon';
+import { Icon } from 'components/UI/Content/Icon/Icon';
 
-import styles from './RoundButton.module.css';
+import styles from './RoundButton.module.scss';
 
 interface RoundButtonProp {
 	onClick?: (event: MouseEvent) => void;

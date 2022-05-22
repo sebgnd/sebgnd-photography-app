@@ -1,11 +1,12 @@
-import React, { FunctionComponent, useRef, useState, useLayoutEffect, useMemo } from 'react';
-import styles from './DropdownButton.module.css';
+import React, { FunctionComponent, useRef, useState, useLayoutEffect, useMemo, CSSProperties } from 'react';
 
 import { Separator } from 'components/UI/Separator/Separator';
 import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
+import { Text } from 'components/UI/Content/Text/Text';
 
 import useEventListener from 'hooks/useEventListener';
-import { CSSProperties } from 'styled-components';
+
+import styles from './DropdownButton.module.scss';
 
 export interface DropdownButtonOption {
 	value: any;
@@ -91,12 +92,6 @@ export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 		const buttonWidth = mainButtonRef.current.scrollWidth;
 		const dropDownHeight = dropdownMenuRef.current.scrollHeight;
 
-		console.log({
-			scrollWidth: mainButtonRef.current.scrollWidth,
-			offsetWidth: mainButtonRef.current.offsetWidth,
-			clientWidth: mainButtonRef.current.clientWidth,
-		})
-
 		return {
 			transition: `height ${dropDuration}ms`,
 			width: dropDownWidth || buttonWidth,
@@ -125,7 +120,7 @@ export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 				className={styles.button}
 				onClick={toggleDropdownMenu}
 			>
-				{label}
+				<Text text={label} />
 			</button>
 			<div
 				className={styles.dropdownBackground}
@@ -145,7 +140,7 @@ export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 									onClick={makeClickHandler(option.value)}
 									className={styles.dropdownButton}
 								>
-									{option.label}
+									<Text text={option.label} />
 								</button> 
 							);
 						})}

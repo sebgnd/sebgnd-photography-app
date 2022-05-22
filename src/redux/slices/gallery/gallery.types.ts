@@ -98,7 +98,8 @@ export type GalleryState = {
 			hasNext: boolean,
 			hasPrevious: boolean,
 			total: number | null,
-			currentOffset: number,
+			nextOffset: number,
+			previousOffset: number,
 			items: EntityState<ImageItem>,
 		},
 		selection: {

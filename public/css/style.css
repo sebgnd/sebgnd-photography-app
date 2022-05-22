@@ -1,98 +1,45 @@
 @font-face {
-    font-family: "CooperHewitt Medium";
-    src: url("../fonts/cooper-hewitt/CooperHewitt-Medium.ttf");
-  }
-  
-  @font-face {
-    font-family: "../CooperHewitt MediumItalic";
-    src: url("../fonts/cooper-hewitt/CooperHewitt-MediumItalic.ttf");
-  }
-  
-  @font-face {
-    font-family: "CooperHewitt Light";
-    src: url("../fonts/cooper-hewitt/CooperHewitt-Light.ttf");
-  }
-  
-  @font-face {
-    font-family: "CooperHewitt SemiboldItalic";
-    src: url("../fonts/cooper-hewitt/CooperHewitt-SemiboldItalic.ttf");
-  }
-  
-  @font-face {
-    font-family: "CooperHewitt Semibold";
-    src: url("../fonts/cooper-hewitt/CooperHewitt-Semibold.ttf");
-  }
-  
-  h1 {
-    font-size: 2em;
-    font-family:"CooperHewitt Semibold";
-  }
-  
-  h2 {
-    font-size: 1.4em;
-    font-family: "CooperHewitt Semibold";
-  }
-  
-  h3 {
-    font-size: 1.2em;
-    font-family: "CooperHewitt Medium";
-  }
-  
-  h4 {
-    font-size: 1.2em;
-    font-family: "CooperHewitt Light";
+    font-family: "Open Sans";
+    src: url("../fonts/open-sans/OpenSans-VariableFont_wdth\,wght.ttf") format("truetype-variations");
+    font-weight: 100 1000;
   }
 
-  h5 {
-    font-size: 1em;
-    font-family: "CooperHewitt Light";
-  }
-  
-  p {
-    font-size: 1em;
-    font-family: "CooperHewitt Medium";
-  }
-  
-  .small {
-    font-size: .8em;
-  }
-  
-  /** GENERAL **/
-  
-  body, html {
-    padding: 0;
-    margin: 0;
-  }
+@font-face {
+  font-family: "Raleway";
+  src: url("../fonts/raleway/Raleway-VariableFont_wght.ttf") format("truetype-variations");
+  font-weight: 100 1000;
+}
 
-  body {
-    position: relative;
-  }
+/** GENERAL **/
 
-  #root {
-    min-height: 100vh;
-    box-sizing: border-box;
-  }
-  
-  @media (max-width: 500px) {
-    body {
-      font-size: 13px;
-    }
-  }
+body, html {
+  margin: 0;
+  padding: 0;
+}
 
-  a {
-    text-decoration: none;
-    font-size: 1em;
-    font-family: "CooperHewitt Medium";
-    color: inherit;
-  }
-  
-  a:visited {
-    color: inherit;
-  }
+body {
+  font-size: 14px;
+  position: relative;
+}
 
-  .global {
-    padding-bottom: 82px;
-    padding-top: 81px;
-    overflow: hidden;
-  }
+a {
+  text-decoration: none;
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+}
 
+.global {
+  padding-bottom: 82px;
+  padding-top: 81px;
+  overflow: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+button {
+  font-size: inherit;
+}

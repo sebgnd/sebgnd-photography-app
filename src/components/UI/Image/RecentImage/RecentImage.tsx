@@ -1,13 +1,13 @@
 import React, { FunctionComponent, useMemo } from 'react';
 
-import { Text } from 'components/Styled/text';
+import { Text } from 'components/UI/Content/Text/Text';
 import { Button } from 'components/UI/Button';
 import { ImageFade } from 'components/UI/Image';
 import { ButtonContainerWidthWidth } from 'components/Styled/container';
 
 import { AdaptedImage } from './AdaptedImage';
 
-import styles from './RecentImage.module.css';
+import styles from './RecentImage.module.scss';
 
 export type RecentImageType = 'portrait' | 'landscape';
 export type RecentImageProp = {
@@ -53,7 +53,7 @@ export const RecentImage: FunctionComponent<RecentImageProp> = ({
 
 				<div className={styles.infoContainer}>
 					<div className={styles.date}>
-						<Text size="small" color="#7E7E7E" weight="bold">{dateString}</Text>
+						<Text size="regular" text={dateString} />
 					</div>
 				</div>
 			</div>

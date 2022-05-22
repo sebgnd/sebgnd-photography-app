@@ -1,5 +1,8 @@
 import React, { FunctionComponent, MouseEvent, useMemo } from 'react';
-import styles from './Button.module.css';
+
+import { Text } from 'components/UI/Content/Text/Text';
+
+import styles from './Button.module.scss';
 
 export type ButtonVariant = 'classic' | 'light';
 export type ButtonColor = 'default' | 'success' | 'destructive';
@@ -38,10 +41,10 @@ export const Button: FunctionComponent<ButtonProp> = ({
 			className={className}
 			onClick={onClick}
 			style={{
-					backgroundColor: color
+				backgroundColor: color
 			}}
 		>
-			{label}
+			<Text text={label} />
 		</button>
 	);
 }

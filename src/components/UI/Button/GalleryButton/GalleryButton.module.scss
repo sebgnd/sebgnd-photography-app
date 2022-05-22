@@ -5,13 +5,23 @@
 
 .galleryButtonWrapper {
 	display: inline-block;
-	margin: 25px;
-	max-height: 400px;
+	max-height: 300px;
 	min-height: 100px;
-	max-width: 400px;
+	max-width: 300px;
 	min-width: 100px;
 	height: auto;
 	position: relative;
+
+	&:hover {
+		.galleryImage {
+			transform: scale(1.05);
+		}
+
+		.galleryName {
+			bottom: -35px;
+			transform: scale(1.05);
+		}
+	}
 }
 
 .galleryImage {
@@ -38,22 +48,15 @@
 	text-align: center;
 	width: 100%;
 	color: black;
+	padding-top: 12px;
+	padding-bottom: 12px;
 	
 	position: absolute;
 	right: -25px;
 	bottom: -25px;
-	min-width: 75%;
+	min-width: 65%;
 	max-width: 95px;
 
 	transform: none;
 	transition: transform .5s, bottom .5s, box-shadow .5s;
-}
-
-.galleryButtonWrapper:hover .galleryImage {
-	transform: scale(1.05);
-}
-
-.galleryButtonWrapper:hover .galleryName {
-	bottom: -35px;
-	transform: scale(1.05);
 }

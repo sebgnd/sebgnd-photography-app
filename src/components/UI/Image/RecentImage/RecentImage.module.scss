@@ -13,10 +13,8 @@
 
 .recentImageContainer:hover {
 	transform: scale(1.01);
-}
 
-@media (max-width: 870px) {
-	.recentImageContainer {
+	@media (max-width: 870px) {
 		width: 95%;
 	}
 }
@@ -61,4 +59,5 @@
 .date {
 	float: right;
 	margin-right: 20px;
+	color: #7E7E7E;
 }

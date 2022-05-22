@@ -6,7 +6,7 @@ import { getImageUrl } from 'libs/image/get-image-url';
 
 import { useImageSelection } from 'hooks/gallery';
 
-import { Title } from 'components/Styled/text';
+import { Text } from 'components/UI/Content/Text/Text';
 import { SingleImage } from 'components/UI/Image';
 import { FlexContainer } from 'components/Styled/container';
 import { ImageViewer } from 'components/ImageViewer/ImageViewer';
@@ -67,7 +67,7 @@ export const Gallery: FunctionComponent = () => {
 			<>
 				{canShowList && (
 					<div>
-						<Title className={style.title} color="#000">{selectedCategory?.displayName}</Title>
+						<Text className={style.title} bold size="2x-large" text={selectedCategory?.displayName || ''} />
 						<FlexContainer
 							className={style.imageList}
 							alignItems="center"

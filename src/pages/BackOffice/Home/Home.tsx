@@ -8,7 +8,7 @@ import { ImageRow } from 'components/UI/DataTable/ImageRow/ImageRow';
 import { DataTable } from 'components/UI/DataTable/DataTable';
 import { Button, DropdownButton } from 'components/UI/Button';
 
-import { selectCategoryList, selectCategoryMap, selectHasNext, selectHasPrevious, selectImageList } from 'redux/slices/gallery/gallery.selector';
+import { selectCategoryList, selectCategoryMap, selectHasNext, selectHasPrevious, selectImageList, selectIsImageListFailed, selectIsImageListLoading } from 'redux/slices/gallery/gallery.selector';
 import { ImageItem } from 'redux/slices/gallery/gallery.types';
 
 import styles from './Home.module.css';
@@ -24,6 +24,8 @@ export const Home: FunctionComponent = () => {
 	const images = useSelector(selectImageList);
 	const categories = useSelector(selectCategoryList);
 	const categoryMap = useSelector(selectCategoryMap);
+	const isLoading = useSelector(selectIsImageListLoading);
+	const isError = useSelector(selectIsImageListFailed);
 
 	const hasPrevious = useSelector(selectHasPrevious);
 	const hasNext = useSelector(selectHasNext);
@@ -43,10 +45,13 @@ export const Home: FunctionComponent = () => {
 	}, [categories]);
 
 	const dropdownLabel = useMemo(() => {
-		const selectedCategory = searchParams.get('category');
+		const selectedCategoryId = searchParams.get('category');
+		const selectedCategory = selectedCategoryId
+			? categoryMap[selectedCategoryId]
+			: null;
 
-		return selectedCategory
-			? categoryMap[selectedCategory]!.displayName
+		return selectedCategoryId && selectedCategory
+			? selectedCategory.displayName
 			: 'Categories';
 	}, [searchParams, categoryMap]);
 
@@ -104,6 +109,8 @@ export const Home: FunctionComponent = () => {
 						items={images}
 						generateRowKey={handleKeyGeneration}
 						separator={true}
+						error={isError}
+						loading={isLoading}
 						renderRow={(item: ImageItem, key) => (
 							<ImageRow
 								key={key}

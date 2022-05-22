@@ -4,10 +4,13 @@ import { InformationMessage } from 'components/UI/InformationMessage/Information
 import { RoundButton } from 'components/UI/Button';
 import { Separator } from 'components/UI/Separator/Separator';
 
-import styles from './DataTable.module.css';
+import styles from './DataTable.module.scss';
+import { Spinner } from '../Spinner/Spinner';
 
 export type DataTableProps = {
 	items: any[],
+	error?: boolean,
+	loading?: boolean,
 	separator?: boolean,
 	disableNextButton?: boolean,
 	disablePreviousButton?: boolean,
@@ -20,6 +23,8 @@ export type DataTableProps = {
 
 export const DataTable: FunctionComponent<DataTableProps> = ({
 	items,
+	error = false,
+	loading = false,
 	separator = false,
 	disableNextButton = false,
 	disablePreviousButton = false,
@@ -69,14 +74,23 @@ export const DataTable: FunctionComponent<DataTableProps> = ({
 
 					return renderRow(item, generateRowKey(item))
 				})}
-				{isEmpty && (
+				{(isEmpty && !loading) && (
 					<div className={styles.noItemsContainer}>
 						<InformationMessage
 							centerVertical
 							centerHorizontal
 							insideContainer
-							messageType="information"
-							message="Nothing here !"
+							messageType={error ? 'error' : 'information'}
+							message={error ? "Something happened. Try again later." : 'Nothing here !'}
+						/>
+					</div>
+				)}
+				{(loading) && (
+					<div className={styles.noItemsContainer}>
+						<Spinner
+							centerHorizontal
+							centerVertical
+							insideContainer
 						/>
 					</div>
 				)}

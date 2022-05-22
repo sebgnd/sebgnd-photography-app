@@ -6,6 +6,20 @@
 	border: none;
 	transition: .25s transform, .25s background-color;
 	overflow: hidden;
+
+	&:hover {
+		cursor: pointer;
+	}
+	
+	&:disabled:hover {
+		transform: scale(1);
+		background-color: white;
+		cursor: not-allowed;
+	}
+	
+	&:focus {
+		outline: none;
+	}
 }
 
 .small {
@@ -26,26 +40,16 @@
 	background-color: #e3e3e3;
 }
 
-.bgColor:hover {
-	background-color: #f2f2f2;
+.bgColor {
+	&:hover {
+		background-color: #f2f2f2;
+	}
 }
 
-.scale:hover {
-	transform: scale(1.05);
-}
-
-.roundButton:hover {
-	cursor: pointer;
-}
-
-.roundButton:disabled:hover {
-	transform: scale(1);
-	background-color: white;
-	cursor: not-allowed;
-}
-
-.roundButton:focus {
-	outline: none;
+.scale {
+	&:hover {
+		transform: scale(1.05);
+	}
 }
 
 .contentContainer {
@@ -60,10 +64,10 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
 
-.content p {
-	font-weight: 600;
-	margin: 0;
-	padding: 0;
+	p {
+		font-weight: 600;
+		margin: 0;
+		padding: 0;
+	}
 }

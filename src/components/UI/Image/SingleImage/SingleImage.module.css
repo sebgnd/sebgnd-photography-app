@@ -13,9 +13,9 @@
 .singleImageContainer {
 	display: inline-block;
 	min-height: 195px;
-	max-height: 400px;
+	max-height: 300px;
 	min-width: 195px;
-	max-width: 400px;
+	max-width: 300px;
 	margin: 10px;
 }
 

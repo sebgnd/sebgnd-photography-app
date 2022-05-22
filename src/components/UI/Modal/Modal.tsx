@@ -1,6 +1,8 @@
 import React, { FunctionComponent, MouseEvent } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
+import { Icon } from 'components/UI/Content/Icon/Icon';
+import { Text } from 'components/UI/Content/Text/Text';
 import { Button } from 'components/UI/Button/Button/Button';
 import { Backdrop } from 'components/UI/Backdrop/Backdrop';
 
@@ -50,17 +52,18 @@ export const Modal: FunctionComponent<ModalProps> = ({
 					<div className={styles.modalHeader}>
 						<div className={styles.modalAction} />
 						<h2>{title}</h2>
+						<Text type="h2" size="large" bold text={title} />
 						<div 
 							onClick={!loading ? onClose : undefined} 
 							className={`${styles.modalAction} ${loading ? styles.actionDisabled : ''}`}
 						>
 							{onClose && (
-									<i className="fas fa-times" />
+								<Icon size="large" name="times" />
 							)}
 						</div>
 					</div>
 					<div className={styles.modalBody}>
-							{children}
+						{children}
 					</div>
 					<div className={styles.modalFooter}>
 						{onCancel && (

@@ -1,9 +1,9 @@
 import React, { FunctionComponent, MouseEvent } from 'react';
 
 import { ButtonContainer } from 'components/Styled/container';
-import { Icon } from 'components/UI/Icon/Icon';
+import { Icon } from 'components/UI/Content/Icon/Icon';
 
-import styles from './IconButton.module.css';
+import styles from './IconButton.module.scss';
 
 interface IconButtonProp {
 	onClick?: (event: MouseEvent) => void;
