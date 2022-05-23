@@ -1,29 +1,36 @@
-import React, { FunctionComponent, DragEvent, useState, useEffect } from 'react';
-import styles from './DropArea.module.css';
+import React, { FunctionComponent, DragEvent, useState, useCallback, useEffect } from 'react';
 
+import { getFileExtension } from 'libs/path/path';
+
+import { Spinner } from 'components/UI/Spinner/Spinner';
 import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
-import File from './File/File';
+import { FileElement, FileExtension } from './FileElement/FileElement';
 
-export type FileState = 'idle' | 'loading';
+import styles from './DropArea.module.scss';
 
-export interface FileStateMap {
+export type FileState = 'idle' | 'loading' | 'success';
+
+export type FileStatusMap = {
 	[name: string]: FileState;
 }
 
-interface DropAreaProps {
-	textBeforeDrop: string;
-	fileStatesMap?: FileStateMap;
-	extensions?: string[];
-	onFilesChange?: (files: File[]) => void;
+export type DropAreaProps = {
+	onFileDrop: (files: File[]) => void,
+	onFileDelete: (file: File) => void,
+	files: File[],
+	loading?: boolean,
+	textBeforeDrop?: string;
+	extensions?: FileExtension[];
 }
 
-const DropArea: FunctionComponent<DropAreaProps> = ({
-	textBeforeDrop,
+export const DropArea: FunctionComponent<DropAreaProps> = ({
+	files,
 	extensions,
-	fileStatesMap,
-	onFilesChange,
+	onFileDelete,
+	onFileDrop,
+	textBeforeDrop = 'Drop your files here',
+	loading = false,
 }) => {
-	const [files, setFiles] = useState<File[]>([]);
 	const [inDropArea, setInDropArea] = useState<boolean>(false);
 
 	const preventDefault = (event: DragEvent<HTMLDivElement>) => {
@@ -32,76 +39,64 @@ const DropArea: FunctionComponent<DropAreaProps> = ({
 		event.persist();
 	}
 
-	const handleDrop = (event: DragEvent<HTMLDivElement>) => {
+	const handleDrop = useCallback((event: DragEvent<HTMLDivElement>) => {
 		preventDefault(event);
+
+		if (loading) {
+			return;
+		}
 
 		const { dataTransfer } = event;
 		const droppedFiles = [...dataTransfer.files];
-		const fileNames: string[] = files.map(file => file.name);
 
-		const filteredDroppedFiles = droppedFiles.filter(file => {
+		const filesWithExtension = droppedFiles.filter((file) => {
 			const { name } = file;
-			let wrongExtension = false;
 
-			if (extensions && extensions.length) {
-				wrongExtension = extensions.filter((ext: string) => {
-						return name.endsWith(ext);
-				}).length === 0;
+			if (!extensions) {
+				return true;
 			}
 
-			return !fileNames.includes(name) && !wrongExtension;
+			return extensions.some((extension) => {
+				return name.endsWith(extension);
+			});
 		});
 
-		setFiles(prevFiles => {
-				return [...prevFiles, ...filteredDroppedFiles]
-		});
+		/**
+		 * Remove duplicate files. Only look at the file names, not their location
+		 */
+		 const currentFileNames = new Set(
+			files.map(({ name }) => name),
+		);
+		
+		const newFiles = [...files, ...filesWithExtension.filter(({ name }) => {
+			return !currentFileNames.has(name);
+		})];
 
+		onFileDrop(newFiles)
 		setInDropArea(false);
-	}
+	}, [files, onFileDrop, loading, extensions]);
 
-	const handleDragEnter = (event: DragEvent<HTMLDivElement>) => {
+	const handleDragEnter = useCallback((event: DragEvent<HTMLDivElement>) => {
 		preventDefault(event);
-		setInDropArea(true);
-	}
+		setInDropArea(true && !loading);
+	}, [loading]);
 
-	const handleDragLeave = (event: DragEvent<HTMLDivElement>) => {
+	const handleDragLeave = useCallback((event: DragEvent<HTMLDivElement>) => {
 		preventDefault(event);
-		setInDropArea(false);
-	}
+		setInDropArea(false && !loading);
+	}, [loading]);
 
-	const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
+	const handleDragOver = useCallback((event: DragEvent<HTMLDivElement>) => {
 		preventDefault(event);
 
 		if (!inDropArea) {
-			setInDropArea(true);
+			setInDropArea(true && !loading);
 		}
-	};
-
-	const handleDelete = (fileName: string) => {
-		const filesFiltered = files.filter((file: File) => {
-			return file.name !== fileName;
-		});
-
-		setFiles(filesFiltered);
-	}
-
-	const isFileLoading = (file: File) => {
-		if (!fileStatesMap) {
-			return false;
-		}
-
-		const { name } = file;
-
-		return fileStatesMap[name] 
-			? fileStatesMap[name] === 'loading'
-			: false;
-	};
+	}, [inDropArea, loading]);
 
 	useEffect(() => {
-		if (files.length && onFilesChange) {
-			onFilesChange(files);
-		}
-	}, [files, onFilesChange]);
+		onFileDrop(files)
+	}, [onFileDrop, files])
 
 	return (
 		<div 
@@ -119,18 +114,27 @@ const DropArea: FunctionComponent<DropAreaProps> = ({
 					centerVertical 
 				/> 
 			)}
+			{loading && (
+				<div className={styles.loadingBlocker}>
+					<div className={styles.spinerContainer}>
+						<Spinner
+							centerHorizontal
+							centerVertical
+							insideContainer
+						/>
+					</div>
+				</div>
+			)}
 			<div className={styles.filesContainer}>
 				{files.map(file => (
-					<File
+					<FileElement
+						extension={getFileExtension(file.name) as FileExtension}
 						key={file.name}
 						name={file.name}
-						loading={isFileLoading(file)}
-						onBadgeClick={() => handleDelete(file.name)}
+						onBadgeClick={() => onFileDelete(file)}
 					/>
 				))}
 			</div>
 		</div>
 	);
 };
-
-export default DropArea;

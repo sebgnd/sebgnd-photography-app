@@ -6,7 +6,7 @@ import { Text } from 'components/UI/Content/Text/Text';
 import { Button } from 'components/UI/Button/Button/Button';
 import { Backdrop } from 'components/UI/Backdrop/Backdrop';
 
-import styles from './Modal.module.css';
+import styles from './Modal.module.scss';
 
 export type ModalSize = 'small' | 'medium' | 'big';
 
@@ -51,7 +51,6 @@ export const Modal: FunctionComponent<ModalProps> = ({
 				<div className={`${styles.modal} ${styles[size]}`}>
 					<div className={styles.modalHeader}>
 						<div className={styles.modalAction} />
-						<h2>{title}</h2>
 						<Text type="h2" size="large" bold text={title} />
 						<div 
 							onClick={!loading ? onClose : undefined} 
@@ -93,7 +92,11 @@ export const Modal: FunctionComponent<ModalProps> = ({
 					</div>
 				</div>
 			</CSSTransition>
-			<Backdrop show={isOpen} zIndex={599} onClick={!loading ? onClose : undefined} />
+			<Backdrop
+				show={isOpen}
+				zIndex={599}
+				onClick={!loading ? onClose : undefined}
+			/>
 		</>
 	);
 };

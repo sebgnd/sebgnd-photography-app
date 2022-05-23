@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from 'react'
+import React, { CSSProperties, FunctionComponent, useMemo } from 'react'
 
 import { ContentSize } from '../types';
 import { contentSizes } from '../constant';
@@ -21,8 +21,9 @@ export const Icon: FunctionComponent<IconProps> = ({
     return `fa-${variant} fa-${name} ${styles.icon}`;
   }, [variant, name]);
 
-  const style = {
-    'fontSize': contentSizes[size],
+  const style: CSSProperties = {
+    fontSize: contentSizes[size],
+    verticalAlign: 'middle',
   };
 
   return (
