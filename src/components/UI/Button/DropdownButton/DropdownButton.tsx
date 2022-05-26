@@ -92,6 +92,12 @@ export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 		const buttonWidth = mainButtonRef.current.scrollWidth;
 		const dropDownHeight = dropdownMenuRef.current.scrollHeight;
 
+		console.log({
+			scrollWidth: mainButtonRef.current.scrollWidth,
+			offsetWidth: mainButtonRef.current.offsetWidth,
+			clientWidth: mainButtonRef.current.clientWidth,
+		});
+
 		return {
 			transition: `height ${dropDuration}ms`,
 			width: dropDownWidth || buttonWidth,

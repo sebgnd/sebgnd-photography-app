@@ -1,6 +1,12 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
-import { fetchAllCategories, fetchImage, fetchImagesFromCategory, fetchImagesPaginated } from './gallery.thunk';
+import {
+	fetchAllCategories,
+	fetchImage,
+	fetchImagesFromCategory,
+	fetchImagesPaginated,
+	uploadImages,
+} from './gallery.thunk';
 import { GalleryState, CategoryItem, ImageItem } from './gallery.types';
 
 export const categoryAdapter = createEntityAdapter<CategoryItem>({
@@ -37,6 +43,10 @@ const initialState: GalleryState = {
 			hasNext: true,
 			error: false,
 			total: null,
+		},
+		upload: {
+			loading: false,
+			error: false,
 		},
 		selection: {
 			item: null,
@@ -161,6 +171,32 @@ const gallerySlice = createSlice({
 			} else {
 				imageAdapter.upsertMany(image.list.items, newItems);	
 			}
+		});
+
+		builder.addCase(uploadImages.pending, ({ image }) => {
+			image.upload.loading = true;
+			image.upload.error = false;
+		});
+
+		builder.addCase(uploadImages.fulfilled, ({ image }, { payload, meta }) => {
+			// TODO: Handle pagination
+			// TODO: Remove hard coded type
+			const newItems = payload.items.map((image): ImageItem => {
+				return {
+					id: image.id,
+					type: 'portrait',
+					createdAt: image.createdAt,
+					categoryId: meta.arg.categoryId,
+				}
+			});
+
+			image.upload.loading = false;
+			imageAdapter.upsertMany(image.list.items, newItems);
+		});
+
+		builder.addCase(uploadImages.rejected, ({ image }) => {
+			image.upload.error = true;
+			image.upload.loading = false;
 		});
 	}
 });

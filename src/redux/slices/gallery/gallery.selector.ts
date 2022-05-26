@@ -35,3 +35,6 @@ export const selectPaginationPreviousOffset = ({ gallery }: RootState) => galler
 
 export const selectHasNext = ({ gallery }: RootState) => gallery.image.list.hasNext;
 export const selectHasPrevious = ({ gallery }: RootState) => gallery.image.list.hasPrevious;
+
+export const selectIsImageUploadLoading = ({ gallery }: RootState) => gallery.image.upload.loading;
+export const selectIsImageUploadFailed = ({ gallery }: RootState) => gallery.image.upload.error;

@@ -58,6 +58,19 @@ export type FetchImagesPaginatedPayload = {
 	categoryId?: string,
 };
 
+export type UploadImagesPayload = {
+	files: File[],
+	categoryId: string,
+};
+
+export type UploadImagesResponse = {
+	items: ReadonlyArray<{
+		id: string,
+		createdAt: string,
+		updatedAt: string,
+	}>
+}
+
 export type CategoryItem = {
 	id: string,
 	name: string,
@@ -101,6 +114,10 @@ export type GalleryState = {
 			nextOffset: number,
 			previousOffset: number,
 			items: EntityState<ImageItem>,
+		},
+		upload: {
+			loading: boolean,
+			error: boolean,
 		},
 		selection: {
 			item: SelectedImage | null,

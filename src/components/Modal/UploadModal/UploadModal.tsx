@@ -2,21 +2,31 @@ import React, { FunctionComponent, useState, useCallback } from 'react';
 
 import { Modal } from 'components/UI/Modal/Modal';
 import { DropArea } from 'components/UI/DropArea/DropArea';
+import { DropdownButton } from 'components/UI/Button';
+
+import styles from './UploadModal.module.scss';
 
 export type UploadModalProps = {
   isOpen: boolean,
   loading: boolean,
+	categoriesDropdownOptions: Array<{
+		label: string,
+		value: string,
+	}>, 
   onClose: () => void,
-  onUpload: (files: File[]) => void,
+  onUpload: (files: File[], categoryId: string) => void,
 }
 
 export const UploadModal: FunctionComponent<UploadModalProps> = ({
   isOpen,
   loading,
+	categoriesDropdownOptions,
   onClose,
   onUpload,
 }) => {
   const [files, setFiles] = useState<File[]>([]);
+	const [selectedCategoryId, setSelectedCategoryId] = useState<null | string>(null);
+	const [dropdownLabel, setDropdownLabel] = useState('Select a category');
 
   const handleDelete = useCallback((file: File) => {
     setFiles((prevFiles) => {
@@ -25,6 +35,16 @@ export const UploadModal: FunctionComponent<UploadModalProps> = ({
       });
     });
   }, []);
+
+	const handleDropdownClick = useCallback((categoryId: string) => {
+		const option = categoriesDropdownOptions.find((option) => {
+			return option.value === categoryId
+		});
+		const label = option?.label || 'Select a category';
+
+		setSelectedCategoryId(categoryId);
+		setDropdownLabel(label)
+	}, [categoriesDropdownOptions]);
 
   const handleDrop = useCallback((files: File[]) => {
     setFiles(files)
@@ -36,8 +56,12 @@ export const UploadModal: FunctionComponent<UploadModalProps> = ({
   }, [onClose]);
 
   const handleConfirm = useCallback(() => {
-    onUpload(files);
-  }, [onUpload, files]);
+		if (!selectedCategoryId) {
+			return;
+		}
+
+    onUpload(files, selectedCategoryId);
+  }, [onUpload, selectedCategoryId, files]);
 
   return (
     <Modal
@@ -48,13 +72,23 @@ export const UploadModal: FunctionComponent<UploadModalProps> = ({
       onConfirm={handleConfirm}
       loading={loading}
     >
-      <DropArea
-        files={files}
-        textBeforeDrop="Drop your images here"
-        loading={loading}
-        onFileDrop={handleDrop}
-        onFileDelete={handleDelete}
-      />
+			<div className={styles.dropdownContainer}>
+				<DropdownButton
+					options={categoriesDropdownOptions}
+					label={dropdownLabel}
+					onClick={handleDropdownClick}
+					fullWidth
+				/>
+			</div>
+			<div className={styles.dropAreaContainer}>
+				<DropArea
+					files={files}
+					textBeforeDrop="Drop your images here"
+					loading={loading}
+					onFileDrop={handleDrop}
+					onFileDelete={handleDelete}
+				/>
+			</div>
     </Modal>
   );
 };

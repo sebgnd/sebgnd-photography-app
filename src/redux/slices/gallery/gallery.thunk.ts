@@ -5,7 +5,9 @@ import {
 	FetchImageResponse,
 	FetchImagesFromCategoryResponse,
 	FetchImagesPaginatedPayload,
-	FetchImagesPaginatedResponse
+	FetchImagesPaginatedResponse,
+	UploadImagesPayload,
+	UploadImagesResponse
 } from './gallery.types';
 
 export const fetchAllCategories = createAsyncThunk<FetchAllCategoriesResponse>(
@@ -28,7 +30,7 @@ export const fetchImagesFromCategory = createAsyncThunk<FetchImagesFromCategoryR
 
 		return response.json();
 	}
-)
+);
 
 export const fetchImagesPaginated = createAsyncThunk<FetchImagesPaginatedResponse, FetchImagesPaginatedPayload>(
 	'gallery/fetchImagesPaginated',
@@ -36,7 +38,7 @@ export const fetchImagesPaginated = createAsyncThunk<FetchImagesPaginatedRespons
 		const queryParams = new URLSearchParams({
 			limit: limit.toString(),
 			offset: offset.toString(),
-			...(categoryId ? { categoryId } : {}),
+			...(categoryId ? { category: categoryId } : {}),
 		});
 
 		const response = await fetch(`http://localhost:8000/api/images?${queryParams.toString()}`, {
@@ -48,7 +50,7 @@ export const fetchImagesPaginated = createAsyncThunk<FetchImagesPaginatedRespons
 			resetList,
 		};
 	}
-)
+);
 
 export const fetchImage = createAsyncThunk<FetchImageResponse, string>(
 	'gallery/fetchImage',
@@ -58,5 +60,31 @@ export const fetchImage = createAsyncThunk<FetchImageResponse, string>(
 		});
 
 		return response.json();
+	}
+);
+
+export const uploadImages = createAsyncThunk<UploadImagesResponse, UploadImagesPayload>(
+	'gallery/uploadImages',
+	async ({ files, categoryId }) => {
+		const responses = await Promise.all(
+			files.map(async (file) => {
+				const formData = new FormData();
+
+				formData.append('categoryId', categoryId);
+				formData.append('image', file);
+
+				const response = await fetch('http://localhost:8000/api/images', {
+					method: 'POST',
+					body: formData,
+				});
+
+				return response.json();
+			})
+		);
+
+		// To have the same return value as the previous request response type
+		return {
+			items: responses.map((response) => response.item),
+		}
 	}
 )

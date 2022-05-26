@@ -8,6 +8,12 @@
 	transition: transform .5s;
 	position: relative;
 	font-size: 1em;
+	z-index: 100;
+	display: inline-flex;
+
+	&.fullWidth {
+		width: calc(100% - 10px);
+	}
 
 	&:hover {
 		transform: scale(1.025);
@@ -25,12 +31,12 @@
 }
 
 .button {
-	width: 100%;
 	background-color: transparent;
 	padding: 8px 16px;
 	border: none;
 	cursor: pointer;
 	z-index: 10;
+	width: 100%;
 	position: relative;
 
 	&:focus {
@@ -64,8 +70,4 @@
 	&:focus {
 		outline: 0;
 	}
-}
-
-.fullWidth {
-	width: 100%;
 }

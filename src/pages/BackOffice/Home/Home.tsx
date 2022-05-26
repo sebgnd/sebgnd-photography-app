@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useCallback, useEffect, useMemo } from 'react';
 import { useSearchParams} from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { usePaginatedImageList } from 'hooks/gallery';
 import { useToggle } from 'hooks';
@@ -18,13 +18,16 @@ import {
 	selectCategoryMap,
 	selectCategoryList,
 	selectIsImageListFailed,
-	selectIsImageListLoading
+	selectIsImageListLoading,
+	selectIsImageUploadLoading
 } from 'redux/slices/gallery/gallery.selector';
 import { ImageItem } from 'redux/slices/gallery/gallery.types';
 
 import styles from './Home.module.css';
+import { uploadImages } from 'redux/slices/gallery/gallery.thunk';
 
 export const Home: FunctionComponent = () => {
+	const dispatch = useDispatch();
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	const { fetchNextPage, fetchPreviousPage, fetchFromScratch } = usePaginatedImageList({
@@ -39,6 +42,8 @@ export const Home: FunctionComponent = () => {
 	const categoryMap = useSelector(selectCategoryMap);
 	const isLoading = useSelector(selectIsImageListLoading);
 	const isError = useSelector(selectIsImageListFailed);
+
+	const isUploading = useSelector(selectIsImageUploadLoading);
 
 	const hasPrevious = useSelector(selectHasPrevious);
 	const hasNext = useSelector(selectHasNext);
@@ -56,6 +61,10 @@ export const Home: FunctionComponent = () => {
 			value: 'all',
 		}];
 	}, [categories]);
+
+	const dropdownOptionsForModal = useMemo(() => {
+		return dropdownOptions.filter((option) => option.value !== 'all')
+	}, [dropdownOptions]);
 
 	const dropdownLabel = useMemo(() => {
 		const selectedCategoryId = searchParams.get('category');
@@ -87,6 +96,12 @@ export const Home: FunctionComponent = () => {
 	const handlePrevious = useCallback(() => {
 		fetchPreviousPage(searchParams.get('category') || undefined);
 	}, [searchParams, fetchPreviousPage]);
+
+	const handleUpload = useCallback((files: File[], categoryId: string) => {
+		dispatch(
+			uploadImages({ files, categoryId }),
+		);
+	}, [dispatch]);
 
 	useEffect(() => {
 		fetchFromScratch(searchParams.get('category') || undefined);
@@ -145,8 +160,9 @@ export const Home: FunctionComponent = () => {
 			</div>
 			<UploadModal
 				onClose={toggleUploadModal}
-				onUpload={() => {}}
-				loading={false}
+				onUpload={handleUpload}
+				categoriesDropdownOptions={dropdownOptionsForModal}
+				loading={isUploading}
 				isOpen={isUploadModalOpen}
 			/>
 		</>
