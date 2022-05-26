@@ -34,10 +34,11 @@ export const fetchImagesFromCategory = createAsyncThunk<FetchImagesFromCategoryR
 
 export const fetchImagesPaginated = createAsyncThunk<FetchImagesPaginatedResponse, FetchImagesPaginatedPayload>(
 	'gallery/fetchImagesPaginated',
-	async ({ limit, offset, resetList, categoryId }) => {
+	async ({ limit, offset, resetList, categoryId, status }) => {
 		const queryParams = new URLSearchParams({
 			limit: limit.toString(),
 			offset: offset.toString(),
+			status,
 			...(categoryId ? { category: categoryId } : {}),
 		});
 

@@ -44,9 +44,12 @@ const initialState: GalleryState = {
 			error: false,
 			total: null,
 		},
-		upload: {
-			loading: false,
-			error: false,
+		edition: {
+			upload: {
+				loading: false,
+				error: false,
+			},
+			statuses: {},
 		},
 		selection: {
 			item: null,
@@ -148,16 +151,19 @@ const gallerySlice = createSlice({
 			const { offset, total, limit } = result;
 
 			image.list.loading = false;
+			image.list.total = total;
 
 			if (offset >= total || offset + limit <= 0) {
 				return;
 			}
 
-			image.list.total = total;
-			image.list.nextOffset = offset + limit;
-			image.list.previousOffset = Math.max(offset - limit, 0);
-			image.list.hasPrevious = offset !== 0;
-			image.list.hasNext = offset + limit < total;
+			image.list = {
+				...image.list,
+				nextOffset: offset + limit,
+				hasPrevious: offset !== 0,
+				previousOffset: Math.max(offset - limit, 0),
+				hasNext: offset + limit < total,
+			};
 
 			const newItems = result.items.map((img) => ({
 				id: img.id,
@@ -165,6 +171,10 @@ const gallerySlice = createSlice({
 				createdAt: img.createdAt,
 				categoryId: img.categoryId,
 			}));
+
+			result.items.forEach((img) => {
+				image.edition.statuses[img.id] = img.status;
+			});
 
 			if (resetList) {
 				imageAdapter.setAll(image.list.items, newItems);
@@ -174,8 +184,8 @@ const gallerySlice = createSlice({
 		});
 
 		builder.addCase(uploadImages.pending, ({ image }) => {
-			image.upload.loading = true;
-			image.upload.error = false;
+			image.edition.upload.loading = true;
+			image.edition.upload.error = false;
 		});
 
 		builder.addCase(uploadImages.fulfilled, ({ image }, { payload, meta }) => {
@@ -190,13 +200,17 @@ const gallerySlice = createSlice({
 				}
 			});
 
-			image.upload.loading = false;
+			image.edition.upload.loading = false;
+
+			payload.items.forEach(({ id, status }) => {
+				image.edition.statuses[id] = image.edition.statuses[id] || status;
+			});
 			imageAdapter.upsertMany(image.list.items, newItems);
 		});
 
 		builder.addCase(uploadImages.rejected, ({ image }) => {
-			image.upload.error = true;
-			image.upload.loading = false;
+			image.edition.upload.error = true;
+			image.edition.upload.loading = false;
 		});
 	}
 });

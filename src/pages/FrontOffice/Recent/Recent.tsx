@@ -28,7 +28,10 @@ export const Recent: FunctionComponent = () => {
 	const canLoad = useRef(true);
 
 	const { selectImage, resetSelection, selection } = useImageSelection();
-	const { fetchNextPage } = usePaginatedImageList({ limit: 10 });
+	const { fetchNextPage } = usePaginatedImageList({
+		limit: 10,
+		status: 'valid',
+	});
 
 	const categoryMap = useSelector(selectCategoryMap);
 	const loading = useSelector(selectIsImageListLoading);

@@ -7,6 +7,7 @@ import { actions } from 'redux/slices/gallery/gallery.slice';
 
 export type UsePaginatedImageListConfig = {
   limit: number,
+	status: 'valid' | 'processing' | 'all' | 'error',
   fetchOnMount?: boolean,
   resetListOnFetch?: boolean,
 };
@@ -19,6 +20,7 @@ export type UsePaginatedList = (config: UsePaginatedImageListConfig) => {
 
 export const usePaginatedImageList: UsePaginatedList = ({
   limit,
+	status = 'all',
   fetchOnMount = false,
   resetListOnFetch = false,
 }) => {
@@ -38,26 +40,29 @@ export const usePaginatedImageList: UsePaginatedList = ({
     dispatch(fetchImagesPaginated({
       ...paginationSettings,
       offset: nextOffset,
+			status,
       categoryId,
     }));
-  }, [dispatch, paginationSettings, nextOffset]);
+  }, [dispatch, status, paginationSettings, nextOffset]);
 
   const fetchPreviousPage = useCallback((categoryId?: string) => {
     dispatch(fetchImagesPaginated({
       ...paginationSettings,
       offset: previousOffset,
+			status,
       categoryId,
     }));
-  }, [dispatch, paginationSettings, previousOffset]);
+  }, [dispatch, status, paginationSettings, previousOffset]);
 
   const fetchFromScratch = useCallback((categoryId?: string) => {
     dispatch(actions.clearImageList());
     dispatch(fetchImagesPaginated({
       ...paginationSettings,
+			status,
       offset: 0,
       categoryId,
     }));
-  }, [dispatch, paginationSettings]);
+  }, [dispatch, status, paginationSettings]);
 
   useEffect(() => {
     dispatch(actions.clearImageList());
@@ -65,11 +70,12 @@ export const usePaginatedImageList: UsePaginatedList = ({
     if (fetchOnMount) {
       dispatch(fetchImagesPaginated({
         resetList: false,
+				status,
         offset: 0,
         limit,
       }));
     }
-  }, [dispatch, limit, fetchOnMount])
+  }, [dispatch, status, limit, fetchOnMount])
 
   return { fetchNextPage, fetchPreviousPage, fetchFromScratch };
 };

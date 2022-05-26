@@ -32,6 +32,7 @@ export const Home: FunctionComponent = () => {
 
 	const { fetchNextPage, fetchPreviousPage, fetchFromScratch } = usePaginatedImageList({
 		limit: 20,
+		status: 'all',
 		resetListOnFetch: true,
 	});
 

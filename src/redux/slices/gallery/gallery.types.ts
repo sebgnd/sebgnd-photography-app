@@ -42,6 +42,7 @@ export type FetchImagesPaginatedResponse = {
 			categoryId: string,
 			createdAt: string,
 			updatedAt: string,
+			status: string,
 			type: 'landscape' | 'portrait',
 		}>
 		total: number,
@@ -56,6 +57,7 @@ export type FetchImagesPaginatedPayload = {
 	offset: number,
 	resetList: boolean,
 	categoryId?: string,
+	status: string,
 };
 
 export type UploadImagesPayload = {
@@ -66,6 +68,7 @@ export type UploadImagesPayload = {
 export type UploadImagesResponse = {
 	items: ReadonlyArray<{
 		id: string,
+		status: string,
 		createdAt: string,
 		updatedAt: string,
 	}>
@@ -115,10 +118,13 @@ export type GalleryState = {
 			previousOffset: number,
 			items: EntityState<ImageItem>,
 		},
-		upload: {
-			loading: boolean,
-			error: boolean,
-		},
+		edition: {
+			upload: {
+				loading: boolean,
+				error: boolean,
+			},
+			statuses: Record<string, string>,
+		}
 		selection: {
 			item: SelectedImage | null,
 			loading: boolean,
