@@ -1,4 +1,9 @@
-import { EntityState } from '@reduxjs/toolkit';
+import { EntityState, PayloadAction } from '@reduxjs/toolkit';
+
+export type SetImageProcessedStatus = PayloadAction<{
+	id: string,
+	status: string,
+}>;
 
 export type FetchAllCategoriesResponse = {
 	items: ReadonlyArray<{

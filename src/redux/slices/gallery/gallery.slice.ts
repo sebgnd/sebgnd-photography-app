@@ -7,7 +7,7 @@ import {
 	fetchImagesPaginated,
 	uploadImages,
 } from './gallery.thunk';
-import { GalleryState, CategoryItem, ImageItem } from './gallery.types';
+import { GalleryState, CategoryItem, ImageItem, SetImageProcessedStatus } from './gallery.types';
 
 export const categoryAdapter = createEntityAdapter<CategoryItem>({
 	selectId: (category) => category.id,
@@ -75,6 +75,13 @@ const gallerySlice = createSlice({
 			image.list.error = false;
 			image.list.loading = false;
 		},
+		setImageProcessedStatus: ({ image }, { payload }: SetImageProcessedStatus) => {
+			const { id, status } = payload;
+
+			if (image.edition.statuses[id] !== undefined) {
+				image.edition.statuses[id] = status;
+			}
+		} 
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchAllCategories.pending, ({ category }) => {

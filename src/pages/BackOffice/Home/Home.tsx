@@ -1,6 +1,8 @@
 import React, { FunctionComponent, useCallback, useEffect, useMemo } from 'react';
 import { useSearchParams} from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+
+import { useAppDispatch } from 'redux/store';
 
 import { usePaginatedImageList } from 'hooks/gallery';
 import { useToggle } from 'hooks';
@@ -27,7 +29,7 @@ import styles from './Home.module.css';
 import { uploadImages } from 'redux/slices/gallery/gallery.thunk';
 
 export const Home: FunctionComponent = () => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	const { fetchNextPage, fetchPreviousPage, fetchFromScratch } = usePaginatedImageList({
@@ -98,11 +100,12 @@ export const Home: FunctionComponent = () => {
 		fetchPreviousPage(searchParams.get('category') || undefined);
 	}, [searchParams, fetchPreviousPage]);
 
-	const handleUpload = useCallback((files: File[], categoryId: string) => {
-		dispatch(
+	const handleUpload = useCallback(async (files: File[], categoryId: string) => {
+		await dispatch(
 			uploadImages({ files, categoryId }),
 		);
-	}, [dispatch]);
+		toggleUploadModal();
+	}, [toggleUploadModal, dispatch]);
 
 	useEffect(() => {
 		fetchFromScratch(searchParams.get('category') || undefined);

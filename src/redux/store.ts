@@ -1,4 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { AnyAction, configureStore, ThunkDispatch } from '@reduxjs/toolkit';
+import { useDispatch } from 'react-redux';
 
 import { reducer as galleryReducer } from './slices/gallery/gallery.slice';
 
@@ -9,3 +10,6 @@ export const store = configureStore({
 });
 
 export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = ThunkDispatch<RootState, any, AnyAction>;
+
+export const useAppDispatch = () => useDispatch<AppDispatch>();
