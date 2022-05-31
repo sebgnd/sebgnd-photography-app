@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 
 import withCentering, { CenteringProps } from '../../../hoc/withCentering';
 
-import styles from './Spinner.module.css';
+import styles from './Spinner.module.scss';
 interface SpinnerProps {
 	size?: 'normal' | 'small' | 'tiny';
 }

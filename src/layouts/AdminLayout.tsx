@@ -9,23 +9,25 @@ import { useSocket } from 'hooks';
 import AdminNavigation from 'components/Navigation/AdminNavigation/AdminNavigation';
 
 type ImageProcessedMessage = {
-	id: string,
-	processed: boolean,
+	data: {
+		id: string,
+		processed: boolean,
+	}
 };
 
 export const AdminLayout: FunctionComponent = () => {
 	const socket = useSocket();
 	const dispatch = useAppDispatch();
 
-	const handleImageProcessed = useCallback((message: ImageProcessedMessage) => {
-		dispatch(actions.setImageProcessedStatus({
-			id: message.id,
-			status: message.processed ? 'valid' : 'processing'
+	const handleImageProcessed = useCallback(({ data }: ImageProcessedMessage) => {
+		dispatch(actions.setImageProcessStatus({
+			id: data.id,
+			status: data.processed ? 'valid' : 'processing'
 		}))
 	}, [dispatch]);
 
 	useEffect(() => {
-		socket.on('image-processing:image-processed', handleImageProcessed)
+		socket.on('image-processing:image-processed', handleImageProcessed);
 	}, [handleImageProcessed, socket]);
 
 	return (

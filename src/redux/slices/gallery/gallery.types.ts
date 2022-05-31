@@ -1,8 +1,68 @@
 import { EntityState, PayloadAction } from '@reduxjs/toolkit';
 
-export type SetImageProcessedStatus = PayloadAction<{
+export type CategoryItem = {
 	id: string,
-	status: string,
+	name: string,
+	displayName: string,
+	thumbnailId: string,
+}
+
+export type ImageItem = {
+	id: string,
+	type: 'landscape' | 'portrait',
+	createdAt: string,
+	categoryId: string,
+}
+
+export type SelectedImage = {
+	id: string,
+	exif?: {
+		iso: number,
+		shutterSpeed: number,
+		aperture: number,
+		focalLength: number,
+	},
+}
+
+export type ImageStatus = 'processing' | 'error' | 'valid';
+
+export type GalleryState = {
+	category: {
+		list: {
+			items: EntityState<CategoryItem>,
+			loading: boolean,
+			error: boolean,
+		},
+		selectedCategoryName: string | null,
+	},
+	image: {
+		list: {
+			error: boolean,
+			loading: boolean,
+			hasNext: boolean,
+			hasPrevious: boolean,
+			total: number | null,
+			nextOffset: number,
+			previousOffset: number,
+			items: EntityState<ImageItem>,
+		},
+		edition: {
+			upload: {
+				loading: boolean,
+				error: boolean,
+			},
+			statuses: Record<string, ImageStatus>,
+		}
+		selection: {
+			item: SelectedImage | null,
+			loading: boolean,
+		},
+	},
+};
+
+export type SetImageProcessStatus = PayloadAction<{
+	id: string,
+	status: ImageStatus,
 }>;
 
 export type FetchAllCategoriesResponse = {
@@ -78,61 +138,3 @@ export type UploadImagesResponse = {
 		updatedAt: string,
 	}>
 }
-
-export type CategoryItem = {
-	id: string,
-	name: string,
-	displayName: string,
-	thumbnailId: string,
-}
-
-export type ImageItem = {
-	id: string,
-	type: 'landscape' | 'portrait',
-	createdAt: string,
-	categoryId: string,
-}
-
-export type SelectedImage = {
-	id: string,
-	exif?: {
-		iso: number,
-		shutterSpeed: number,
-		aperture: number,
-		focalLength: number,
-	},
-}
-
-export type GalleryState = {
-	category: {
-		list: {
-			items: EntityState<CategoryItem>,
-			loading: boolean,
-			error: boolean,
-		},
-		selectedCategoryName: string | null,
-	},
-	image: {
-		list: {
-			error: boolean,
-			loading: boolean,
-			hasNext: boolean,
-			hasPrevious: boolean,
-			total: number | null,
-			nextOffset: number,
-			previousOffset: number,
-			items: EntityState<ImageItem>,
-		},
-		edition: {
-			upload: {
-				loading: boolean,
-				error: boolean,
-			},
-			statuses: Record<string, string>,
-		}
-		selection: {
-			item: SelectedImage | null,
-			loading: boolean,
-		},
-	},
-};

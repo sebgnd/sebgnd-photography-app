@@ -21,7 +21,8 @@ import {
 	selectCategoryList,
 	selectIsImageListFailed,
 	selectIsImageListLoading,
-	selectIsImageUploadLoading
+	selectIsImageUploadLoading,
+	selectImageStatuses
 } from 'redux/slices/gallery/gallery.selector';
 import { ImageItem } from 'redux/slices/gallery/gallery.types';
 
@@ -41,6 +42,7 @@ export const Home: FunctionComponent = () => {
 	const [isUploadModalOpen, toggleUploadModal] = useToggle(false);
 
 	const images = useSelector(selectImageList);
+	const imageStatuses = useSelector(selectImageStatuses);
 	const categories = useSelector(selectCategoryList);
 	const categoryMap = useSelector(selectCategoryMap);
 	const isLoading = useSelector(selectIsImageListLoading);
@@ -150,6 +152,7 @@ export const Home: FunctionComponent = () => {
 									imageId={item.id}
 									selected={false}
 									uploadDate={item.createdAt}
+									status={imageStatuses[item.id]}
 									onDelete={() => {}}
 									onToggleSelection={() => {}}
 								/>

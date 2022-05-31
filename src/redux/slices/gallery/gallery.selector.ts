@@ -38,3 +38,5 @@ export const selectHasPrevious = ({ gallery }: RootState) => gallery.image.list.
 
 export const selectIsImageUploadLoading = ({ gallery }: RootState) => gallery.image.edition.upload.loading;
 export const selectIsImageUploadFailed = ({ gallery }: RootState) => gallery.image.edition.upload.error;
+
+export const selectImageStatuses = ({ gallery }: RootState) => gallery.image.edition.statuses;

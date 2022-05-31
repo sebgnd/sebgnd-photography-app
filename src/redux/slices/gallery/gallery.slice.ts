@@ -7,7 +7,7 @@ import {
 	fetchImagesPaginated,
 	uploadImages,
 } from './gallery.thunk';
-import { GalleryState, CategoryItem, ImageItem, SetImageProcessedStatus } from './gallery.types';
+import { GalleryState, CategoryItem, ImageItem, SetImageProcessStatus, ImageStatus } from './gallery.types';
 
 export const categoryAdapter = createEntityAdapter<CategoryItem>({
 	selectId: (category) => category.id,
@@ -22,7 +22,13 @@ export const imageAdapter = createEntityAdapter<ImageItem>({
 
 		return dateB.getTime() - dateA.getTime();
 	}
-})
+});
+
+export const isImageStatus = (value: string): value is ImageStatus => {
+	const statuses = ['processing', 'valid', 'valid'];
+
+	return statuses.includes(value);
+}
 
 const initialState: GalleryState = {
 	category: {
@@ -75,7 +81,7 @@ const gallerySlice = createSlice({
 			image.list.error = false;
 			image.list.loading = false;
 		},
-		setImageProcessedStatus: ({ image }, { payload }: SetImageProcessedStatus) => {
+		setImageProcessStatus: ({ image }, { payload }: SetImageProcessStatus) => {
 			const { id, status } = payload;
 
 			if (image.edition.statuses[id] !== undefined) {
@@ -180,7 +186,9 @@ const gallerySlice = createSlice({
 			}));
 
 			result.items.forEach((img) => {
-				image.edition.statuses[img.id] = img.status;
+				if (isImageStatus(img.status)) {
+					image.edition.statuses[img.id] = img.status;
+				}
 			});
 
 			if (resetList) {

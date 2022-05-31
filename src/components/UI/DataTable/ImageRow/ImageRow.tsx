@@ -4,14 +4,17 @@ import { getImageUrl } from 'libs/image/get-image-url';
 
 import { IconButton } from 'components/UI/Button';
 import { Text } from 'components/UI/Content/Text/Text';
+import { Svg } from 'components/UI/Content/Svg/Svg';
 import { Checkbox } from 'components/UI/Form/Checkbox/Checkbox';
 
 import styles from './ImageRow.module.scss';
+import { Spinner } from 'components/UI/Spinner/Spinner';
 
 export type ImageRowProps = {
   imageId: string,
   uploadDate: string,
   selected: boolean,
+	status: 'error' | 'processing' | 'valid',
   onDelete: (id: string) => void,
   onToggleSelection: (id: string) => void,
 }
@@ -20,6 +23,7 @@ export const ImageRow: FunctionComponent<ImageRowProps> = ({
   imageId,
   selected,
   uploadDate,
+	status,
   onDelete,
   onToggleSelection,
 }) => {
@@ -48,13 +52,26 @@ export const ImageRow: FunctionComponent<ImageRowProps> = ({
           />
         </div>
         <div className={styles.image}>
-          <img src={imageUrl} alt={imageId} />
+					{status === 'valid'
+						? (
+							<img src={imageUrl} alt={imageId} />
+						)
+						: (
+							<Svg name="processing-image" />
+						)
+					}
         </div>
         <div className={styles.imageId}>
           <Text size="small" text={`#${imageId}`} />
         </div>
       </div>
       <div className={styles.sideContainer}>
+				{status === 'processing' && (
+					<div className={styles.processing}>
+						<Spinner size="tiny" />
+						<Text size="small" text="Processing ..." />
+					</div>
+				)}
         <div className={styles.deleteButton}>
           <IconButton
             icon="times"

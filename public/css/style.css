@@ -17,6 +17,11 @@ body, html {
   padding: 0;
 }
 
+html {
+	overflow-y: scroll;
+	overflow-y: overlay;
+}
+
 body {
   font-size: 14px;
   position: relative;
