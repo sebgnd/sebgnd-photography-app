@@ -2,6 +2,7 @@ import React, { FunctionComponent, useRef, useState, useLayoutEffect, useMemo, C
 
 import { Separator } from 'components/UI/Separator/Separator';
 import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
+import { ButtonContainer } from 'components/UI/Button';
 import { Text } from 'components/UI/Content/Text/Text';
 
 import useEventListener from 'hooks/useEventListener';
@@ -92,12 +93,6 @@ export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 		const buttonWidth = mainButtonRef.current.scrollWidth;
 		const dropDownHeight = dropdownMenuRef.current.scrollHeight;
 
-		console.log({
-			scrollWidth: mainButtonRef.current.scrollWidth,
-			offsetWidth: mainButtonRef.current.offsetWidth,
-			clientWidth: mainButtonRef.current.clientWidth,
-		});
-
 		return {
 			transition: `height ${dropDuration}ms`,
 			width: dropDownWidth || buttonWidth,
@@ -121,13 +116,16 @@ export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 			ref={dropdownRef}
 			className={containerClassName}
 		>
-			<button
+			<ButtonContainer
 				ref={mainButtonRef}
+				type="regular"
+				variant="classic"
+				color="default"
 				className={styles.button}
 				onClick={toggleDropdownMenu}
 			>
 				<Text text={label} />
-			</button>
+			</ButtonContainer>
 			<div
 				className={styles.dropdownBackground}
 				style={dropdownBackgroundStyle}
@@ -142,12 +140,15 @@ export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 						<Separator size="big" />
 						{options.map((option: DropdownButtonOption) => {
 							return (
-								<button
+								<ButtonContainer
+									color="default"
+									variant="classic"
+									type="regular"
 									onClick={makeClickHandler(option.value)}
 									className={styles.dropdownButton}
 								>
 									<Text text={option.label} />
-								</button> 
+								</ButtonContainer> 
 							);
 						})}
 					</>

@@ -125,13 +125,6 @@ export const Home: FunctionComponent = () => {
 							label="Upload"
 							onClick={toggleUploadModal}
 						/>
-						<Button
-							variant="classic"
-							color="destructive"
-							fullWidth
-							label="Delete"
-							onClick={() => {}}
-						/>
 						<DropdownButton
 							options={dropdownOptions}
 							onClick={handleDropdownClick}

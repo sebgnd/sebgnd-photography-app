@@ -3,3 +3,4 @@ export * from './RoundButton/RoundButton';
 export * from './GalleryButton/GalleryButton';
 export * from './DropdownButton/DropdownButton'
 export * from './IconButton/IconButton';
+export * from './ButtonContainer/ButtonContainer';
