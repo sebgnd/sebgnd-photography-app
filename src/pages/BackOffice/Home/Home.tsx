@@ -22,7 +22,8 @@ import {
 	selectIsImageListFailed,
 	selectIsImageListLoading,
 	selectIsImageUploadLoading,
-	selectImageStatuses
+	selectImageStatuses,
+	selectCategoryThumbnailIds
 } from 'redux/slices/gallery/gallery.selector';
 import { ImageItem } from 'redux/slices/gallery/gallery.types';
 
@@ -47,6 +48,7 @@ export const Home: FunctionComponent = () => {
 	const categoryMap = useSelector(selectCategoryMap);
 	const isLoading = useSelector(selectIsImageListLoading);
 	const isError = useSelector(selectIsImageListFailed);
+	const thumbnailIds = useSelector(selectCategoryThumbnailIds);
 
 	const isUploading = useSelector(selectIsImageUploadLoading);
 
@@ -143,11 +145,10 @@ export const Home: FunctionComponent = () => {
 								<ImageRow
 									key={key}
 									imageId={item.id}
+									thumbnail={thumbnailIds.includes(item.id)}
 									selected={false}
-									uploadDate={item.createdAt}
 									status={imageStatuses[item.id]}
 									onDelete={() => {}}
-									onToggleSelection={() => {}}
 								/>
 							)}
 							disableNextButton={!hasNext}

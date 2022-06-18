@@ -22,6 +22,12 @@ export const selectFirstThreeCategory = createSelector(
 		return categories.slice(0, 3);
 	}
 )
+export const selectCategoryThumbnailIds = createSelector(
+	selectCategoryList,
+	(categories) => {
+		return categories.map(({ thumbnailId }) => thumbnailId)
+	}
+);
 export const selectIsCategoryListLoading = ({ gallery }: RootState) => gallery.category.list.loading;
 export const selectIsCategoryListFailed = ({ gallery }: RootState) => gallery.category.list.error;
 
