@@ -1,6 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
+	DeleteImagePayload,
+	DeleteImageResponse,
 	FetchAllCategoriesResponse,
 	FetchImageResponse,
 	FetchImagesFromCategoryResponse,
@@ -87,5 +89,16 @@ export const uploadImages = createAsyncThunk<UploadImagesResponse, UploadImagesP
 		return {
 			items: responses.map((response) => response.item),
 		}
+	}
+);
+
+export const deleteImage = createAsyncThunk<DeleteImageResponse, DeleteImagePayload>(
+	'gallery/deleteImage',
+	async ({ id }) => {
+		const response = await fetch(`http://localhost:8000/api/images/${id}`, {
+			method: 'DELETE',
+		});
+
+		return response.json();
 	}
 )

@@ -1,6 +1,7 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
 import {
+	deleteImage,
 	fetchAllCategories,
 	fetchImage,
 	fetchImagesFromCategory,
@@ -227,6 +228,13 @@ const gallerySlice = createSlice({
 			image.edition.upload.error = true;
 			image.edition.upload.loading = false;
 		});
+
+		builder.addCase(deleteImage.fulfilled, ({ image }, { payload: { id } }) => {
+			const { [id]: deletedImage, ...otherStatuses } = image.edition.statuses;
+
+			imageAdapter.removeOne(image.list.items, id);
+			image.edition.statuses = otherStatuses;
+		})
 	}
 });
 

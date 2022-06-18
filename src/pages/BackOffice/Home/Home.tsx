@@ -28,7 +28,7 @@ import {
 import { ImageItem } from 'redux/slices/gallery/gallery.types';
 
 import styles from './Home.module.css';
-import { uploadImages } from 'redux/slices/gallery/gallery.thunk';
+import { deleteImage, uploadImages } from 'redux/slices/gallery/gallery.thunk';
 
 export const Home: FunctionComponent = () => {
 	const dispatch = useAppDispatch();
@@ -111,6 +111,12 @@ export const Home: FunctionComponent = () => {
 		toggleUploadModal();
 	}, [toggleUploadModal, dispatch]);
 
+	const handleDelete = useCallback((id: string) => {
+		dispatch(
+			deleteImage({ id }),
+		);
+	}, [dispatch]);
+
 	useEffect(() => {
 		fetchFromScratch(searchParams.get('category') || undefined);
 	}, [fetchFromScratch, searchParams]);
@@ -148,7 +154,7 @@ export const Home: FunctionComponent = () => {
 									thumbnail={thumbnailIds.includes(item.id)}
 									selected={false}
 									status={imageStatuses[item.id]}
-									onDelete={() => {}}
+									onDelete={handleDelete}
 								/>
 							)}
 							disableNextButton={!hasNext}

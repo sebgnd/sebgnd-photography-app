@@ -138,3 +138,11 @@ export type UploadImagesResponse = {
 		updatedAt: string,
 	}>
 }
+
+export type DeleteImageResponse = {
+	id: string,
+};
+
+export type DeleteImagePayload = {
+	id: string,
+};
