@@ -1,6 +1,5 @@
-import React, { FunctionComponent, useRef, useState, useLayoutEffect, useMemo, CSSProperties } from 'react';
+import React, { FunctionComponent, useRef, useState, useId, useMemo, CSSProperties } from 'react';
 
-import { Separator } from 'components/UI/Separator/Separator';
 import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
 import { ButtonContainer } from 'components/UI/Button';
 import { Text } from 'components/UI/Content/Text/Text';
@@ -29,6 +28,8 @@ export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 	fullWidth = false,
 	dropDuration = 250,
 }) => {
+	const componentId = useId();
+
 	const [showDropdown, setShowDropdown] = useState<boolean>(false);
 	const [buttonRendered, setButtonRendered] = useState(false);
 	const [dropDownWidth, setDropDownWidth] = useState(0);
@@ -38,6 +39,10 @@ export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 	const dropdownMenuRef = useRef<HTMLDivElement>(null);
 
 	const toggleDropdownMenu = () => {
+		const buttonRenderedTimeout = buttonRendered ? dropDuration : 0;
+		setTimeout(() => {
+			setButtonRendered((prev) => !prev);
+		}, buttonRenderedTimeout);
 		setShowDropdown(prevShow => !prevShow);
 	}
 
@@ -85,29 +90,25 @@ export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 	}, [showDropdown, dropDuration]);
 
 	const dropdownBackgroundStyle = useMemo((): CSSProperties => {
-		if (!buttonRendered || !mainButtonRef.current || !dropdownMenuRef.current) {
+		if (!mainButtonRef.current || !dropdownMenuRef.current) {
 			return {};
 		}
 
-		const buttonHeight = mainButtonRef.current.scrollHeight;
 		const buttonWidth = mainButtonRef.current.scrollWidth;
 		const dropDownHeight = dropdownMenuRef.current.scrollHeight;
 
 		return {
-			transition: `height ${dropDuration}ms`,
+			transition: `height ${dropDuration}ms, top ${dropDuration}ms`,
 			width: dropDownWidth || buttonWidth,
-			height: showDropdown
-				? buttonHeight + dropDownHeight
-				: buttonHeight,
+			visibility: buttonRendered ? 'visible' : 'hidden',
+			height: showDropdown && buttonRendered
+				? dropDownHeight
+				: 0,
 		};
 	}, [showDropdown, dropDuration, buttonRendered, dropDownWidth]);
 
 	useEventListener('mousedown', handleClickOutside);
 	useEventListener('resize', handleResize);
-
-	useLayoutEffect(() => {
-		setButtonRendered(true);
-	}, []);
 
 	const emptyOptions = options.length === 0
 
@@ -137,17 +138,20 @@ export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 			>
 				{(!emptyOptions) ? (
 					<>
-						<Separator size="big" />
-						{options.map((option: DropdownButtonOption) => {
+						{options.map(({ label, value }: DropdownButtonOption, index) => {
 							return (
 								<ButtonContainer
+									key={`DropdownButton-${componentId}-${value}`}
 									color="default"
 									variant="classic"
 									type="regular"
-									onClick={makeClickHandler(option.value)}
+									onClick={makeClickHandler(value)}
 									className={styles.dropdownButton}
+									style={{
+										border: 'none',
+									}}
 								>
-									<Text text={option.label} />
+									<Text text={label} />
 								</ButtonContainer> 
 							);
 						})}

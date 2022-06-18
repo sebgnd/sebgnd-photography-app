@@ -20,7 +20,7 @@ export type ButtonContainerProps = {
 
 export const ButtonContainer = forwardRef<HTMLButtonElement, ButtonContainerProps>(
 	/**
-	 * Use named function to keep `displayName`
+	 * Use named function to keep `displayName` because `forwardRef` removes it
 	 */
 	function ButtonContainer({
 		color,
