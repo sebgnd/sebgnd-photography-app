@@ -68,7 +68,7 @@ export const Recent: FunctionComponent = () => {
 			 */
 			const timeoutId = setTimeout(() => {
 				canLoad.current = true;
-			}, [250]);
+			}, 250);
 
 			return () => clearTimeout(timeoutId);
 		}

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, MouseEvent } from 'react';
+import React, { FunctionComponent, MouseEvent, ReactNode } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 import { Icon } from 'components/UI/Content/Icon/Icon';
@@ -17,6 +17,7 @@ export type ModalProps = {
 	confirmText?: string;
 	size?: ModalSize;
 	loading?: boolean;
+	children: ReactNode,
 	onConfirm?: (e?: MouseEvent) => void;
 	onClose?: (e?: MouseEvent) => void;
 	onCancel?: (e?: MouseEvent) => void;

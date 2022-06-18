@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback, FunctionComponent } from 'react';
+import React, { useEffect, useRef, useState, useCallback, FunctionComponent, ReactNode } from 'react';
 import { throttle } from 'lodash';
 
 import ParallaxContainer from './ParallaxContainer';
@@ -6,6 +6,7 @@ import ParallaxContainer from './ParallaxContainer';
 interface ParallaxProp {
 	img: string;
 	speed: number;
+	children: ReactNode,
 }
 
 interface BackgroundStyle {
