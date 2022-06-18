@@ -5,35 +5,28 @@ import { getImageUrl } from 'libs/image/get-image-url';
 import { IconButton } from 'components/UI/Button';
 import { Text } from 'components/UI/Content/Text/Text';
 import { Svg } from 'components/UI/Content/Svg/Svg';
-import { Checkbox } from 'components/UI/Form/Checkbox/Checkbox';
+import { Label } from 'components/UI/Content/Label/Label';
 
 import styles from './ImageRow.module.scss';
 import { Spinner } from 'components/UI/Spinner/Spinner';
 
 export type ImageRowProps = {
   imageId: string,
-  uploadDate: string,
+  thumbnail: boolean,
   selected: boolean,
 	status: 'error' | 'processing' | 'valid',
   onDelete: (id: string) => void,
-  onToggleSelection: (id: string) => void,
 }
 
 export const ImageRow: FunctionComponent<ImageRowProps> = ({
   imageId,
-  selected,
-  uploadDate,
+  thumbnail,
 	status,
   onDelete,
-  onToggleSelection,
 }) => {
   const handleDelete = useCallback(() => {
     return onDelete(imageId);
   }, [onDelete, imageId]);
-
-  const handleToggle = useCallback(() => {
-    return onToggleSelection(imageId);
-  }, [imageId, onToggleSelection]);
 
   const imageUrl = useMemo(() => {
     return getImageUrl(imageId, {
@@ -45,12 +38,6 @@ export const ImageRow: FunctionComponent<ImageRowProps> = ({
   return (
     <div className={styles.imageRowContainer}>
       <div className={styles.sideContainer}>
-        <div className={styles.checkBox}>
-          <Checkbox
-            onToggle={handleToggle}
-            checked={selected}
-          />
-        </div>
         <div className={styles.image}>
 					{status === 'valid'
 						? (
@@ -61,9 +48,10 @@ export const ImageRow: FunctionComponent<ImageRowProps> = ({
 						)
 					}
         </div>
-        <div className={styles.imageId}>
-          <Text size="small" text={`#${imageId}`} />
-        </div>
+        <Label color="default" text={`#${imageId}`} />
+        {thumbnail && (
+          <Label color="info" text="Category thumbnail" />
+        )}
       </div>
       <div className={styles.sideContainer}>
 				{status === 'processing' && (
@@ -75,7 +63,8 @@ export const ImageRow: FunctionComponent<ImageRowProps> = ({
         <div className={styles.deleteButton}>
           <IconButton
             icon="times"
-            color="#E24D2D"
+            color="destructive"
+            variant="light"
             onClick={handleDelete}
           />
         </div>

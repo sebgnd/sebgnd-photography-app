@@ -1,7 +1,7 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent, ReactNode, Fragment, useId } from 'react';
 
 import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
-import { RoundButton } from 'components/UI/Button';
+import { IconButton } from 'components/UI/Button';
 import { Separator } from 'components/UI/Separator/Separator';
 
 import styles from './DataTable.module.scss';
@@ -33,42 +33,41 @@ export const DataTable: FunctionComponent<DataTableProps> = ({
 	generateRowKey,
 	onPreviousClick,
 }) => {
+	const dataTableComponentId = useId();
 	const isEmpty = items.length === 0;
 
 	return (
 		<div className={styles.dataTableContainer}>
 			<div className={styles.dataTableHeader}>
 				<div className={styles.arrowsContainer}>
-					<div className={styles.arrowButtonContainer}>
-						<RoundButton
-							size="small"
-							icon="arrow-left"
-							onClick={onPreviousClick}
-							disabled={disablePreviousButton}
-						/>
-					</div>
-					<div className={styles.arrowButtonContainer}>
-						<RoundButton
-							size="small"
-							icon="arrow-right"
-							onClick={onNextClick}
-							disabled={disableNextButton}
-						/>
-					</div>
+					<IconButton
+						variant="classic"
+						color="default"
+						icon="arrow-left"
+						onClick={onPreviousClick}
+						disabled={disablePreviousButton}
+					/>
+					<IconButton
+						variant="classic"
+						color="default"
+						icon="arrow-right"
+						onClick={onNextClick}
+						disabled={disableNextButton}
+					/>
 				</div>
 			</div>
 			<div className={styles.listContainer}>
 				{items.map((item, index) => {
 					if (index !== items.length - 1 && separator) {
 						return (
-							<>
+							<Fragment key={`DataTable-${dataTableComponentId}-${index}`}>
 								{renderRow(item, generateRowKey(item))}
 								<Separator
 									size="big"
 									centerHorizontal
 									orientation="horizontal"
 								/>
-							</>
+							</Fragment>
 						)
 					}
 
