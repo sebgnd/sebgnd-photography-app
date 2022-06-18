@@ -5,7 +5,7 @@ import styles from './ButtonContainer.module.scss';
 
 export type ButtonVariant = 'classic' | 'light';
 export type ButtonColor = 'default' | 'success' | 'destructive';
-export type ButtonType = 'regular' | 'icon' | 'round';
+export type ButtonType = 'regular' | 'round';
 
 export type ButtonContainerProps = {
 	color: ButtonColor,
