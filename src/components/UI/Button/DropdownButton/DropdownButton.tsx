@@ -4,6 +4,8 @@ import { InformationMessage } from 'components/UI/InformationMessage/Information
 import { ButtonContainer } from 'components/UI/Button';
 import { Text } from 'components/UI/Content/Text/Text';
 
+import { ClickOutside } from 'hoc/ClickOutside/ClickOutside';
+
 import useEventListener from 'hooks/useEventListener';
 
 import styles from './DropdownButton.module.scss';
@@ -35,7 +37,6 @@ export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 	const [dropDownWidth, setDropDownWidth] = useState(0);
 
 	const mainButtonRef = useRef<HTMLButtonElement>(null);
-	const dropdownRef = useRef<HTMLDivElement>(null);
 	const dropdownMenuRef = useRef<HTMLDivElement>(null);
 
 	const toggleDropdownMenu = () => {
@@ -51,16 +52,12 @@ export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 		toggleDropdownMenu();
 	}
 
-	const handleClickOutside = (event: Event) => {
-		if (!dropdownRef.current || !showDropdown) {
+	const handleClickOutside = () => {
+		if (!showDropdown) {
 			return;
 		}
 	
-		const outsideDropdown = !dropdownRef.current.contains(event.target as Node);
-
-		if (outsideDropdown) {
-			toggleDropdownMenu();
-		}
+		toggleDropdownMenu();
 	}
 
 	const handleResize = () => {
@@ -108,15 +105,14 @@ export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 		};
 	}, [showDropdown, dropDuration, buttonRendered, dropDownWidth]);
 
-	useEventListener('mousedown', handleClickOutside);
 	useEventListener('resize', handleResize);
 
 	const emptyOptions = options.length === 0
 
 	return (
-		<div
-			ref={dropdownRef}
-			className={containerClassName}
+		<ClickOutside
+			containerClassName={containerClassName}
+			onClickOutside={handleClickOutside}
 		>
 			<ButtonContainer
 				ref={mainButtonRef}
@@ -166,6 +162,6 @@ export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 					/>
 				)}
 			</div>
-		</div>
+		</ClickOutside>
 	);
 };

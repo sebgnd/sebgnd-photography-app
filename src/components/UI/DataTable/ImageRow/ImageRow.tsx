@@ -65,6 +65,7 @@ export const ImageRow: FunctionComponent<ImageRowProps> = ({
             icon="times"
             color="destructive"
             variant="light"
+						confirmationText="Delete this image ?"
             onClick={handleDelete}
           />
         </div>
