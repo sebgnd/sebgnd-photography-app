@@ -1,7 +1,5 @@
 import React, { FunctionComponent, useMemo } from 'react';
 
-import withCentering, { CenteringProps } from 'hoc/withCentering';
-
 import { Icon } from 'components/UI/Content/Icon/Icon';
 import { Text } from 'components/UI/Content/Text/Text';
 
@@ -24,7 +22,7 @@ const icons: IconMap = {
 	information: 'info-circle'
 };
 
-const InformationMessageWithoutCentering: FunctionComponent<InformationMessageProps & CenteringProps> = ({ 
+export const InformationMessage: FunctionComponent<InformationMessageProps> = ({ 
 	message, 
 	color, 
 	messageType,
@@ -55,5 +53,3 @@ const InformationMessageWithoutCentering: FunctionComponent<InformationMessagePr
 		</div>
 	);
 };
-
-export const InformationMessage = withCentering(InformationMessageWithoutCentering);

@@ -11,6 +11,8 @@ import { RecentImage } from 'components/UI/Image';
 import { Spinner } from 'components/UI/Spinner/Spinner';
 import { ImageViewer } from 'components/ImageViewer/ImageViewer';
 
+import { Centered } from 'hoc/Centered/Centered';
+
 import {
 	selectImageList,
 	selectCategoryMap,
@@ -96,7 +98,9 @@ export const Recent: FunctionComponent = () => {
 			))}
 			{loading && (
 				<div className={styles.spinnerContainer}>
-					<Spinner centerHorizontal />
+					<Centered centerHorizontal>
+						<Spinner />
+					</Centered>
 				</div>
 			)}
 			{selection && (

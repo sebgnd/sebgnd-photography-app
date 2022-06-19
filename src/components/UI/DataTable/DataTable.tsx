@@ -3,9 +3,11 @@ import React, { FunctionComponent, ReactNode, Fragment, useId } from 'react';
 import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
 import { IconButton } from 'components/UI/Button';
 import { Separator } from 'components/UI/Separator/Separator';
+import { Spinner } from 'components/UI/Spinner/Spinner';
+
+import { Centered } from 'hoc/Centered/Centered';
 
 import styles from './DataTable.module.scss';
-import { Spinner } from '../Spinner/Spinner';
 
 export type DataTableProps = {
 	items: any[],
@@ -62,11 +64,12 @@ export const DataTable: FunctionComponent<DataTableProps> = ({
 						return (
 							<Fragment key={`DataTable-${dataTableComponentId}-${index}`}>
 								{renderRow(item, generateRowKey(item))}
-								<Separator
-									size="big"
-									centerHorizontal
-									orientation="horizontal"
-								/>
+								<Centered centerHorizontal>
+									<Separator
+										size="big"
+										orientation="horizontal"
+									/>
+								</Centered>
 							</Fragment>
 						)
 					}
@@ -75,22 +78,19 @@ export const DataTable: FunctionComponent<DataTableProps> = ({
 				})}
 				{(isEmpty && !loading) && (
 					<div className={styles.noItemsContainer}>
-						<InformationMessage
-							centerVertical
-							centerHorizontal
-							insideContainer
-							messageType={error ? 'error' : 'information'}
-							message={error ? "Something happened. Try again later." : 'Nothing here !'}
-						/>
+						<Centered centerHorizontal centerVertical insideContainer>
+							<InformationMessage
+								messageType={error ? 'error' : 'information'}
+								message={error ? "Something happened. Try again later." : 'Nothing here !'}
+							/>
+						</Centered>
 					</div>
 				)}
 				{(loading) && (
 					<div className={styles.noItemsContainer}>
-						<Spinner
-							centerHorizontal
-							centerVertical
-							insideContainer
-						/>
+						<Centered centerHorizontal centerVertical insideContainer>
+							<Spinner />
+						</Centered>
 					</div>
 				)}
 			</div>

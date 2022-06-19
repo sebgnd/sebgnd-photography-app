@@ -11,8 +11,9 @@ import { SingleImage } from 'components/UI/Image';
 import { FlexContainer } from 'components/Styled/container';
 import { ImageViewer } from 'components/ImageViewer/ImageViewer';
 import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
-
 import { Spinner } from 'components/UI/Spinner/Spinner';
+
+import { Centered } from 'hoc/Centered/Centered';
 
 import { RootState } from 'redux/store';
 import { fetchImagesFromCategory } from 'redux/slices/gallery/gallery.thunk';
@@ -97,16 +98,17 @@ export const Gallery: FunctionComponent = () => {
 					</div>
 				)}
 				{(categoryLoading || imagesLoading) && (
-					<Spinner centerHorizontal centerVertical fullScreen />
+					<Centered centerHorizontal centerVertical fullScreen>
+						<Spinner />
+					</Centered>
 				)}
 				{(categoryError || imagesError) && (
-					<InformationMessage
-						centerHorizontal
-						centerVertical
-						fullScreen
-						messageType="error"
-						message="Something went wrong"
-					/>
+					<Centered centerHorizontal centerVertical fullScreen>
+						<InformationMessage
+							messageType="error"
+							message="Something went wrong"
+						/>
+					</Centered>
 				)}
 			</>
     )

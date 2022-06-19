@@ -1,16 +1,17 @@
 import React, { FunctionComponent } from 'react';
 
-import withCentering, { CenteringProps } from '../../../hoc/withCentering';
-
 import styles from './Spinner.module.scss';
-interface SpinnerProps {
+
+export type SpinnerProps = {
 	size?: 'normal' | 'small' | 'tiny';
+	zIndex?: number,
 }
-export const Spinner: FunctionComponent<SpinnerProps & CenteringProps> = withCentering(({
+
+export const Spinner: FunctionComponent<SpinnerProps> = ({
 	zIndex,
 	size = 'normal'
 }) => {
 	return (
 		<div className={[styles.spinner, styles[size]].join(' ')} style={{ zIndex }} />
 	)
-});
+};

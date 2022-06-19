@@ -8,6 +8,8 @@ import { GalleryButton } from 'components/UI/Button';
 import { Spinner } from 'components/UI/Spinner/Spinner';
 import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
 
+import { Centered } from 'hoc/Centered/Centered';
+
 import {
 	selectCategoryList,
 	selectIsCategoryListFailed,
@@ -45,16 +47,17 @@ export const Galleries: FunctionComponent = () => {
 	return (
 		<div className={styles.listContainer}>
 			{(loading) && (
-					<Spinner centerHorizontal centerVertical fullScreen />
+				<Centered centerHorizontal centerVertical fullScreen>
+					<Spinner />
+				</Centered>
 			)}
 			{(error) && (
-				<InformationMessage
-					message="Something went wrong"
-					messageType="error"
-					centerHorizontal
-					centerVertical
-					fullScreen
-				/>
+				<Centered centerHorizontal centerVertical fullScreen>
+					<InformationMessage
+						message="Something went wrong"
+						messageType="error"
+					/>
+				</Centered>
 			)}
 			{(!loading && !error) && (
 				<>

@@ -17,6 +17,7 @@ import { Spinner } from 'components/UI/Spinner/Spinner';
 import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
 
 import styles from './Home.module.scss';
+import { Centered } from 'hoc/Centered/Centered';
 
 export const getThumbnailUrl = (imageId: string) => getImageUrl(imageId, {
 	size: 'medium',
@@ -62,14 +63,17 @@ export const Home: FunctionComponent = () => {
 					</div>
 					<div className={styles.row}>
 						{loading && (
-							<Spinner centerHorizontal />
+							<Centered centerHorizontal>
+								<Spinner />
+							</Centered>
 						)}
 						{error && (
-							<InformationMessage
-								message="Something went wrong"
-								messageType="error"
-								centerHorizontal
-							/>
+							<Centered centerHorizontal>
+								<InformationMessage
+									message="Something went wrong"
+									messageType="error"
+								/>
+							</Centered>
 						)}
 						{(!error && !loading) && (
 							<div className={styles.listContainer}>

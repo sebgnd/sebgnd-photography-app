@@ -1,7 +1,5 @@
 import React, { FunctionComponent } from 'react';
 
-import withCentering from 'hoc/withCentering';
-
 import style from './Separator.module.css';
 
 interface SeparatorProp {
@@ -24,7 +22,7 @@ const classes = {
 	}
 }
 
-const SeparatorWithoutCentering: FunctionComponent<SeparatorProp> = ({ size, orientation = 'horizontal' }) => {
+export const Separator: FunctionComponent<SeparatorProp> = ({ size, orientation = 'horizontal' }) => {
 	const styleClass = classes[orientation][size];
 	const separatorClasses = [style.separator, style[styleClass]];
 
@@ -33,4 +31,3 @@ const SeparatorWithoutCentering: FunctionComponent<SeparatorProp> = ({ size, ori
 	);
 };
 
-export const Separator = withCentering(SeparatorWithoutCentering);

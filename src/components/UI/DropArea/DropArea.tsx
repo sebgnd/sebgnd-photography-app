@@ -6,6 +6,8 @@ import { Spinner } from 'components/UI/Spinner/Spinner';
 import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
 import { FileElement, FileExtension } from './FileElement/FileElement';
 
+import { Centered } from 'hoc/Centered/Centered';
+
 import styles from './DropArea.module.scss';
 
 export type FileState = 'idle' | 'loading' | 'success';
@@ -107,21 +109,19 @@ export const DropArea: FunctionComponent<DropAreaProps> = ({
 			className={`${styles.dropArea} ${inDropArea ? styles.greenBorder : ''}`}
 		>
 			{files.length === 0 && (
-				<InformationMessage 
-					message={textBeforeDrop} 
-					messageType="information" 
-					centerHorizontal 
-					centerVertical 
-				/> 
+				<Centered centerHorizontal centerVertical>
+					<InformationMessage 
+						message={textBeforeDrop} 
+						messageType="information" 
+					/> 
+				</Centered>
 			)}
 			{loading && (
 				<div className={styles.loadingBlocker}>
 					<div className={styles.spinerContainer}>
-						<Spinner
-							centerHorizontal
-							centerVertical
-							insideContainer
-						/>
+						<Centered centerHorizontal centerVertical insideContainer>
+							<Spinner />
+						</Centered>
 					</div>
 				</div>
 			)}

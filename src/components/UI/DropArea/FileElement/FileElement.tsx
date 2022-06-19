@@ -3,7 +3,7 @@ import React, { FunctionComponent } from 'react';
 import { Text } from 'components/UI/Content/Text/Text';
 import { Icon } from 'components/UI/Content/Icon/Icon';
 
-import withActionBadge, { WithActionBadgeProps } from 'hoc/withActionBadge';
+import { ActionBadge, ActionBadgeProps } from 'hoc/ActionBadge/ActionBadge';
 
 import styles from './FileElement.module.scss';
 
@@ -12,6 +12,7 @@ export type FileExtension = 'png' | 'jpg';
 export type FileProps = {
 	name: string;
 	extension: FileExtension,
+	onBadgeClick: ActionBadgeProps['onBadgeClick'],
 }
 
 export const icons: Record<FileExtension, string> = {
@@ -19,18 +20,21 @@ export const icons: Record<FileExtension, string> = {
 	'jpg': 'file-image',
 };
 
-export const FileElement: FunctionComponent<FileProps & WithActionBadgeProps> = withActionBadge(({
+export const FileElement: FunctionComponent<FileProps> = ({
 	name,
 	extension,
+	onBadgeClick,
 }) => {
 	return (
-		<div className={styles.file}>
-			<div className={styles.filePreview}>
-				<Icon size="2x-large" name={icons[extension]} />
+		<ActionBadge iconName="times" onBadgeClick={onBadgeClick}>
+			<div className={styles.file}>
+				<div className={styles.filePreview}>
+					<Icon size="2x-large" name={icons[extension]} />
+				</div>
+				<div className={styles.fileName}>
+					<Text ellipsis wrap={false} lines={1} type="p" text={name} />
+				</div>
 			</div>
-			<div className={styles.fileName}>
-				<Text ellipsis wrap={false} lines={1} type="p" text={name} />
-			</div>
-		</div>
+		</ActionBadge>
 	);
-}, { name: 'times' });
+};
