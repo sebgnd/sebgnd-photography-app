@@ -5,10 +5,11 @@ import { ButtonContainer } from 'components/Styled/container';
 import { ImageFade } from 'components/UI/Image/ImageFade/ImageFade';
 
 import styles from './GalleryButton.module.scss';
+import { Svg } from 'components/UI/Content/Svg/Svg';
 
 export type GalleryButtonProp = {
 	src: string;
-	imageId: string;
+	imageId?: string;
 	onClick: () => void;
 	categoryDisplayName: string;
 }
@@ -19,11 +20,15 @@ export const GalleryButton: FunctionComponent<GalleryButtonProp> = ({ src, image
 			<div className={styles.galleryButtonWrapper}>
 				<ButtonContainer onClick={() => onClick()}>
 					<div className={styles.galleryImage}>
-						<ImageFade
-							className={styles.image}
-							src={src}
-							alt={imageId}
-						/>
+						{imageId ? (
+							<ImageFade
+								className={styles.image}
+								src={src}
+								alt={imageId}
+							/>
+						) : (
+							<Svg name="processing-image" size="100%" />
+						)}
 					</div>
 
 					<div id="gallery-name" className={styles.galleryName}>

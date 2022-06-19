@@ -4,7 +4,7 @@ import { icons, IconName } from './icons';
 
 export type SvgProps = {
 	name: IconName,
-	size?: number,
+	size?: number | string,
 };
 
 export const Svg: FunctionComponent<SvgProps> = ({ name, size = 80 }) => {

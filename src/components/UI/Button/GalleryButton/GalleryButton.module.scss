@@ -27,6 +27,8 @@
 .galleryImage {
 	height: 100%;
 	width: 100%;
+	border-radius: 5px;
+	overflow: hidden;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 	display: flex;
 	transform: none;
@@ -34,7 +36,6 @@
 }
 
 .image {
-	border-radius: 5px;
 	height: 100%;
 	width: 100%;
 }

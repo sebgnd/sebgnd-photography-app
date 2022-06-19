@@ -84,10 +84,11 @@ export const DropdownButton: FunctionComponent<DropdownButtonProps> = ({
 		return {
 			transition: `max-height ${dropDuration}ms`,
 			maxHeight: !showDropdown ? 0 : dropdownMenuRef.current?.scrollHeight,
+			visibility: buttonRendered ? 'visible' : 'hidden',
 			top: mainButtonRef.current ? mainButtonRef.current.scrollHeight : 0,
 			left: 0,
 		};
-	}, [showDropdown, dropDuration]);
+	}, [showDropdown, buttonRendered, dropDuration]);
 
 	const dropdownBackgroundStyle = useMemo((): CSSProperties => {
 		if (!mainButtonRef.current || !dropdownMenuRef.current) {

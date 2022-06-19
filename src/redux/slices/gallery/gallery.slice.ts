@@ -85,9 +85,7 @@ const gallerySlice = createSlice({
 		setImageProcessStatus: ({ image }, { payload }: SetImageProcessStatus) => {
 			const { id, status } = payload;
 
-			if (image.edition.statuses[id] !== undefined) {
-				image.edition.statuses[id] = status;
-			}
+			image.edition.statuses[id] = status;
 		} 
 	},
 	extraReducers: (builder) => {
