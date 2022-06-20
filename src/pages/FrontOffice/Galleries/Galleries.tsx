@@ -19,7 +19,8 @@ import {
 import styles from './Galleries.module.css';
 
 // TODO: Maybe move that to the api response
-export const getThumbnailUrl = (imageId: string) => getImageUrl(imageId, {
+export const getThumbnailUrl = (imageId: string | null) => getImageUrl({
+	id: imageId,
 	size: 'medium',
 	thumbnail: true,
 });
@@ -66,7 +67,7 @@ export const Galleries: FunctionComponent = () => {
 							<div key={categoryId} className={styles.galleryButtonContainer}>
 								<GalleryButton
 									src={getThumbnailUrl(imageId)}
-									imageId={imageId}
+									imageId={imageId || undefined}
 									onClick={navigateToGalleryPage(categoryId)}
 									categoryDisplayName={galleryName}   
 								/>

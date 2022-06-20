@@ -9,6 +9,7 @@ import { Gallery } from 'pages/FrontOffice/Gallery/Gallery';
 import { Recent } from 'pages/FrontOffice/Recent/Recent';
 
 import { Home as BackOfficeHome } from 'pages/BackOffice/Home/Home';
+import { GallerySettings } from 'pages/BackOffice/GallerySettings/GallerySettings';
 
 import { UserLayout } from 'layouts/UserLayout';
 import { AdminLayout } from 'layouts/AdminLayout';
@@ -35,6 +36,7 @@ export const App: FunctionComponent = () => {
 					<Routes>
 						<Route path="admin" element={<AdminLayout />}>
 							<Route path="home" element={<BackOfficeHome />} />
+							<Route path="gallery-settings" element={<GallerySettings />} />
 						</Route>
 						<Route path="*" element={<UserLayout />}>
 							<Route index element={<FrontOfficeHome />} />

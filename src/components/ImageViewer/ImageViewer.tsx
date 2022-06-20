@@ -16,7 +16,8 @@ export type ImageViewerProps = {
 };
 
 export const ImageViewer: FunctionComponent<ImageViewerProps> = ({ imageId, exif, onBackdropClick }) => {
-	const imageUrl = getImageUrl(imageId, {
+	const imageUrl = getImageUrl({
+		id: imageId,
 		size: 'full',
 		thumbnail: false,
 	});
@@ -36,9 +37,9 @@ export const ImageViewer: FunctionComponent<ImageViewerProps> = ({ imageId, exif
 			<Backdrop zIndex={100} onClick={onBackdropClick} show={true} />
 			<div className={styles.imageContainer}>
 					<ViewerImage
-							src={imageUrl}
-							imageInfo={imageInfo}
-							imageId={imageId}
+						src={imageUrl!}
+						imageInfo={imageInfo}
+						imageId={imageId}
 					/>
 			</div>
 		</div>

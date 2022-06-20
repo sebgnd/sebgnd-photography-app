@@ -1,0 +1,9 @@
+.gallerySettingsContainer {
+	width: 1000px;
+	margin: auto;
+	margin-top: 32px;
+
+	@media (max-width: 1000px) {
+		width: 100%;	
+	}
+}

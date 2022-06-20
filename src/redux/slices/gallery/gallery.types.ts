@@ -4,7 +4,7 @@ export type CategoryItem = {
 	id: string,
 	name: string,
 	displayName: string,
-	thumbnailId: string,
+	thumbnailId: string | null,
 }
 
 export type ImageItem = {

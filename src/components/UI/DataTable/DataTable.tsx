@@ -14,12 +14,12 @@ export type DataTableProps = {
 	error?: boolean,
 	loading?: boolean,
 	separator?: boolean,
+	dynamicContent?: boolean,
 	disableNextButton?: boolean,
 	disablePreviousButton?: boolean,
-	onNextClick: () => void | Promise<void>,
-	onPreviousClick: () => void | Promise<void>,
+	onNextClick?: () => void | Promise<void>,
+	onPreviousClick?: () => void | Promise<void>,
 	renderRow: (item: any, key: string) => ReactNode,
-	renderSeparator?: () => ReactNode,
 	generateRowKey: (item: any) => string,
 }
 
@@ -28,12 +28,13 @@ export const DataTable: FunctionComponent<DataTableProps> = ({
 	error = false,
 	loading = false,
 	separator = false,
+	dynamicContent = true,
 	disableNextButton = false,
 	disablePreviousButton = false,
 	renderRow,
-	onNextClick,
 	generateRowKey,
-	onPreviousClick,
+	onNextClick = () => {},
+	onPreviousClick  = () => {},
 }) => {
 	const dataTableComponentId = useId();
 	const isEmpty = items.length === 0;
@@ -41,22 +42,24 @@ export const DataTable: FunctionComponent<DataTableProps> = ({
 	return (
 		<div className={styles.dataTableContainer}>
 			<div className={styles.dataTableHeader}>
-				<div className={styles.arrowsContainer}>
-					<IconButton
-						variant="classic"
-						color="default"
-						icon="arrow-left"
-						onClick={onPreviousClick}
-						disabled={disablePreviousButton}
-					/>
-					<IconButton
-						variant="classic"
-						color="default"
-						icon="arrow-right"
-						onClick={onNextClick}
-						disabled={disableNextButton}
-					/>
-				</div>
+				{dynamicContent && (
+					<div className={styles.arrowsContainer}>
+						<IconButton
+							variant="classic"
+							color="default"
+							icon="arrow-left"
+							onClick={onPreviousClick}
+							disabled={disablePreviousButton}
+						/>
+						<IconButton
+							variant="classic"
+							color="default"
+							icon="arrow-right"
+							onClick={onNextClick}
+							disabled={disableNextButton}
+						/>
+					</div>
+				)}
 			</div>
 			<div className={styles.listContainer}>
 				{items.map((item, index) => {

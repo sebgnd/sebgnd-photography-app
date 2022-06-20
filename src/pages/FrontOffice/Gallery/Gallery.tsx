@@ -77,10 +77,11 @@ export const Gallery: FunctionComponent = () => {
 						>
 							{images.map((img) => (
 								<SingleImage
-									src={getImageUrl(img.id, {
+									src={getImageUrl({
+										id: img.id,
 										thumbnail: true,
 										size: 'medium'
-									})}
+									})!}
 									key={img.id}
 									onClick={selectImage}
 									imageId={img.id}
