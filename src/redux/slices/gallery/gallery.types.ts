@@ -146,3 +146,8 @@ export type DeleteImageResponse = {
 export type DeleteImagePayload = {
 	id: string,
 };
+
+export type SetCategoryThumbnailPayload = {
+	categoryId: string,
+	thumbnailId: string,
+};

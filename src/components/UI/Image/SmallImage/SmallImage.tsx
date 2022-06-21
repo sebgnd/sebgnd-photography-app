@@ -4,6 +4,7 @@ import type { FunctionComponent } from 'react';
 import { Svg } from 'components/UI/Content/Svg/Svg';
 
 import styles from './SmallImage.module.scss';
+import { ActionBadge } from 'hoc/ActionBadge/ActionBadge';
 
 export type SmallImageProps = {
   id?: string,
@@ -26,12 +27,12 @@ export const SmallImage: FunctionComponent<SmallImageProps> = ({
     () => {
       const classNames = [styles.image];
 
-      if (selected) classNames.push(styles.selected);
       if (clickable) classNames.push(styles.clickableImage);
+			if (selected) classNames.push(styles.selected);
 
       return classNames.join(' ');
     },
-    [selected, clickable]
+    [clickable, selected]
   );
 
   const handleClick = useCallback(() => {
@@ -43,15 +44,23 @@ export const SmallImage: FunctionComponent<SmallImageProps> = ({
   }, [onClick, id, clickable]);
 
   return (
-    <div className={className} onClick={handleClick}>
-      {(!placeholder && src && id)
-        ? (
-          <img src={src} alt={id} />
-        )
-        : (
-          <Svg name="processing-image" />
-        )
-      }
-    </div>
+		<ActionBadge
+			iconName="check"
+			visible={selected}
+		>
+			<div className={className} onClick={handleClick}>
+				{(!placeholder && src && id)
+					? (
+						<img
+							src={src}
+							alt={id}
+						/>
+					)
+					: (
+						<Svg name="processing-image" />
+					)
+				}
+			</div>
+		</ActionBadge>
   );
 };

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getImageUrl } from 'libs/image/get-image-url';
 
+import { fetchImagesFromCategory, setCategoryThumbnail } from 'redux/slices/gallery/gallery.thunk';
 import { selectCategoryList, selectImageList } from 'redux/slices/gallery/gallery.selector';
 import { CategoryItem } from 'redux/slices/gallery/gallery.types';
 
@@ -11,7 +12,6 @@ import { CategoryRow } from 'components/UI/DataTable/CategoryRow/CategoryRow';
 import { SelectThumbnailModal } from 'components/Modal/SelectThumbnailModal/SelectThumbnailModal';
 
 import styles from './GallerySettings.module.scss';
-import { fetchImagesFromCategory } from 'redux/slices/gallery/gallery.thunk';
 
 export const GallerySettings: FunctionComponent = () => {
 	const dispatch = useDispatch();
@@ -50,6 +50,23 @@ export const GallerySettings: FunctionComponent = () => {
 		setSelectedCategoryId(null);
 	}, []);
 
+	const handleSelect = useCallback(async (imageId: string) => {
+		if (!selectedCategoryId) {
+			return;
+		}
+
+		console.log(selectedCategoryId);
+
+		await dispatch(
+			setCategoryThumbnail({
+				categoryId: selectedCategoryId,
+				thumbnailId: imageId,
+			}),
+		)
+
+		setSelectedCategoryId(null);
+	}, [dispatch, selectedCategoryId]);
+
 	useEffect(() => {
 		if (selectedCategoryId) {
 			dispatch(fetchImagesFromCategory(selectedCategoryId))
@@ -64,8 +81,9 @@ export const GallerySettings: FunctionComponent = () => {
 					dynamicContent={false}
 					items={categories}
 					generateRowKey={generateRowKey}
-					renderRow={(item: CategoryItem) => (
+					renderRow={(item: CategoryItem, key: string) => (
 						<CategoryRow
+							key={key}
 							categoryId={item.id}
 							categoryName={item.displayName}
 							thumbnailUrl={getThumbnailUrl(item.thumbnailId)}
@@ -79,7 +97,7 @@ export const GallerySettings: FunctionComponent = () => {
 				isOpen={selectedCategoryId !== null}
 				onCancel={handleCancel}
 				images={formattedImages}
-				onSelect={() => {}}
+				onSelect={handleSelect}
 			/>
 		</>
 	);

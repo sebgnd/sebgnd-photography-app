@@ -11,6 +11,7 @@ export const IMAGE_SIZES: Record<ImageSize, string> = {
 	'small': '80',
 }
 
+// TODO: Fix this function and where it is used
 export const getImageUrl = (config: ImageConfig) => {
 	const { thumbnail, size, id } = config;
 

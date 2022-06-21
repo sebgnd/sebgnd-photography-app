@@ -7,6 +7,7 @@ import {
 	fetchImagesFromCategory,
 	fetchImagesPaginated,
 	uploadImages,
+	setCategoryThumbnail,
 } from './gallery.thunk';
 import { GalleryState, CategoryItem, ImageItem, SetImageProcessStatus, ImageStatus } from './gallery.types';
 
@@ -232,6 +233,15 @@ const gallerySlice = createSlice({
 
 			imageAdapter.removeOne(image.list.items, id);
 			image.edition.statuses = otherStatuses;
+		});
+
+		builder.addCase(setCategoryThumbnail.fulfilled, ({ category }, { meta }) => {
+			categoryAdapter.updateOne(category.list.items, {
+				id: meta.arg.categoryId,
+				changes: {
+					thumbnailId: meta.arg.thumbnailId,
+				},
+			});
 		})
 	}
 });

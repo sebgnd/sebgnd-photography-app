@@ -38,14 +38,19 @@ export const SelectThumbnailModal: FunctionComponent<SelectThumbnailModalProps> 
     onSelect(selectedId);
   }, [onSelect, selectedId]);
 
+	const handleCancel = useCallback(() => {
+		setSelectedId(null);
+		onCancel();
+	}, [onCancel]);
+
   return (
     <Modal
       isOpen={isOpen}
       confirmText="Select thumbnail"
       cancelText="Cancel"
       title="Select category thumbnail"
-      onCancel={onCancel}
-      onClose={onCancel}
+      onCancel={handleCancel}
+      onClose={handleCancel}
       onConfirm={handleConfirm}
     >
       <div className={styles.imageListContainer}>
@@ -58,6 +63,7 @@ export const SelectThumbnailModal: FunctionComponent<SelectThumbnailModalProps> 
                 src={src}
                 placeholder={false}
                 onClick={handleImageSelection}
+								selected={id === selectedId}
               />
             </div>
           ))

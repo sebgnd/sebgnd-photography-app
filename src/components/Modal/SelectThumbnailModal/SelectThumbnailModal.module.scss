@@ -3,11 +3,21 @@
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
+	margin: auto;
+	width: 65%;
+
+	@media (max-width: 850px) {
+		width: 80%;
+	}
+
+	@media (max-width: 700px) {
+		width: 100%;
+	}
 }
 
 .imageContainer {
-  margin: 4px;
+  margin: 12px;
 }
 
 .emptyCategory {

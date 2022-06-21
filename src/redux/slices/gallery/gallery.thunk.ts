@@ -9,7 +9,8 @@ import {
 	FetchImagesPaginatedPayload,
 	FetchImagesPaginatedResponse,
 	UploadImagesPayload,
-	UploadImagesResponse
+	UploadImagesResponse,
+	SetCategoryThumbnailPayload
 } from './gallery.types';
 
 export const fetchAllCategories = createAsyncThunk<FetchAllCategoriesResponse>(
@@ -100,5 +101,22 @@ export const deleteImage = createAsyncThunk<DeleteImageResponse, DeleteImagePayl
 		});
 
 		return response.json();
+	}
+)
+
+export const setCategoryThumbnail = createAsyncThunk<void, SetCategoryThumbnailPayload>(
+	'gallery/setCategoryThumbnail',
+	async ({ categoryId, thumbnailId }) => {
+		const request = new Request(`http://localhost:8000/api/categories/${categoryId}/thumbnail`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				imageId: thumbnailId,
+			}),
+		});
+
+		await fetch(request);
 	}
 )

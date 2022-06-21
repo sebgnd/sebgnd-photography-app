@@ -1,16 +1,16 @@
 .image {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
+	border-radius: 5px;
+	overflow: hidden;
 
-  &.selected {
-    border-width: 1px;
-    border-color: #0073FF;
-  }
+	&.selected {
+		opacity: .75;
+	}
 
   * {
     width: 100%;
     height: 100%;
-    border-radius: 5px;
   }
 }
 
