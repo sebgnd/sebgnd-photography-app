@@ -8,7 +8,7 @@ import MoreNavigation from './MoreNavigation/MoreNavigation';
 import styles from './TopNavigation.module.scss';
 
 interface TopNavigationProps {
-  moreItems: INavItem[];
+  moreItems?: INavItem[];
   normalItems: INavItem[];
   onMoreClick: () => void;
   isMoreOpen: boolean;
@@ -37,12 +37,14 @@ const TopNavigation: FunctionComponent<TopNavigationProps> = ({ normalItems, mor
             />
           ))}
         </div>
-        <MoreNavigation 
-          normalItems={normalItems} 
-          moreItems={moreItems} 
-          onClick={onMoreClick}
-          isOpen={isMoreOpen}
-        />
+        {(moreItems && moreItems.length) && (
+          <MoreNavigation 
+            normalItems={normalItems} 
+            moreItems={moreItems} 
+            onClick={onMoreClick}
+            isOpen={isMoreOpen}
+          />
+        )}
       </div>
     </div>
   )

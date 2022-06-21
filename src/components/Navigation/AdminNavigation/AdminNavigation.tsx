@@ -1,11 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
 
 import TopNavigation from './TopNavigation/TopNavigation';
-import { INavItem } from '../NavigationItem/NavigationItem';
-
-const moreItems: INavItem[] = [
-	{ url: '/admin/password', name: 'Change password' },
-];
 
 const normalItems = [
 	{ url: '/admin/home', name: 'Home' },
@@ -23,7 +18,6 @@ const AdminNavigation: FunctionComponent = () => {
 	return (
 		<nav>
 			<TopNavigation 
-				moreItems={moreItems} 
 				normalItems={normalItems} 
 				onMoreClick={toggleMoreNav}
 				isMoreOpen={moreNavOpen}

@@ -4,11 +4,11 @@ import { getImageUrl } from 'libs/image/get-image-url';
 
 import { IconButton } from 'components/UI/Button';
 import { Text } from 'components/UI/Content/Text/Text';
-import { Svg } from 'components/UI/Content/Svg/Svg';
 import { Label } from 'components/UI/Content/Label/Label';
 
 import styles from './ImageRow.module.scss';
 import { Spinner } from 'components/UI/Spinner/Spinner';
+import { SmallImage } from 'components/UI/Image/SmallImage/SmallImage';
 
 export type ImageRowProps = {
   imageId: string,
@@ -40,14 +40,11 @@ export const ImageRow: FunctionComponent<ImageRowProps> = ({
     <div className={styles.imageRowContainer}>
       <div className={styles.sideContainer}>
         <div className={styles.image}>
-					{status === 'valid'
-						? (
-							<img src={imageUrl} alt={imageId} />
-						)
-						: (
-							<Svg name="processing-image" />
-						)
-					}
+          <SmallImage
+            id={imageId}
+            src={imageUrl}
+            placeholder={status !== 'valid'}
+          />
         </div>
         <Label color="default" text={`#${imageId}`} />
         {thumbnail && (
