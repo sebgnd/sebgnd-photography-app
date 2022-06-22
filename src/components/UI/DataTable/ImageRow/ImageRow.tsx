@@ -14,7 +14,7 @@ export type ImageRowProps = {
   imageId: string,
   thumbnail: boolean,
   selected: boolean,
-	status: 'error' | 'processing' | 'valid',
+	status: 'error' | 'processing' | 'valid' | 'unknown',
   onDelete: (id: string) => void,
 }
 
@@ -29,8 +29,7 @@ export const ImageRow: FunctionComponent<ImageRowProps> = ({
   }, [onDelete, imageId]);
 
   const imageUrl = useMemo(() => {
-    return getImageUrl({
-			id: imageId,
+    return getImageUrl(imageId, {
       thumbnail: true,
       size: 'small',
     });

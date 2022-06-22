@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useCallback, useMemo, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getImageUrl } from 'libs/image/get-image-url';
+import { getImageUrl, getImageUrlOrUndefined } from 'libs/image/get-image-url';
 
 import { fetchImagesFromCategory, setCategoryThumbnail } from 'redux/slices/gallery/gallery.thunk';
 import { selectCategoryList, selectImageList } from 'redux/slices/gallery/gallery.selector';
@@ -25,20 +25,20 @@ export const GallerySettings: FunctionComponent = () => {
 		return item.id;
 	}, []);
 
-	const getThumbnailUrl = useCallback((thumbnailId: string | null) => getImageUrl({
-		id: thumbnailId,
-		thumbnail: true,
-		size: 'small',
-	}), []);
+	const getThumbnailUrl = useCallback((thumbnailId: string | null) => {
+		return getImageUrlOrUndefined(thumbnailId, {
+			thumbnail: true,
+			size: 'small',
+		})
+	}, []);
 
 	const formattedImages = useMemo(() => {
 		return images.map((image) => ({
 			id: image.id,
-			src: getImageUrl({
-				id: image.id,
+			src: getImageUrl(image.id, {
 				size: 'small',
 				thumbnail: true,
-			})!,
+			}),
 		}))
 	}, [images]);
 
@@ -54,8 +54,6 @@ export const GallerySettings: FunctionComponent = () => {
 		if (!selectedCategoryId) {
 			return;
 		}
-
-		console.log(selectedCategoryId);
 
 		await dispatch(
 			setCategoryThumbnail({

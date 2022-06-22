@@ -2,7 +2,7 @@ import React, { FunctionComponent, useMemo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { getImageUrl } from 'libs/image/get-image-url';
+import { getImageUrlOrUndefined } from 'libs/image/get-image-url';
 
 import {
 	selectFirstThreeCategory,
@@ -19,8 +19,7 @@ import { InformationMessage } from 'components/UI/InformationMessage/Information
 import styles from './Home.module.scss';
 import { Centered } from 'hoc/Centered/Centered';
 
-export const getThumbnailUrl = (imageId: string | null) => getImageUrl({
-	id: imageId,
+export const getThumbnailUrl = (imageId: string | null) => getImageUrlOrUndefined(imageId, {
 	size: 'medium',
 	thumbnail: true,
 });

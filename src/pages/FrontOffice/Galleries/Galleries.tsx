@@ -2,7 +2,7 @@ import React, { FunctionComponent, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { getImageUrl } from 'libs/image/get-image-url';
+import { getImageUrlOrUndefined } from 'libs/image/get-image-url';
 
 import { GalleryButton } from 'components/UI/Button';
 import { Spinner } from 'components/UI/Spinner/Spinner';
@@ -18,12 +18,12 @@ import {
 
 import styles from './Galleries.module.css';
 
-// TODO: Maybe move that to the api response
-export const getThumbnailUrl = (imageId: string | null) => getImageUrl({
-	id: imageId,
-	size: 'medium',
-	thumbnail: true,
-});
+export const getThumbnailUrl = (imageId: string | null) => {
+	return getImageUrlOrUndefined(imageId, {
+		size: 'medium',
+		thumbnail: true,
+	});
+};
 
 export const Galleries: FunctionComponent = () => {
 	const navigate = useNavigate();

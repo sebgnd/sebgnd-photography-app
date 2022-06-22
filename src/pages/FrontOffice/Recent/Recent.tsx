@@ -84,11 +84,10 @@ export const Recent: FunctionComponent = () => {
 				<RecentImage
 					key={img.id}
 					date={img.createdAt}
-					src={getImageUrl({
-						id: img.id,
+					src={getImageUrl(img.id, {
 						size: 'medium',
 						thumbnail: false,
-					})!}
+					})}
 					imageId={img.id}
 					categoryId={img.categoryId}
 					categoryDisplayName={categoryMap[img.categoryId]?.displayName || "Unknown"}

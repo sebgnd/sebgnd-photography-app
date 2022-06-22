@@ -30,7 +30,6 @@ import { ImageItem } from 'redux/slices/gallery/gallery.types';
 import styles from './Home.module.css';
 import { deleteImage, uploadImages } from 'redux/slices/gallery/gallery.thunk';
 
-// TODO: Add retry when processing fails
 export const Home: FunctionComponent = () => {
 	const dispatch = useAppDispatch();
 	const [searchParams, setSearchParams] = useSearchParams();

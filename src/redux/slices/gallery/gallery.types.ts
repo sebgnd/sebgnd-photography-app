@@ -1,5 +1,7 @@
 import { EntityState, PayloadAction } from '@reduxjs/toolkit';
 
+// State
+
 export type CategoryItem = {
 	id: string,
 	name: string,
@@ -7,9 +9,10 @@ export type CategoryItem = {
 	thumbnailId: string | null,
 }
 
+export type ImageType = 'landscape' | 'portrait' | 'unknown';
 export type ImageItem = {
 	id: string,
-	type: 'landscape' | 'portrait',
+	type: ImageType,
 	createdAt: string,
 	categoryId: string,
 }
@@ -24,7 +27,8 @@ export type SelectedImage = {
 	},
 }
 
-export type ImageStatus = 'processing' | 'error' | 'valid';
+export type ImageStatus = 'processing' | 'error' | 'valid' | 'unknown';
+export type ImageStatusRecord = Record<string, ImageStatus>;
 
 export type GalleryState = {
 	category: {
@@ -41,7 +45,8 @@ export type GalleryState = {
 			loading: boolean,
 			hasNext: boolean,
 			hasPrevious: boolean,
-			total: number | null,
+			limit: number,
+			total: number,
 			nextOffset: number,
 			previousOffset: number,
 			items: EntityState<ImageItem>,
@@ -51,7 +56,7 @@ export type GalleryState = {
 				loading: boolean,
 				error: boolean,
 			},
-			statuses: Record<string, ImageStatus>,
+			statuses: ImageStatusRecord,
 		}
 		selection: {
 			item: SelectedImage | null,
@@ -59,6 +64,8 @@ export type GalleryState = {
 		},
 	},
 };
+
+// Actions
 
 export type SetImageProcessStatus = PayloadAction<{
 	id: string,

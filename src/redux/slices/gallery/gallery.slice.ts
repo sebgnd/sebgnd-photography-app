@@ -9,7 +9,14 @@ import {
 	uploadImages,
 	setCategoryThumbnail,
 } from './gallery.thunk';
-import { GalleryState, CategoryItem, ImageItem, SetImageProcessStatus, ImageStatus } from './gallery.types';
+import {
+	GalleryState,
+	CategoryItem,
+	ImageItem,
+	SetImageProcessStatus,
+} from './gallery.types';
+import { reduceImageStatuses } from './gallery.utils';
+
 
 export const categoryAdapter = createEntityAdapter<CategoryItem>({
 	selectId: (category) => category.id,
@@ -26,12 +33,6 @@ export const imageAdapter = createEntityAdapter<ImageItem>({
 	}
 });
 
-export const isImageStatus = (value: string): value is ImageStatus => {
-	const statuses = ['processing', 'valid', 'valid'];
-
-	return statuses.includes(value);
-}
-
 const initialState: GalleryState = {
 	category: {
 		list: {
@@ -44,13 +45,14 @@ const initialState: GalleryState = {
 	image: {
 		list: {
 			items: imageAdapter.getInitialState(),
-			hasPrevious: true,
+			hasNext: false,
+			hasPrevious: false,
+			total: 0,
+			limit: 0,
 			nextOffset: 0,
 			previousOffset: 0,
 			loading: false,
-			hasNext: true,
 			error: false,
-			total: null,
 		},
 		edition: {
 			upload: {
@@ -70,88 +72,134 @@ const gallerySlice = createSlice({
 	name: 'gallery',
 	initialState,
 	reducers: {
-		clearImageSelection: ({ image }) => {
+		clearImageSelection: (state) => {
+			const { image } = state;
+
 			image.selection.item = null;
 		},
-		clearImageList: ({ image }) => {
+		clearImageList: (state) => {
+			const { image } = state;
+
 			imageAdapter.removeAll(image.list.items);
-			image.list.hasNext = true;
-			image.list.hasPrevious = true;
-			image.list.nextOffset = 0;
-			image.list.previousOffset = 0;
-			image.list.total = null;
-			image.list.error = false;
-			image.list.loading = false;
+			image.list = {
+				...image.list,
+				hasNext: true,
+				hasPrevious: true,
+				nextOffset: 0,
+				previousOffset: 0,
+				total: 0,
+				error: false,
+				loading: false,
+			}
 		},
-		setImageProcessStatus: ({ image }, { payload }: SetImageProcessStatus) => {
+		setImageProcessStatus: (state, { payload }: SetImageProcessStatus) => {
 			const { id, status } = payload;
+			const { image } = state;
 
 			image.edition.statuses[id] = status;
 		} 
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchAllCategories.pending, ({ category }) => {
-			category.list.loading = true;
-			category.list.error = false;
+			category.list = {
+				...category.list,
+				loading: true,
+				error: false,
+			}
 		});
 
 		builder.addCase(fetchAllCategories.fulfilled, ({ category }, { payload }) => {
+			const { items } = category.list;
+
 			category.list.loading = false;
-			categoryAdapter.setAll(category.list.items, payload.items.map((item) => ({
-				id: item.id,
-				displayName: item.displayName,
-				name: item.name,
-				thumbnailId: item.thumbnail.id,
-			})));
+
+			categoryAdapter.setAll(items, payload.items.map(
+				(item) => ({
+					id: item.id,
+					displayName: item.displayName,
+					name: item.name,
+					thumbnailId: item.thumbnail.id,
+				})
+			));
 		});
 
 		builder.addCase(fetchAllCategories.rejected, ({ category }) => {
-			category.list.error = true;
-			category.list.loading = false;
+			category.list = {
+				...category.list,
+				error: true,
+				loading: false,
+			}
 		});
 
-		builder.addCase(fetchImagesFromCategory.pending, ({ image }) => {
-			image.list.loading = true;
-			image.list.error = false;
-			imageAdapter.removeAll(image.list.items);
+		builder.addCase(fetchImagesFromCategory.pending, (state) => {
+			const { image } = state;
+			const { items } = image.list;
+
+			imageAdapter.removeAll(items);
+			image.list = {
+				...image.list,
+				loading: true,
+				error: false,
+			}
 		});
 
-		builder.addCase(fetchImagesFromCategory.fulfilled, ({ image }, { payload }) => {
-			image.list.loading = false;
-			imageAdapter.setAll(image.list.items, payload.items.map((item) => ({
-				id: item.id,
-				type: item.type,
-				categoryId: item.categoryId,
-				createdAt: item.createdAt,
-			})));
+		builder.addCase(fetchImagesFromCategory.fulfilled, (state, { payload }) => {
+			const { list } = state.image;
+	
+			list.loading = false;
+			imageAdapter.setAll(list.items, payload.items.map(
+				(item) => ({
+					id: item.id,
+					type: item.type,
+					categoryId: item.categoryId,
+					createdAt: item.createdAt,
+				}))
+			);
 		});
 
-		builder.addCase(fetchImagesFromCategory.rejected, ({ image }) => {
-			image.list.error = true;
-			image.list.loading = false;
+		builder.addCase(fetchImagesFromCategory.rejected, (state) => {
+			const { image } = state;
+
+			image.list = {
+				...image.list,
+				error: true,
+				loading: false,
+			}
 		});
 
-		builder.addCase(fetchImage.pending, ({ image }) => {
-			image.selection.item = null;
-			image.selection.loading = true;
-		});
+		builder.addCase(fetchImage.pending, (state) => {
+			const { image } = state;
 
-		builder.addCase(fetchImage.fulfilled, ({ image }, { payload }) => {
-			image.selection.item = {
-				id: payload.id,
-				exif: payload.exif
-					? {
-						iso: payload.exif.iso,
-						shutterSpeed: payload.exif.shutterSpeed,
-						focalLength: payload.exif.focalLength,
-						aperture: payload.exif.aperture,
-					}
-					: undefined,
+			image.selection = {
+				...image.selection,
+				item: null,
+				loading: true,
 			};
-			image.selection.loading = false;
 		});
 
-		builder.addCase(fetchImagesPaginated.pending, ({ image }, { meta }) => {
+		builder.addCase(fetchImage.fulfilled, (state, { payload }) => {
+			const { image } = state;
+
+			image.selection = {
+				...image.selection,
+				loading: false,
+				item: {
+					id: payload.id,
+					exif: payload.exif
+						? {
+							iso: payload.exif.iso,
+							shutterSpeed: payload.exif.shutterSpeed,
+							focalLength: payload.exif.focalLength,
+							aperture: payload.exif.aperture,
+						}
+						: undefined,
+				}
+			};
+		});
+
+		builder.addCase(fetchImagesPaginated.pending, (state, { meta }) => {
+			const { image } = state;
+
 			image.list.loading = true;
 			
 			if (meta.arg.offset === 0) {
@@ -159,83 +207,108 @@ const gallerySlice = createSlice({
 			}
 		});
 
-		builder.addCase(fetchImagesPaginated.fulfilled, ({ image }, { payload }) => {
+		builder.addCase(fetchImagesPaginated.fulfilled, (state, { payload }) => {
+			const { image } = state;
 			const { result, resetList } = payload;
-			const { offset, total, limit } = result;
+			const { offset: currentOffset, total, limit } = result;
+			const { edition } = image;
 
-			image.list.loading = false;
-			image.list.total = total;
-
-			if (offset >= total || offset + limit <= 0) {
+			// Invalid pagination, maybe should throw an error
+			if (currentOffset > total || currentOffset < 0) {
 				return;
 			}
+			
+			// An offset cannot be a negative number
+			const previousOffset = Math.max(currentOffset - limit, 0);
+			const nextOffset = currentOffset + limit;
+
+			const hasNext = nextOffset < total;
+			const hasPrevious = previousOffset >= 0;
 
 			image.list = {
 				...image.list,
-				nextOffset: offset + limit,
-				hasPrevious: offset !== 0,
-				previousOffset: Math.max(offset - limit, 0),
-				hasNext: offset + limit < total,
+				loading: false,
+				total,
+				hasNext,
+				nextOffset,
+				hasPrevious,
+				previousOffset,
 			};
 
-			const newItems = result.items.map((img) => ({
+			edition.statuses = reduceImageStatuses(edition.statuses, result.items);
+
+			const newImageItems = result.items.map((img) => ({
 				id: img.id,
 				type: img.type,
 				createdAt: img.createdAt,
 				categoryId: img.categoryId,
 			}));
 
-			result.items.forEach((img) => {
-				if (isImageStatus(img.status)) {
-					image.edition.statuses[img.id] = img.status;
-				}
-			});
+			const action = resetList
+				? 'setAll' as const
+				: 'upsertMany' as const;
 
-			if (resetList) {
-				imageAdapter.setAll(image.list.items, newItems);
-			} else {
-				imageAdapter.upsertMany(image.list.items, newItems);	
-			}
+			imageAdapter[action](image.list.items, newImageItems)
 		});
 
-		builder.addCase(uploadImages.pending, ({ image }) => {
+		builder.addCase(uploadImages.pending, (state) => {
+			const { image } = state;
+			
 			image.edition.upload.loading = true;
 			image.edition.upload.error = false;
 		});
 
-		builder.addCase(uploadImages.fulfilled, ({ image }, { payload, meta }) => {
-			// TODO: Handle pagination
-			// TODO: Remove hard coded type
-			const newItems = payload.items.map((image): ImageItem => {
-				return {
-					id: image.id,
-					type: 'portrait',
-					createdAt: image.createdAt,
-					categoryId: meta.arg.categoryId,
-				}
-			});
+		builder.addCase(uploadImages.fulfilled, (state, { payload, meta }) => {
+			const { image } = state;
+			const { edition, list } = image;
+			const { items: imageItems } = list;
 
-			image.edition.upload.loading = false;
+			const uploadedItems = payload.items
+				.map((image): ImageItem => {
+					return {
+						id: image.id,
+						type: 'unknown',
+						createdAt: image.createdAt,
+						categoryId: meta.arg.categoryId,
+					}
+				});
 
-			payload.items.forEach(({ id, status }) => {
-				image.edition.statuses[id] = image.edition.statuses[id] || status;
-			});
-			imageAdapter.upsertMany(image.list.items, newItems);
+			const numberItemsToRemove = imageItems.ids.length + uploadedItems.length - list.limit;
+
+			imageAdapter.removeMany(
+				imageItems,
+				imageItems.ids.slice(
+					imageItems.ids.length - numberItemsToRemove,
+					imageItems.ids.length
+				),
+			);
+			imageAdapter.upsertMany(imageItems, uploadedItems);
+
+			edition.upload.loading = false;
+			edition.statuses = reduceImageStatuses(edition.statuses, payload.items);
 		});
 
-		builder.addCase(uploadImages.rejected, ({ image }) => {
+		builder.addCase(uploadImages.rejected, (state) => {
+			const { image } = state;
+
 			image.edition.upload.error = true;
 			image.edition.upload.loading = false;
 		});
 
-		builder.addCase(deleteImage.fulfilled, ({ image }, { payload: { id } }) => {
-			const { [id]: deletedImage, ...otherStatuses } = image.edition.statuses;
+		builder.addCase(deleteImage.fulfilled, (state, { payload: { id } }) => {
+			const { image } = state;
+			const {
+				[id]: deletedImage,
+				...otherStatuses
+			} = image.edition.statuses;
 
 			imageAdapter.removeOne(image.list.items, id);
 			image.edition.statuses = otherStatuses;
 		});
 
-		builder.addCase(setCategoryThumbnail.fulfilled, ({ category }, { meta }) => {
+		builder.addCase(setCategoryThumbnail.fulfilled, (state, { meta }) => {
+			const { category } = state;
+
 			categoryAdapter.updateOne(category.list.items, {
 				id: meta.arg.categoryId,
 				changes: {
