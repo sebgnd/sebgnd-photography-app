@@ -6,8 +6,8 @@ import { fetchImagesPaginated } from 'redux/slices/gallery/gallery.thunk';
 import { actions } from 'redux/slices/gallery/gallery.slice';
 
 export type UsePaginatedImageListConfig = {
-  limit: number,
 	status: 'valid' | 'processing' | 'all' | 'error',
+	limit?: number,
   fetchOnMount?: boolean,
   resetListOnFetch?: boolean,
 };
@@ -19,8 +19,8 @@ export type UsePaginatedList = (config: UsePaginatedImageListConfig) => {
 }
 
 export const usePaginatedImageList: UsePaginatedList = ({
-  limit,
 	status = 'all',
+	limit = 20,
   fetchOnMount = false,
   resetListOnFetch = false,
 }) => {
@@ -37,43 +37,51 @@ export const usePaginatedImageList: UsePaginatedList = ({
   }, [resetListOnFetch, limit])
 
   const fetchNextPage = useCallback((categoryId?: string) => {
-    dispatch(fetchImagesPaginated({
+    dispatch(
+			fetchImagesPaginated({
       ...paginationSettings,
-      offset: nextOffset,
-			status,
-      categoryId,
-    }));
+				offset: nextOffset,
+				status,
+				categoryId,
+			})
+		);
   }, [dispatch, status, paginationSettings, nextOffset]);
 
   const fetchPreviousPage = useCallback((categoryId?: string) => {
-    dispatch(fetchImagesPaginated({
+    dispatch(
+			fetchImagesPaginated({
       ...paginationSettings,
-      offset: previousOffset,
-			status,
-      categoryId,
-    }));
+				offset: previousOffset,
+				status,
+				categoryId,
+			})
+		);
   }, [dispatch, status, paginationSettings, previousOffset]);
 
   const fetchFromScratch = useCallback((categoryId?: string) => {
     dispatch(actions.clearImageList());
-    dispatch(fetchImagesPaginated({
-      ...paginationSettings,
-			status,
-      offset: 0,
-      categoryId,
-    }));
+    dispatch(
+			fetchImagesPaginated({
+				...paginationSettings,
+				status,
+				offset: 0,
+				categoryId,
+			})
+		);
   }, [dispatch, status, paginationSettings]);
 
   useEffect(() => {
     dispatch(actions.clearImageList());
     
     if (fetchOnMount) {
-      dispatch(fetchImagesPaginated({
-        resetList: false,
-				status,
-        offset: 0,
-        limit,
-      }));
+      dispatch(
+				fetchImagesPaginated({
+					resetList: false,
+					status,
+					offset: 0,
+					limit,
+				})
+			);
     }
   }, [dispatch, status, limit, fetchOnMount])
 

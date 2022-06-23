@@ -33,6 +33,10 @@ export const imageAdapter = createEntityAdapter<ImageItem>({
 	}
 });
 
+/**
+ * Maybe it would be better to seperate the edition state from
+ * the reading / viewing (BackOffice / FrontOffice)
+ */
 const initialState: GalleryState = {
 	category: {
 		list: {
@@ -47,8 +51,7 @@ const initialState: GalleryState = {
 			items: imageAdapter.getInitialState(),
 			hasNext: false,
 			hasPrevious: false,
-			total: 0,
-			limit: 0,
+			total: null,
 			nextOffset: 0,
 			previousOffset: 0,
 			loading: false,
@@ -83,11 +86,11 @@ const gallerySlice = createSlice({
 			imageAdapter.removeAll(image.list.items);
 			image.list = {
 				...image.list,
-				hasNext: true,
-				hasPrevious: true,
+				hasNext: false,
+				hasPrevious: false,
 				nextOffset: 0,
 				previousOffset: 0,
-				total: 0,
+				total: null,
 				error: false,
 				loading: false,
 			}
@@ -97,7 +100,7 @@ const gallerySlice = createSlice({
 			const { image } = state;
 
 			image.edition.statuses[id] = status;
-		} 
+		}
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchAllCategories.pending, ({ category }) => {
@@ -208,6 +211,12 @@ const gallerySlice = createSlice({
 		});
 
 		builder.addCase(fetchImagesPaginated.fulfilled, (state, { payload }) => {
+			/**
+			 * For now, it only handles the pagination with all categories. Since the selected
+			 * category is not in the state yet, if an image is uploaded to a category that is not dispayed,
+			 * it will still add it to the list.
+			 */
+
 			const { image } = state;
 			const { result, resetList } = payload;
 			const { offset: currentOffset, total, limit } = result;
@@ -217,13 +226,12 @@ const gallerySlice = createSlice({
 			if (currentOffset > total || currentOffset < 0) {
 				return;
 			}
-			
-			// An offset cannot be a negative number
+
 			const previousOffset = Math.max(currentOffset - limit, 0);
 			const nextOffset = currentOffset + limit;
 
 			const hasNext = nextOffset < total;
-			const hasPrevious = previousOffset >= 0;
+			const hasPrevious = currentOffset !== 0;
 
 			image.list = {
 				...image.list,
@@ -273,16 +281,32 @@ const gallerySlice = createSlice({
 					}
 				});
 
-			const numberItemsToRemove = imageItems.ids.length + uploadedItems.length - list.limit;
+			const numberItemsToRemove = imageItems.ids.length + uploadedItems.length - list.items.ids.length;
 
-			imageAdapter.removeMany(
-				imageItems,
-				imageItems.ids.slice(
-					imageItems.ids.length - numberItemsToRemove,
-					imageItems.ids.length
-				),
-			);
-			imageAdapter.upsertMany(imageItems, uploadedItems);
+			/**
+			 * Only add them to the list if we are on the first page. Otherwise,
+			 * it breaks the pagination (e.g. if our current offset is 5 and limit
+			 * is 20, we'll have 15 identical images in the previous page).
+			 */
+			if (!list.hasPrevious) {
+				imageAdapter.removeMany(
+					imageItems,
+					imageItems.ids.slice(
+						imageItems.ids.length - numberItemsToRemove,
+						imageItems.ids.length
+					),
+				);
+				imageAdapter.upsertMany(imageItems, uploadedItems);
+			} else {
+				/**
+				 * Update the offset to keep the pagination up to date. It might result
+				 * in the first pages with some identical images.
+				 */
+				list.nextOffset = list.nextOffset + uploadImages.length;
+				list.previousOffset = list.previousOffset + uploadImages.length;
+			}
+
+			list.total = (list.total || 0) + uploadImages.length;
 
 			edition.upload.loading = false;
 			edition.statuses = reduceImageStatuses(edition.statuses, payload.items);

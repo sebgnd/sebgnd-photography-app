@@ -56,7 +56,7 @@ export const SelectThumbnailModal: FunctionComponent<SelectThumbnailModalProps> 
       <div className={styles.imageListContainer}>
         {images.length !== 0 && (
           images.map(({ id, src }) => (
-            <div className={styles.imageContainer}>
+            <div key={id} className={styles.imageContainer}>
               <SmallImage
                 clickable
                 id={id}

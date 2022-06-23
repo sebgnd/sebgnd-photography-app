@@ -35,7 +35,6 @@ export const Home: FunctionComponent = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 
 	const { fetchNextPage, fetchPreviousPage, fetchFromScratch } = usePaginatedImageList({
-		limit: 20,
 		status: 'all',
 		resetListOnFetch: true,
 	});
