@@ -10,6 +10,7 @@ import { Recent } from 'pages/FrontOffice/Recent/Recent';
 
 import { Home as BackOfficeHome } from 'pages/BackOffice/Home/Home';
 import { GallerySettings } from 'pages/BackOffice/GallerySettings/GallerySettings';
+import { Authentication } from 'pages/BackOffice/Authentication/Authentication';
 
 import { UserLayout } from 'layouts/UserLayout';
 import { AdminLayout } from 'layouts/AdminLayout';
@@ -34,6 +35,7 @@ export const App: FunctionComponent = () => {
 			<SocketContext.Provider value={{ socket }}>
 				<BrowserRouter>
 					<Routes>
+						<Route path="admin/login" element={<Authentication />} />
 						<Route path="admin" element={<AdminLayout />}>
 							<Route path="home" element={<BackOfficeHome />} />
 							<Route path="gallery-settings" element={<GallerySettings />} />
