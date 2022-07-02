@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.2",
+    "axios": "^0.27.2",
     "lodash": "^4.17.21",
     "node-sass": "^7.0.1",
     "react": "^18.2.0",

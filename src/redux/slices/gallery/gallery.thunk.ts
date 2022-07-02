@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { request } from 'libs/http/request';
 
 import {
 	DeleteImagePayload,
@@ -16,22 +17,22 @@ import {
 export const fetchAllCategories = createAsyncThunk<FetchAllCategoriesResponse>(
 	'gallery/fetchAllCategories',
 	async () => {
-		const response = await fetch('http://localhost:8000/api/categories', {
+		const response = await request('categories', {
 			method: 'GET',
 		});
 
-		return response.json();
+		return response.data;
 	}
 );
 
 export const fetchImagesFromCategory = createAsyncThunk<FetchImagesFromCategoryResponse, string>(
 	'gallery/fetchImagesFromCategory',
 	async (id: string) => {
-		const response = await fetch(`http://localhost:8000/api/categories/${id}/images`, {
+		const response = await request(`categories/${id}/images`, {
 			method: 'GET',
 		});
 
-		return response.json();
+		return response.data;
 	}
 );
 
@@ -45,12 +46,12 @@ export const fetchImagesPaginated = createAsyncThunk<FetchImagesPaginatedRespons
 			...(categoryId ? { category: categoryId } : {}),
 		});
 
-		const response = await fetch(`http://localhost:8000/api/images?${queryParams.toString()}`, {
+		const response = await request(`images?${queryParams.toString()}`, {
 			method: 'GET',
 		});
 
 		return {
-			result: await response.json(),
+			result: response.data,
 			resetList,
 		};
 	}
@@ -59,11 +60,11 @@ export const fetchImagesPaginated = createAsyncThunk<FetchImagesPaginatedRespons
 export const fetchImage = createAsyncThunk<FetchImageResponse, string>(
 	'gallery/fetchImage',
 	async (id: string) => {
-		const response = await fetch(`http://localhost:8000/api/images/${id}`, {
+		const response = await request(`images/${id}`, {
 			method: 'GET',
 		});
 
-		return response.json();
+		return response.data;
 	}
 );
 
@@ -77,12 +78,12 @@ export const uploadImages = createAsyncThunk<UploadImagesResponse, UploadImagesP
 				formData.append('categoryId', categoryId);
 				formData.append('image', file);
 
-				const response = await fetch('http://localhost:8000/api/images', {
+				const response = await request('images', {
 					method: 'POST',
 					body: formData,
 				});
 
-				return response.json();
+				return response.data;
 			})
 		);
 
@@ -96,27 +97,22 @@ export const uploadImages = createAsyncThunk<UploadImagesResponse, UploadImagesP
 export const deleteImage = createAsyncThunk<DeleteImageResponse, DeleteImagePayload>(
 	'gallery/deleteImage',
 	async ({ id }) => {
-		const response = await fetch(`http://localhost:8000/api/images/${id}`, {
+		const response = await request(`http://localhost:8000/api/images/${id}`, {
 			method: 'DELETE',
 		});
 
-		return response.json();
+		return response.data;
 	}
 )
 
 export const setCategoryThumbnail = createAsyncThunk<void, SetCategoryThumbnailPayload>(
 	'gallery/setCategoryThumbnail',
 	async ({ categoryId, thumbnailId }) => {
-		const request = new Request(`http://localhost:8000/api/categories/${categoryId}/thumbnail`, {
+		await request(`categories/${categoryId}/thumbnail`, {
 			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({
+			body: {
 				imageId: thumbnailId,
-			}),
+			},
 		});
-
-		await fetch(request);
 	}
 )
