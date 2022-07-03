@@ -10,6 +10,8 @@ import {
 	selectIsCategoryListLoading,
 } from 'redux/slices/gallery/gallery.selector';
 
+import { Centered } from 'hoc/Centered/Centered';
+
 import { Parallax } from 'components/UI/Parallax/Parallax';
 import { Button, GalleryButton } from 'components/UI/Button';
 import { Text } from 'components/UI/Content/Text/Text';
@@ -17,7 +19,6 @@ import { Spinner } from 'components/UI/Spinner/Spinner';
 import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
 
 import styles from './Home.module.scss';
-import { Centered } from 'hoc/Centered/Centered';
 
 export const getThumbnailUrl = (imageId: string | null) => getImageUrlOrUndefined(imageId, {
 	size: 'medium',

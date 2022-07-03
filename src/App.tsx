@@ -4,6 +4,8 @@ import { io } from 'socket.io-client';
 
 import { useAppDispatch } from 'redux/store';
 
+import { RestrictedRoute } from 'components/Authentication/RestrictedRoute';
+
 import { Home as FrontOfficeHome } from 'pages/FrontOffice/Home/Home';
 import { Galleries } from 'pages/FrontOffice/Galleries/Galleries';
 import { Gallery } from 'pages/FrontOffice/Gallery/Gallery';
@@ -37,7 +39,14 @@ export const App: FunctionComponent = () => {
 				<BrowserRouter>
 					<Routes>
 						<Route path="admin/login" element={<Authentication />} />
-						<Route path="admin" element={<AdminLayout />}>
+						<Route
+							path="admin"
+							element={
+								<RestrictedRoute fallback="/admin/login">
+									<AdminLayout />
+								</RestrictedRoute>
+							}
+						>
 							<Route path="home" element={<BackOfficeHome />} />
 							<Route path="gallery-settings" element={<GallerySettings />} />
 						</Route>

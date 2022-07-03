@@ -3,7 +3,6 @@ import { PayloadAction } from '@reduxjs/toolkit';
 export type UserState = {
 	authorization: {
 		token: string,
-		ttl: number,
 		error: boolean,
 	}
 };
@@ -11,4 +10,8 @@ export type UserState = {
 export type SetTokenPayload = PayloadAction<{
 	token: string,
 }>;
+
+export type LoginResponse = {
+	token: string,
+};
 
