@@ -34,32 +34,30 @@ export const App: FunctionComponent = () => {
 	}, [dispatch]);
 
 	return (
-		<React.StrictMode>
-			<SocketContext.Provider value={{ socket }}>
-				<BrowserRouter>
-					<Routes>
-						<Route path="admin/login" element={<Authentication />} />
-						<Route
-							path="admin"
-							element={
-								<RestrictedRoute fallback="/admin/login">
-									<AdminLayout />
-								</RestrictedRoute>
-							}
-						>
-							<Route path="home" element={<BackOfficeHome />} />
-							<Route path="gallery-settings" element={<GallerySettings />} />
-						</Route>
-						<Route path="*" element={<UserLayout />}>
-							<Route index element={<FrontOfficeHome />} />
-							<Route path="galleries" element={<Galleries />} />
-							<Route path="gallery/:id" element={<Gallery />} />
-							<Route path="recent" element={<Recent />} />
-						</Route>
-					</Routes>
-				</BrowserRouter>
-			</SocketContext.Provider>
-		</React.StrictMode>
+		<SocketContext.Provider value={{ socket }}>
+			<BrowserRouter>
+				<Routes>
+					<Route path="admin/login" element={<Authentication />} />
+					<Route
+						path="admin"
+						element={
+							<RestrictedRoute fallback="/admin/login">
+								<AdminLayout />
+							</RestrictedRoute>
+						}
+					>
+						<Route path="home" element={<BackOfficeHome />} />
+						<Route path="gallery-settings" element={<GallerySettings />} />
+					</Route>
+					<Route path="*" element={<UserLayout />}>
+						<Route index element={<FrontOfficeHome />} />
+						<Route path="galleries" element={<Galleries />} />
+						<Route path="gallery/:id" element={<Gallery />} />
+						<Route path="recent" element={<Recent />} />
+					</Route>
+				</Routes>
+			</BrowserRouter>
+		</SocketContext.Provider>
 	);
 }
 

@@ -6,6 +6,8 @@ export type RequestConfig = {
 	body?: any,
 };
 
+// TODO: Create interceptors to refresh the token if it is about or is expired
+// 			 before the request.
 export const instance = axios.create({
 	baseURL: 'http://localhost:8000/api/',
 });

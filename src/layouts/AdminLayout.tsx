@@ -2,6 +2,7 @@ import React, { FunctionComponent, useCallback, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { useAppDispatch } from 'redux/store';
+
 import { actions } from 'redux/slices/gallery/gallery.slice';
 
 import { useSocket } from 'hooks';

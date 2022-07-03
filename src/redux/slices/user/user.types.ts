@@ -11,7 +11,7 @@ export type SetTokenPayload = PayloadAction<{
 	token: string,
 }>;
 
-export type LoginResponse = {
+export type TokenResponse = {
 	token: string,
 };
 

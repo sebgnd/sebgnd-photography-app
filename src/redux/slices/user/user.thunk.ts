@@ -2,9 +2,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { request } from 'libs/http/request';
 
-import { LoginResponse } from './user.types';
+import { TokenResponse } from './user.types';
 
-export const login = createAsyncThunk<LoginResponse, string>(
+export const login = createAsyncThunk<TokenResponse, string>(
 	'user/login',
 	async (idToken: string) => {
 		const response = await request('iam/login/google', {
@@ -16,3 +16,15 @@ export const login = createAsyncThunk<LoginResponse, string>(
 		return response.data;
 	}
 );
+
+export const refreshToken = createAsyncThunk<TokenResponse>(
+	'user/refreshToken',
+	async () => {
+		const response = await request('iam/token/refresh', {
+			method: 'POST',
+			credentials: true,
+		});
+
+		return response.data;
+	}
+)

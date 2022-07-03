@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { login } from './user.thunk';
+import { login, refreshToken } from './user.thunk';
 
 import { UserState } from './user.types';
 
@@ -21,9 +21,10 @@ const userSlice = createSlice({
 				state.authorization.token = payload.token;
 				state.authorization.error = false;
 			})
-			.addCase(login.rejected, (state) => {
-				state.authorization.error = true;
-			});
+			.addCase(refreshToken.fulfilled, (state, { payload }) => {
+				state.authorization.token = payload.token;
+				state.authorization.error = false;
+			})
 	}
 });
 

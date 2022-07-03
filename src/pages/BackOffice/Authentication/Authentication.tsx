@@ -10,6 +10,7 @@ import { useAuthenticated } from 'hooks';
 
 import { Text } from 'components/UI/Content/Text/Text';
 import { GoogleAuthenticationButton } from 'components/Authentication/GoogleAuthenticationButton/GoogleAuthenticationButton';
+import { SilentTokenRefresh } from 'components/Authentication/SilentTokenRefresh';
 
 import styles from './Authentication.module.scss';
 
@@ -34,17 +35,19 @@ export const Authentication: FunctionComponent = () => {
 	}
 
 	return (
-		<div className={styles.wrapper}>
-			<div className={styles.container}>
-				{/* TODO: Update with real logo */}
-				<div className={styles.logo}>
-					<Text text="SebGND Photography - Administration panel" />
+		<SilentTokenRefresh>
+			<div className={styles.wrapper}>
+				<div className={styles.container}>
+					{/* TODO: Update with real logo */}
+					<div className={styles.logo}>
+						<Text text="SebGND Photography - Administration panel" />
+					</div>
+					<GoogleAuthenticationButton
+						clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID!}
+						onSignIn={handleSignIn}
+					/>
 				</div>
-				<GoogleAuthenticationButton
-					clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID!}
-					onSignIn={handleSignIn}
-				/>
 			</div>
-		</div>
+		</SilentTokenRefresh>
 	)
 }
