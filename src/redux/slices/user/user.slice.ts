@@ -1,19 +1,32 @@
 import { createSlice } from '@reduxjs/toolkit';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
-import { UserState, SetUserPayload } from './user.types';
+import { UserState, SetTokenPayload } from './user.types';
 
 const initialState: UserState = {
-	firstName: '',
-	lastName: '',
+	authorization: {
+		error: false,
+		token: '',
+		ttl: 0,
+	},
 }
 
 const userSlice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {
-		setUser: (state, { payload }: SetUserPayload) => {
-			state.firstName = payload.firstName;
-			state.lastName = payload.lastName;
+		setToken: (state, { payload }: SetTokenPayload) => {
+			state.authorization.error = false;
+
+			try {
+				const decoded = jwt.decode(payload.token) as JwtPayload;
+				const { exp } = decoded;
+
+				state.authorization.ttl = exp!;
+				state.authorization.token = payload.token;
+			} catch (err) {
+				state.authorization.error = true;
+			}
 		},
 	}
 });

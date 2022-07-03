@@ -1,6 +1,8 @@
 import React, { FunctionComponent, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+
+import { useAppDispatch } from 'redux/store';
 
 import { getImageUrl } from 'libs/image/get-image-url';
 
@@ -29,7 +31,7 @@ import {
 import style from './Gallery.module.css';
 
 export const Gallery: FunctionComponent = () => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
     
 	const { id } = useParams();
 	const { resetSelection, selectImage, selection } = useImageSelection();

@@ -1,6 +1,8 @@
 import { useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
+
+import { useAppDispatch } from 'redux/store';
 
 import { actions } from 'redux/slices/gallery/gallery.slice';
 import { fetchImage } from 'redux/slices/gallery/gallery.thunk';
@@ -9,7 +11,7 @@ import { selectSelectedImage } from 'redux/slices/gallery/gallery.selector';
 import { useScrolling } from '../useScrolling';
 
 export const useImageSelection = (urlParam: string = 'image') => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	const [search, setSearch] = useSearchParams();
 	const [, setScroll] = useScrolling();

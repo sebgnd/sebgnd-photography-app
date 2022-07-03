@@ -1,6 +1,8 @@
 import React, { FunctionComponent, useEffect, useRef, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
+import { useAppDispatch } from 'redux/store';
 
 import { getImageUrl } from 'libs/image/get-image-url';
 
@@ -20,11 +22,10 @@ import {
 	selectIsImageListLoading,
 } from 'redux/slices/gallery/gallery.selector';
 
-
 import styles from './Recent.module.css';
 
 export const Recent: FunctionComponent = () => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
 	const canLoad = useRef(true);

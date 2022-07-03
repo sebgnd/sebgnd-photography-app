@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+
+import { useAppDispatch } from 'redux/store';
 
 import { selectPaginationNextOffset, selectPaginationPreviousOffset } from 'redux/slices/gallery/gallery.selector';
 import { fetchImagesPaginated } from 'redux/slices/gallery/gallery.thunk';
@@ -24,7 +26,7 @@ export const usePaginatedImageList: UsePaginatedList = ({
   fetchOnMount = false,
   resetListOnFetch = false,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const nextOffset = useSelector(selectPaginationNextOffset);
   const previousOffset = useSelector(selectPaginationPreviousOffset);

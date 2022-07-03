@@ -1,12 +1,14 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 
 export type UserState = {
-	firstName: string,
-	lastName: string,
+	authorization: {
+		token: string,
+		ttl: number,
+		error: boolean,
+	}
 };
 
-export type SetUserPayload = PayloadAction<{
-	firstName: string,
-	lastName: string,
+export type SetTokenPayload = PayloadAction<{
+	token: string,
 }>;
 

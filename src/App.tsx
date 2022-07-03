@@ -1,7 +1,8 @@
 import React, { FunctionComponent, useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { io } from 'socket.io-client';
+
+import { useAppDispatch } from 'redux/store';
 
 import { Home as FrontOfficeHome } from 'pages/FrontOffice/Home/Home';
 import { Galleries } from 'pages/FrontOffice/Galleries/Galleries';
@@ -20,7 +21,7 @@ import { SocketContext } from 'contexts/SocketContext';
 import { fetchAllCategories } from 'redux/slices/gallery/gallery.thunk';
 
 export const App: FunctionComponent = () => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	const socket = useMemo(() => {
 		return io('localhost:8000')

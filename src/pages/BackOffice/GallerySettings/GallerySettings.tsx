@@ -1,5 +1,7 @@
 import React, { FunctionComponent, useCallback, useMemo, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+
+import { useAppDispatch } from 'redux/store';
 
 import { getImageUrl, getImageUrlOrUndefined } from 'libs/image/get-image-url';
 
@@ -14,7 +16,7 @@ import { SelectThumbnailModal } from 'components/Modal/SelectThumbnailModal/Sele
 import styles from './GallerySettings.module.scss';
 
 export const GallerySettings: FunctionComponent = () => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
 
