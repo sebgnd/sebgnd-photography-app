@@ -12,6 +12,7 @@ export type TokenValidationConfig = {
 export const isTokenValid = (token: string, config?: TokenValidationConfig) => {
 	const inTime = ms(config?.in || '0ms');
 
+	// TODO: Check if this throws an error if token is expired
 	const decodedToken = jwt.decode(token) as JwtPayload;
 
 	// `exp` is in minute
