@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback, FunctionComponent, ReactNode } from 'react';
+
+// TODO: Remove lodash
 import { throttle } from 'lodash';
 
 import ParallaxContainer from './ParallaxContainer';

@@ -1,4 +1,6 @@
 import React, { useEffect, useState, FunctionComponent, useRef } from 'react';
+
+// TODO: Remove lodash
 import { throttle } from 'lodash';
 
 import { Backdrop } from 'components/UI/Backdrop/Backdrop';
