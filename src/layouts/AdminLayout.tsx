@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import { useAppDispatch } from 'redux/store';
 
 import { actions } from 'redux/slices/gallery/gallery.slice';
+import { fetchAllCategories } from 'redux/slices/gallery/gallery.thunk';
 
 import { useSocket } from 'hooks';
 
@@ -30,6 +31,10 @@ export const AdminLayout: FunctionComponent = () => {
 	useEffect(() => {
 		socket.on('image-processing:image-processed', handleImageProcessed);
 	}, [handleImageProcessed, socket]);
+
+	useEffect(() => {
+		dispatch(fetchAllCategories());
+	}, [dispatch]);
 
 	return (
 		<>

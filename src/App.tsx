@@ -1,8 +1,6 @@
-import React, { FunctionComponent, useEffect, useMemo } from 'react';
+import React, { FunctionComponent, useMemo } from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { io } from 'socket.io-client';
-
-import { useAppDispatch } from 'redux/store';
 
 import { RestrictedRoute } from 'components/Authentication/RestrictedRoute';
 
@@ -20,18 +18,10 @@ import { AdminLayout } from 'layouts/AdminLayout';
 
 import { SocketContext } from 'contexts/SocketContext';
 
-import { fetchAllCategories } from 'redux/slices/gallery/gallery.thunk';
-
 export const App: FunctionComponent = () => {
-	const dispatch = useAppDispatch();
-
 	const socket = useMemo(() => {
 		return io('localhost:8000')
 	}, []);
-
-	useEffect(() => {
-		dispatch(fetchAllCategories());
-	}, [dispatch]);
 
 	return (
 		<SocketContext.Provider value={{ socket }}>
