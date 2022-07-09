@@ -1,0 +1,46 @@
+$animation-timing: 500ms;
+
+.navigationContainer {
+	z-index: 500;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	transition: height $animation-timing;
+}
+
+.navigationLayout {
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 510;
+}
+
+.hamburgerContainer {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	flex-grow: 1;
+}
+
+.desktopItem {
+	margin-left: 16px;
+	margin-right: 16px;
+}
+
+.mobileItem {
+	margin-top: 16px;
+	margin-bottom: 16px;
+}
+
+.mobileContainer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 505;
+	transition: transform $animation-timing;
+}

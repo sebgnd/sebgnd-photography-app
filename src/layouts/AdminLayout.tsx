@@ -8,7 +8,9 @@ import { fetchAllCategories } from 'redux/slices/gallery/gallery.thunk';
 
 import { useSocket } from 'hooks';
 
-import AdminNavigation from 'components/Navigation/AdminNavigation/AdminNavigation';
+import { TopNavigationBar } from 'components/Navigation/NavigationBar/TopNavigationBar';
+
+import styles from './AdminLayout.module.scss';
 
 type ImageProcessedMessage = {
 	data: {
@@ -38,7 +40,20 @@ export const AdminLayout: FunctionComponent = () => {
 
 	return (
 		<>
-			<AdminNavigation />
+			<TopNavigationBar
+				height={125}
+				items={[
+					{ name: 'Home', url: '/admin/home' },
+					{ name: 'Gallery settings', url: '/admin/gallery-settings' },
+				]}
+				logo={{
+					src: '/images/logo.png',
+					url: '/admin/home',
+				}}
+				classNames={{
+					layout: styles.navigationLayout,
+				}}
+			/>
 			<div id="admin" style={{paddingTop: '140px', paddingBottom: '70px' }}>
 				<Outlet />
 			</div>

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const useEventListener = <K extends keyof WindowEventMap>(
+export const useEventListener = <K extends keyof WindowEventMap>(
 	event: K,
 	listener: Parameters<typeof window.addEventListener>[1],
 	options?: Parameters<typeof window.addEventListener>[2],
@@ -13,5 +13,3 @@ const useEventListener = <K extends keyof WindowEventMap>(
 		}
 	}, [event, listener, options])
 }
-
-export default useEventListener;

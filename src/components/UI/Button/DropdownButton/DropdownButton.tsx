@@ -6,7 +6,7 @@ import { Text } from 'components/UI/Content/Text/Text';
 
 import { ClickOutside } from 'hoc/ClickOutside/ClickOutside';
 
-import useEventListener from 'hooks/useEventListener';
+import { useEventListener } from 'hooks';
 
 import styles from './DropdownButton.module.scss';
 

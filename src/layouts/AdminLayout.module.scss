@@ -1,0 +1,8 @@
+.navigationLayout {
+	background-color: white;
+	padding: 0 100px;
+
+	@media (max-width: 1050px) {
+    padding: 0 50px;
+  }
+}
