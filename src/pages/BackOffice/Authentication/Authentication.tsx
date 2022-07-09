@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import type { FunctionComponent } from 'react';
 

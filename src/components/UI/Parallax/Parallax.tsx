@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback, FunctionComponent, ReactNode } from 'react';
+import { useEffect, useRef, useState, useCallback, FunctionComponent, ReactNode } from 'react';
 
 import { throttle } from 'throttle-debounce';
 

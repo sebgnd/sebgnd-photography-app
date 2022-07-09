@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, Fragment, useId } from 'react';
+import { FunctionComponent, ReactNode, Fragment, useId } from 'react';
 
 import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
 import { IconButton } from 'components/UI/Button';

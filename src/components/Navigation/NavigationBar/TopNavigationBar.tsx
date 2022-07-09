@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useRef, useEffect, CSSProperties } from 'react';
+import { useState, useCallback, useMemo, useRef, useEffect, CSSProperties } from 'react';
 import type { FunctionComponent } from 'react';
 
 import { combineClasses } from 'libs/css/css';

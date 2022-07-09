@@ -1,4 +1,4 @@
-import React, { FunctionComponent, MouseEvent, useCallback, useState } from 'react';
+import { FunctionComponent, MouseEvent, useCallback, useState } from 'react';
 
 import { Icon } from 'components/UI/Content/Icon/Icon';
 import { Text } from 'components/UI/Content/Text/Text';

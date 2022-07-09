@@ -1,4 +1,4 @@
-import React, { FunctionComponent, FormEvent } from 'react';
+import { FunctionComponent, FormEvent } from 'react';
 
 import { Label } from 'components/UI/Form/Label/Label';
 

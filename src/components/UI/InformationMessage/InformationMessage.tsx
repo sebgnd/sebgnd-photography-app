@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from 'react';
+import { FunctionComponent, useMemo } from 'react';
 
 import { Icon } from 'components/UI/Content/Icon/Icon';
 import { Text } from 'components/UI/Content/Text/Text';

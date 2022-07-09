@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import type { FunctionComponent, ReactNode } from 'react';
 
 import { useEventListener } from 'hooks';

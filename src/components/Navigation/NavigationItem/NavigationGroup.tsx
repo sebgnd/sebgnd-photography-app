@@ -1,4 +1,4 @@
-import React, { CSSProperties, useCallback } from 'react';
+import { CSSProperties, useCallback } from 'react';
 import type { FunctionComponent } from 'react';
 
 import { NavigationItem } from './NavigationItem';

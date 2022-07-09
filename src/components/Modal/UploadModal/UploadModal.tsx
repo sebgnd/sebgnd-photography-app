@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useCallback } from 'react';
+import { FunctionComponent, useState, useCallback } from 'react';
 
 import { Modal } from 'components/UI/Modal/Modal';
 import { DropArea } from 'components/UI/DropArea/DropArea';

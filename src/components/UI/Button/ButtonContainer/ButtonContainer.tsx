@@ -1,4 +1,4 @@
-import React, { useMemo, forwardRef } from 'react';
+import { useMemo, forwardRef } from 'react';
 import type { CSSProperties, MouseEvent, ReactNode } from 'react';
 
 import styles from './ButtonContainer.module.scss';

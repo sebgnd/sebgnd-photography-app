@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback, useEffect, useMemo } from 'react';
+import { FunctionComponent, useCallback, useEffect, useMemo } from 'react';
 import { useSearchParams} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import type { FunctionComponent } from 'react';
 
 import { Svg } from 'components/UI/Content/Svg/Svg';

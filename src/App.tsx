@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useMemo } from 'react';
+import { FunctionComponent, useEffect, useMemo } from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { io } from 'socket.io-client';
 

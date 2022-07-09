@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useRef, useState, useId, useMemo, CSSProperties } from 'react';
+import { FunctionComponent, useRef, useState, useId, useMemo, CSSProperties } from 'react';
 
 import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
 import { ButtonContainer } from 'components/UI/Button';

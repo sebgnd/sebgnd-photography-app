@@ -1,4 +1,4 @@
-import React, { CSSProperties, FunctionComponent, useMemo } from 'react'
+import { CSSProperties, FunctionComponent, useMemo } from 'react'
 
 import { ContentSize } from '../types';
 import { contentSizes } from '../constant';

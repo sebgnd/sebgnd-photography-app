@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback, useEffect } from 'react';
+import { FunctionComponent, useCallback, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 import { request } from 'libs/http/request';

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback,useMemo } from 'react';
+import { FunctionComponent, useCallback,useMemo } from 'react';
 
 import { getImageUrl } from 'libs/image/get-image-url';
 

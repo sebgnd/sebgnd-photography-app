@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import { useRef, useMemo } from 'react';
 import type { FunctionComponent, CSSProperties, ReactNode } from 'react';
 
 import styles from './WipeAnimation.module.scss';

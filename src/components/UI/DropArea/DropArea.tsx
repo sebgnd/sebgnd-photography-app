@@ -1,4 +1,4 @@
-import React, { FunctionComponent, DragEvent, useState, useCallback, useEffect } from 'react';
+import { FunctionComponent, DragEvent, useState, useCallback, useEffect } from 'react';
 
 import { getFileExtension } from 'libs/path/path';
 

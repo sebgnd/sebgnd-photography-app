@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 
 import { Text } from 'components/UI/Content/Text/Text';
 import { Icon } from 'components/UI/Content/Icon/Icon';

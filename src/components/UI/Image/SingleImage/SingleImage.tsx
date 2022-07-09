@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 
 import { ButtonContainer } from '../../../Styled/container';
 import { ImageFade } from '../ImageFade/ImageFade';

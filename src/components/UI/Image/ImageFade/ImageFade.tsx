@@ -1,4 +1,4 @@
-import React, { useState, FunctionComponent, useEffect, useRef } from 'react';
+import { useState, FunctionComponent, useEffect, useRef } from 'react';
 
 import styles from './ImageFade.module.css';
 

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useCallback, useMemo, useState, useEffect } from 'react';
+import { FunctionComponent, useCallback, useMemo, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useAppDispatch } from 'redux/store';

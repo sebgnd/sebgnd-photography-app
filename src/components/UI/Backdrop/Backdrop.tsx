@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 import styles from './Backdrop.module.css';

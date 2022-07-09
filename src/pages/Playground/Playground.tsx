@@ -1,4 +1,4 @@
-import React, { FunctionComponent, Fragment, useEffect, useState } from 'react';
+import { FunctionComponent, Fragment, useEffect, useState } from 'react';
 
 import { useAppDispatch } from 'redux/store';
 
