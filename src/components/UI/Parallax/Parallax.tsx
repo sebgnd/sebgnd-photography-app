@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback, FunctionComponent, ReactNode } from 'react';
 
-// TODO: Remove lodash
-import { throttle } from 'lodash';
+import { throttle } from 'throttle-debounce';
+
 
 import ParallaxContainer from './ParallaxContainer';
 
@@ -16,6 +16,8 @@ interface BackgroundStyle {
 	backgroundSize: string;
 }
 
+const THROTTLE_TIME = 7;
+
 
 export const Parallax: FunctionComponent<ParallaxProp> = ({ img, speed, children }) => {
 	const parallaxElemRef = useRef<HTMLDivElement>(null);
@@ -27,8 +29,6 @@ export const Parallax: FunctionComponent<ParallaxProp> = ({ img, speed, children
 		backgroundPositionY: '',
 		backgroundSize: 'cover'
 	});
-
-	const throttleTime: number = 7;
 
 	const isElementVisible = (): boolean => {
 		if (!parallaxElemRef || !parallaxElemRef.current) {
@@ -93,7 +93,7 @@ export const Parallax: FunctionComponent<ParallaxProp> = ({ img, speed, children
 	const handleScroll = (): void => {
 		updatePosition();
 	}
-	const handleScrollThrottled = throttle(handleScroll, throttleTime);
+	const handleScrollThrottled = throttle(THROTTLE_TIME, handleScroll);
 
 	const handleResize = (): void => {
 		topOffset.current = getTopOffset();
@@ -102,7 +102,7 @@ export const Parallax: FunctionComponent<ParallaxProp> = ({ img, speed, children
 		updatePosition();
 	}
 
-	const handleResizeThrottled = throttle(handleResize, throttleTime);
+	const handleResizeThrottled = throttle(THROTTLE_TIME, handleResize);
 
 	const handleBackgroundLoad = useCallback(() => {
 		const image = new Image();
