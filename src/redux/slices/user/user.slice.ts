@@ -14,7 +14,14 @@ const initialState: UserState = {
 const userSlice = createSlice({
 	name: 'user',
 	initialState,
-	reducers: {},
+	reducers: {
+		clearAuthenticationToken: (state) => {
+			state.authorization = {
+				error: false,
+				token: '',
+			};
+		},
+	},
 	extraReducers: (builder) => {
 		builder
 			.addCase(login.fulfilled, (state, { payload }) => {

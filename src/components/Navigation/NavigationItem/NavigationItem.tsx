@@ -1,27 +1,31 @@
-import React, { CSSProperties, FunctionComponent } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
+
+import { combineClasses } from 'libs/css/css';
 
 import { Text } from 'components/UI/Content/Text/Text';
 
-export interface INavItem {
-  url: string;
-  name: string;
-} 
+import styles from './styles/NavigationItem.module.scss';
 
 export type NavigationItemProps = {
   name: string;
-  url: string;
-  className?: string,
-	style?: CSSProperties,
+  url?: string;
 	onClick?: () => void,
+  className?: string,
 }
 
-const NavigationItem: FunctionComponent<NavigationItemProps> = ({ name, url, className, style, onClick }) => {
+export const NavigationItem: FunctionComponent<NavigationItemProps> = ({ name, url, className, onClick }) => {
+	if (url) {
+		return (
+			<Link onClick={onClick} className={className} to={url}>
+				<Text text={name} />
+			</Link>
+		);
+	}
+
   return (
-    <Link onClick={onClick} className={className} to={url}>
+    <div onClick={onClick} className={combineClasses(className, styles.clickable)}>
       <Text text={name} />
-    </Link>
+    </div>
   );
 };
-
-export default NavigationItem;

@@ -1,10 +1,13 @@
 import React, { FunctionComponent, useCallback, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
+
+import { request } from 'libs/http/request';
 
 import { useAppDispatch } from 'redux/store';
 
-import { actions } from 'redux/slices/gallery/gallery.slice';
+import { actions as galleryActions } from 'redux/slices/gallery/gallery.slice';
 import { fetchAllCategories } from 'redux/slices/gallery/gallery.thunk';
+import { actions as userActions } from 'redux/slices/user/user.slice';
 
 import { useSocket } from 'hooks';
 
@@ -21,17 +24,34 @@ type ImageProcessedMessage = {
 
 export const AdminLayout: FunctionComponent = () => {
 	const socket = useSocket();
+	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 
 	const handleImageProcessed = useCallback(({ data }: ImageProcessedMessage) => {
-		dispatch(actions.setImageProcessStatus({
+		dispatch(galleryActions.setImageProcessStatus({
 			id: data.id,
 			status: data.processed ? 'valid' : 'processing'
 		}))
 	}, [dispatch]);
 
+	const handleLogout = useCallback(async () => {
+		const response = await request('iam/logout', {
+			method: 'POST',
+			credentials: true,
+		});
+
+		if (response.status === 204) {
+			dispatch(userActions.clearAuthenticationToken())
+			navigate('/admin/login');
+		}
+	}, [dispatch, navigate]);
+
 	useEffect(() => {
 		socket.on('image-processing:image-processed', handleImageProcessed);
+
+		return () => {
+			socket.off('image-processing:image-processed');
+		}
 	}, [handleImageProcessed, socket]);
 
 	useEffect(() => {
@@ -45,6 +65,7 @@ export const AdminLayout: FunctionComponent = () => {
 				items={[
 					{ name: 'Home', url: '/admin/home' },
 					{ name: 'Gallery settings', url: '/admin/gallery-settings' },
+					{ name: 'Log out', onClick: handleLogout },
 				]}
 				logo={{
 					src: '/images/logo.png',

@@ -27,4 +27,5 @@ export const refreshToken = createAsyncThunk<TokenResponse>(
 
 		return response.data;
 	}
-)
+);
+

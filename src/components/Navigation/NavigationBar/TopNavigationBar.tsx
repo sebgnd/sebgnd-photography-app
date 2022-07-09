@@ -8,7 +8,6 @@ import { useEventListener } from 'hooks';
 import type {
 	NavigationBarItem,
 	NavigationLogoItem,
-	NavigationBarAction,
 	NavigationBarClassNames,
 } from './NavigationBar.type';
 
@@ -26,7 +25,6 @@ export type TopNavigationBarProps = {
 	maxPixelForMobile?: number,
 	items: NavigationBarItem[],
 	classNames: NavigationBarClassNames,
-	actions?: NavigationBarAction[],
 }
 
 export const TopNavigationBar: FunctionComponent<TopNavigationBarProps> = ({
@@ -35,7 +33,6 @@ export const TopNavigationBar: FunctionComponent<TopNavigationBarProps> = ({
 	height,
 	classNames,
 	maxPixelForMobile,
-	actions = [],
 }) => {
 	const mobileNavigationRef = useRef<HTMLDivElement | null>(null);
 
@@ -113,11 +110,13 @@ export const TopNavigationBar: FunctionComponent<TopNavigationBarProps> = ({
 							url={logo.url}
 						/>
 						{!mobileNavActive && (
-							<NavigationGroup
-								items={items}
-								justifyContent="right"
-								itemClassName={styles.desktopItem}
-							/>
+							<>
+								<NavigationGroup
+									items={items}
+									justifyContent="right"
+									itemClassName={styles.desktopItem}
+								/>
+							</>
 						)}
 						{mobileNavActive && (
 							<div className={styles.hamburgerContainer}>

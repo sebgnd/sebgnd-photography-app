@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from 'react';
+import React, { FunctionComponent, useEffect, useMemo } from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { io } from 'socket.io-client';
 
@@ -22,6 +22,10 @@ export const App: FunctionComponent = () => {
 	const socket = useMemo(() => {
 		return io('localhost:8000')
 	}, []);
+
+	useEffect(() => () => {
+		socket.disconnect();
+	}, [socket]);
 
 	return (
 		<SocketContext.Provider value={{ socket }}>
