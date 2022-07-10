@@ -17,10 +17,12 @@ export const login = createAsyncThunk<TokenResponse, string>(
 	}
 );
 
+export const REFRESH_TOKEN_ENDPOINT = 'iam/token/refresh';
+
 export const refreshToken = createAsyncThunk<TokenResponse>(
 	'user/refreshToken',
 	async () => {
-		const response = await request('iam/token/refresh', {
+		const response = await request(REFRESH_TOKEN_ENDPOINT, {
 			method: 'POST',
 			credentials: true,
 		});

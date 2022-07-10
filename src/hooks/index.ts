@@ -5,6 +5,7 @@ export * from './useEndPageReached';
 export * from './useSocket';
 export * from './useAuthenticated';
 export * from './useEventListener';
+export * from './useRouter';
 
 export {
 	useToggle,

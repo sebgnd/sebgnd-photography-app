@@ -37,22 +37,26 @@ export const App: FunctionComponent = () => {
 						restricted: false,
 						layout: <UserLayout />,
 						routes: {
-							'index': <FrontOfficeHome />,
-							'galleries': <Galleries />,
-							'gallery/:id': <Gallery />,
-							'recent': <Recent />
+							'index': { name: 'Home', element: <FrontOfficeHome /> },
+							'galleries': { element: <Galleries />, name: 'Galleries' },
+							'gallery/:id': { element: <Gallery /> },
+							'recent': { element: <Recent />, name: 'Recent' },
 						},
 					},
-					// Outside of `admin` subrouter since this is un unrestricted route
-					// and does not user the layout
-					'admin/login': <Authentication />,
 					'admin': {
 						restricted: true,
 						layout: <AdminLayout />,
-						loginPath: '/admin/login',
+						login: {
+							path: 'login',
+							element: <Authentication />,
+						},
 						routes: {
-							'home': <BackOfficeHome />,
-							'gallery-settings': <GallerySettings />
+							'home': {
+								name: 'Home',
+								index: true,
+								element: <BackOfficeHome />,
+							},
+							'gallery-settings': { element: <GallerySettings />, name: 'Gallery settings' },
 						},
 					},
 				}}

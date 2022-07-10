@@ -1,19 +1,22 @@
 import { FunctionComponent, useCallback, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-import { request } from 'libs/http/request';
+import { request, initializeAuthorizationInterceptor, ejectInterceptor } from 'libs/http/request';
 
-import { useAppDispatch } from 'redux/store';
+import { useAppDispatch, store } from 'redux/store';
 
 import { actions as galleryActions } from 'redux/slices/gallery/gallery.slice';
 import { fetchAllCategories } from 'redux/slices/gallery/gallery.thunk';
 import { actions as userActions } from 'redux/slices/user/user.slice';
+import { refreshToken, REFRESH_TOKEN_ENDPOINT } from 'redux/slices/user/user.thunk';
 
 import { useSocket } from 'hooks';
+import { useRouter } from 'hooks';
 
 import { TopNavigationBar } from 'components/Navigation/NavigationBar/TopNavigationBar';
 
 import styles from './AdminLayout.module.scss';
+import { selectUserToken } from 'redux/slices/user/user.selector';
 
 type ImageProcessedMessage = {
 	data: {
@@ -26,6 +29,7 @@ export const AdminLayout: FunctionComponent = () => {
 	const socket = useSocket();
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
+	const { propsForNavigation } = useRouter('admin', '/images/logo.png');
 
 	const handleImageProcessed = useCallback(({ data }: ImageProcessedMessage) => {
 		dispatch(galleryActions.setImageProcessStatus({
@@ -55,22 +59,34 @@ export const AdminLayout: FunctionComponent = () => {
 	}, [handleImageProcessed, socket]);
 
 	useEffect(() => {
-		dispatch(fetchAllCategories());
-	}, [dispatch]);
+		const interceptorId = initializeAuthorizationInterceptor({
+			refreshTokenEndpoint: REFRESH_TOKEN_ENDPOINT,
+			updateRefreshToken: async () => {
+				await dispatch(refreshToken())
+			},
+			getAuthorizationToken: () => selectUserToken(store.getState()),
+		});
+
+		/**
+		 * Neither dispatch or router info should change, so it's ok
+		 * to fetch the categories in the useEffect.
+		 */
+		 dispatch(fetchAllCategories());
+
+		return () => {
+			ejectInterceptor(interceptorId);
+		};
+	}, [dispatch])
 
 	return (
 		<>
 			<TopNavigationBar
 				height={125}
 				items={[
-					{ name: 'Home', url: '/admin/home' },
-					{ name: 'Gallery settings', url: '/admin/gallery-settings' },
+					...propsForNavigation.items,
 					{ name: 'Log out', onClick: handleLogout },
 				]}
-				logo={{
-					src: '/images/logo.png',
-					url: '/admin/home',
-				}}
+				logo={propsForNavigation.logo}
 				classNames={{
 					layout: styles.navigationLayout,
 				}}

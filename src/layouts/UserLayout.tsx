@@ -2,6 +2,7 @@ import { FunctionComponent, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { useAppDispatch } from 'redux/store';
+import { useRouter } from 'hooks';
 
 import { fetchAllCategories } from 'redux/slices/gallery/gallery.thunk';
 
@@ -14,6 +15,7 @@ const MAX_PIXEL_FOR_MOBILE = 850;
 
 export const UserLayout: FunctionComponent = () => {
 	const dispatch = useAppDispatch();
+	const { propsForNavigation } = useRouter('index', '/images/logo.png');
 
 	useEffect(() => {
 		dispatch(fetchAllCategories())
@@ -22,17 +24,9 @@ export const UserLayout: FunctionComponent = () => {
 	return (
 		<>
 			<TopNavigationBar
+				{...propsForNavigation}
 				height={81}
-				items={[
-					{ name: 'Home', url: '/' },
-					{ name: 'Galleries', url: '/galleries' },
-					{ name: 'Recent', url: '/recent' },
-				]}
 				maxPixelForMobile={MAX_PIXEL_FOR_MOBILE}
-				logo={{
-					src: '/images/logo.png',
-					url: '/',
-				}}
 				classNames={{
 					container: styles.userNavigationContainer,
 					layout: styles.userNavigationLayout,
