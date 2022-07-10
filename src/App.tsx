@@ -1,8 +1,8 @@
-import { FunctionComponent, useEffect, useMemo } from 'react';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { useEffect, useMemo } from 'react';
+import type { FunctionComponent } from 'react';
 import { io } from 'socket.io-client';
 
-import { RestrictedRoute } from 'components/Authentication/RestrictedRoute';
+import { SebGndPhotographyRouter } from 'components/Router/SebGndPhotographyRouter';
 
 import { Home as FrontOfficeHome } from 'pages/FrontOffice/Home/Home';
 import { Galleries } from 'pages/FrontOffice/Galleries/Galleries';
@@ -23,34 +23,40 @@ export const App: FunctionComponent = () => {
 		return io('localhost:8000')
 	}, []);
 
-	useEffect(() => () => {
-		socket.disconnect();
+	useEffect(() => {
+		return () => {
+			socket.disconnect();
+		};
 	}, [socket]);
 
 	return (
 		<SocketContext.Provider value={{ socket }}>
-			<BrowserRouter>
-				<Routes>
-					<Route path="admin/login" element={<Authentication />} />
-					<Route
-						path="admin"
-						element={
-							<RestrictedRoute fallback="/admin/login">
-								<AdminLayout />
-							</RestrictedRoute>
-						}
-					>
-						<Route path="home" element={<BackOfficeHome />} />
-						<Route path="gallery-settings" element={<GallerySettings />} />
-					</Route>
-					<Route path="*" element={<UserLayout />}>
-						<Route index element={<FrontOfficeHome />} />
-						<Route path="galleries" element={<Galleries />} />
-						<Route path="gallery/:id" element={<Gallery />} />
-						<Route path="recent" element={<Recent />} />
-					</Route>
-				</Routes>
-			</BrowserRouter>
+			<SebGndPhotographyRouter
+				router={{
+					'index': {
+						restricted: false,
+						layout: <UserLayout />,
+						routes: {
+							'index': <FrontOfficeHome />,
+							'galleries': <Galleries />,
+							'gallery/:id': <Gallery />,
+							'recent': <Recent />
+						},
+					},
+					// Outside of `admin` subrouter since this is un unrestricted route
+					// and does not user the layout
+					'admin/login': <Authentication />,
+					'admin': {
+						restricted: true,
+						layout: <AdminLayout />,
+						loginPath: '/admin/login',
+						routes: {
+							'home': <BackOfficeHome />,
+							'gallery-settings': <GallerySettings />
+						},
+					},
+				}}
+			/>
 		</SocketContext.Provider>
 	);
 }
