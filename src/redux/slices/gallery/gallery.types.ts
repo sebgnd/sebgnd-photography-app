@@ -134,6 +134,7 @@ export type FetchImagesPaginatedPayload = {
 export type UploadImagesPayload = {
 	files: File[],
 	categoryId: string,
+	filteredCategoryId: string | null,
 };
 
 export type UploadImagesResponse = {

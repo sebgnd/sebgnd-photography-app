@@ -271,6 +271,16 @@ const gallerySlice = createSlice({
 			const { edition, list } = image;
 			const { items: imageItems } = list;
 
+			edition.upload.loading = false;
+			edition.statuses = reduceImageStatuses(edition.statuses, payload.items);
+
+			/**
+			 * Only add the uploaded images if they match the filter
+			 */
+			if (meta.arg.filteredCategoryId && meta.arg.filteredCategoryId !== meta.arg.categoryId) {
+				return;
+			}
+
 			const uploadedItems = payload.items
 				.map((image): ImageItem => {
 					return {
@@ -317,9 +327,6 @@ const gallerySlice = createSlice({
 			}
 
 			list.total = (list.total || 0) + uploadImages.length;
-
-			edition.upload.loading = false;
-			edition.statuses = reduceImageStatuses(edition.statuses, payload.items);
 		});
 
 		builder.addCase(uploadImages.rejected, (state) => {
@@ -335,10 +342,7 @@ const gallerySlice = createSlice({
 
 			imageAdapter.removeOne(image.list.items, id);
 			image.edition.statuses = otherStatuses;
-			image.list.nextOffset = Math.max(
-				image.list.nextOffset - 1,
-				image.list.nextOffset,
-			);
+			image.list.nextOffset = Math.max(image.list.nextOffset - 1, 0);
 		});
 
 		builder.addCase(setCategoryThumbnail.fulfilled, (state, { meta }) => {

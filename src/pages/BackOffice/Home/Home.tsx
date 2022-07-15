@@ -105,10 +105,14 @@ export const Home: FunctionComponent = () => {
 
 	const handleUpload = useCallback(async (files: File[], categoryId: string) => {
 		await dispatch(
-			uploadImages({ files, categoryId }),
+			uploadImages({
+				filteredCategoryId: searchParams.get('category'),
+				files,
+				categoryId,
+			}),
 		);
 		toggleUploadModal();
-	}, [toggleUploadModal, dispatch]);
+	}, [toggleUploadModal, dispatch, searchParams]);
 
 	const handleDelete = useCallback((id: string) => {
 		dispatch(
