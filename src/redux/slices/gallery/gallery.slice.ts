@@ -281,21 +281,31 @@ const gallerySlice = createSlice({
 					}
 				});
 
-			const numberItemsToRemove = imageItems.ids.length + uploadedItems.length - list.items.ids.length;
-
 			/**
 			 * Only add them to the list if we are on the first page. Otherwise,
 			 * it breaks the pagination (e.g. if our current offset is 5 and limit
 			 * is 20, we'll have 15 identical images in the previous page).
 			 */
 			if (!list.hasPrevious) {
-				imageAdapter.removeMany(
-					imageItems,
-					imageItems.ids.slice(
-						imageItems.ids.length - numberItemsToRemove,
-						imageItems.ids.length
-					),
-				);
+				/**
+				 * If we have a next pages, we remote the number of items uploaded
+				 * from the list so the pagination is still valid. Otherwise, if there
+				 * is not pagination to break since we are on the first page and there is no
+				 * second page.
+				 */
+				const numberItemsToRemove = list.hasNext
+					? uploadImages.length
+					: 0;
+				
+				if (numberItemsToRemove > 0) {
+					imageAdapter.removeMany(
+						imageItems,
+						imageItems.ids.slice(
+							imageItems.ids.length - numberItemsToRemove,
+							imageItems.ids.length
+						),
+					);
+				}
 				imageAdapter.upsertMany(imageItems, uploadedItems);
 			} else {
 				/**
@@ -321,13 +331,14 @@ const gallerySlice = createSlice({
 
 		builder.addCase(deleteImage.fulfilled, (state, { payload: { id } }) => {
 			const { image } = state;
-			const {
-				[id]: deletedImage,
-				...otherStatuses
-			} = image.edition.statuses;
+			const { [id]: deletedImage, ...otherStatuses } = image.edition.statuses;
 
 			imageAdapter.removeOne(image.list.items, id);
 			image.edition.statuses = otherStatuses;
+			image.list.nextOffset = Math.max(
+				image.list.nextOffset - 1,
+				image.list.nextOffset,
+			);
 		});
 
 		builder.addCase(setCategoryThumbnail.fulfilled, (state, { meta }) => {
