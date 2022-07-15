@@ -12,10 +12,13 @@ export type UploadModalProps = {
 	categoriesDropdownOptions: Array<{
 		label: string,
 		value: string,
+    default?: boolean,
 	}>, 
   onClose: () => void,
   onUpload: (files: File[], categoryId: string) => void,
 }
+
+const DEFAULT_DROPDOWN_LABEL = 'Select a category';
 
 export const UploadModal: FunctionComponent<UploadModalProps> = ({
   isOpen,
@@ -26,7 +29,7 @@ export const UploadModal: FunctionComponent<UploadModalProps> = ({
 }) => {
   const [files, setFiles] = useState<File[]>([]);
 	const [selectedCategoryId, setSelectedCategoryId] = useState<null | string>(null);
-	const [dropdownLabel, setDropdownLabel] = useState('Select a category');
+	const [dropdownLabel, setDropdownLabel] = useState(DEFAULT_DROPDOWN_LABEL);
 
   const handleDelete = useCallback((file: File) => {
     setFiles((prevFiles) => {
@@ -40,7 +43,7 @@ export const UploadModal: FunctionComponent<UploadModalProps> = ({
 		const option = categoriesDropdownOptions.find((option) => {
 			return option.value === categoryId
 		});
-		const label = option?.label || 'Select a category';
+		const label = option?.label || DEFAULT_DROPDOWN_LABEL;
 
 		setSelectedCategoryId(categoryId);
 		setDropdownLabel(label)
@@ -50,11 +53,6 @@ export const UploadModal: FunctionComponent<UploadModalProps> = ({
     setFiles(files)
   }, []);
 
-  const handleClose = useCallback(() => {
-    setFiles([]);
-    onClose();
-  }, [onClose]);
-
   const handleConfirm = useCallback(() => {
 		if (!selectedCategoryId) {
 			return;
@@ -63,14 +61,21 @@ export const UploadModal: FunctionComponent<UploadModalProps> = ({
     onUpload(files, selectedCategoryId);
   }, [onUpload, selectedCategoryId, files]);
 
+  const handleClearingFilesAfterClose = useCallback(() => {
+    setFiles([]);
+    setSelectedCategoryId(null);
+    setDropdownLabel(DEFAULT_DROPDOWN_LABEL);
+  }, []);
+
   return (
     <Modal
-      title="Upload images"
-      onClose={handleClose}
       isOpen={isOpen}
-      confirmText="Upload"
-      onConfirm={handleConfirm}
       loading={loading}
+      title="Upload images"
+      confirmText="Upload"
+      onClose={onClose}
+      onConfirm={handleConfirm}
+      onCloseAnimationFinished={handleClearingFilesAfterClose}
     >
 			<div className={styles.dropdownContainer}>
 				<DropdownButton

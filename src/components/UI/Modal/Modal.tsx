@@ -1,4 +1,4 @@
-import { FunctionComponent, MouseEvent, ReactNode } from 'react';
+import { FunctionComponent, MouseEvent, ReactNode, useEffect } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 import { Icon } from 'components/UI/Content/Icon/Icon';
@@ -21,7 +21,10 @@ export type ModalProps = {
 	onConfirm?: (e?: MouseEvent) => void;
 	onClose?: (e?: MouseEvent) => void;
 	onCancel?: (e?: MouseEvent) => void;
-}
+	onCloseAnimationFinished?: () => void,
+};
+
+const ANIMATION_DURATION = 250;
 
 export const Modal: FunctionComponent<ModalProps> = ({ 
 	title,
@@ -31,14 +34,29 @@ export const Modal: FunctionComponent<ModalProps> = ({
 	cancelText = 'Cancel',
 	confirmText = 'Confirm',
 	size = 'medium',
-	onConfirm,
 	onClose,
 	onCancel,
+	onConfirm,
+	onCloseAnimationFinished,
 }) => {
+	useEffect(() => {
+		if (!isOpen) {
+			const timeoutId = setTimeout(() => {
+				onCloseAnimationFinished?.();
+			}, ANIMATION_DURATION);
+
+			return () => {
+				clearTimeout(timeoutId);
+			}
+		}
+
+		return () => {};
+	}, [onCloseAnimationFinished, isOpen]);
+
 	return (
 		<>
 			<CSSTransition
-				timeout={250}
+				timeout={ANIMATION_DURATION}
 				in={isOpen}
 				unmountOnExit
 				mountOnEnter
