@@ -21,9 +21,9 @@ export type SelectedImage = {
 	id: string,
 	exif?: {
 		iso: number,
-		shutterSpeed: number,
-		aperture: number,
-		focalLength: number,
+		shutterSpeed: string,
+		aperture: string,
+		focalLength: string,
 	},
 }
 
@@ -100,9 +100,9 @@ export type FetchImageResponse = {
 	updatedAt: string,
 	exif: null | {
 		iso: number,
-		shutterSpeed: number,
-		focalLength: number,
-		aperture: number,
+		shutterSpeed: string,
+		focalLength: string,
+		aperture: string,
 	}
 }
 

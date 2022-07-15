@@ -11,7 +11,10 @@ export type ImageViewerProps = {
 	onBackdropClick: () => void,
 	imageId: string,
 	exif?: {
-			iso: number,
+		iso: number,
+		shutterSpeed: string,
+		aperture: string,
+		focalLength: string,
 	},
 };
 
@@ -26,9 +29,9 @@ export const ImageViewer: FunctionComponent<ImageViewerProps> = ({ imageId, exif
 			return 'No image information.'
 		}
 
-		const { iso } = exif;
+		const { iso, shutterSpeed, aperture, focalLength } = exif;
 
-		return `ISO: ${iso}`;
+		return `ISO: ${iso}, ${shutterSpeed}, ${aperture}, ${focalLength}`;
 	}, [exif])
 
 	return (
