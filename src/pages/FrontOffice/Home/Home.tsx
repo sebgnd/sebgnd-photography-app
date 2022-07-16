@@ -36,6 +36,10 @@ export const Home: FunctionComponent = () => {
 		navigate('/gallery/' + category);
 	}, [navigate]);
 
+	const navigationToGalleriesPage = useCallback(() => {
+		navigate('/galleries');
+	}, [navigate]);
+
 	const thumbnails = useMemo(() => {
 		return categories.map((category) => {
 			return {
@@ -51,9 +55,6 @@ export const Home: FunctionComponent = () => {
 			<>
 				<Parallax img="images/parallax-1.jpg" speed={0.5}>
 					<div className={styles.landingContainer}>
-						<div className={styles.landingButtonContainer}>
-							<Button variant="classic" label="See this photo" onClick={() => {}} />
-						</div>
 					</div>
 				</Parallax>
 				<div className={styles.galleriesPreviewContainer}>
@@ -95,7 +96,7 @@ export const Home: FunctionComponent = () => {
 					</div>
 					<div className={styles.row}>
 						<div className={styles.seeAllGalleriesButton}>
-							<Button variant="classic" onClick={() => {}} label="See all galleries" />
+							<Button variant="classic" onClick={navigationToGalleriesPage} label="See all galleries" />
 						</div>
 					</div>
 				</div>

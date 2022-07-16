@@ -3,7 +3,6 @@ import { FunctionComponent, useMemo } from 'react';
 import { Text } from 'components/UI/Content/Text/Text';
 import { Button } from 'components/UI/Button';
 import { ImageFade } from 'components/UI/Image';
-import { ButtonContainerWidthWidth } from 'components/Styled/container';
 
 import { AdaptedImage } from './AdaptedImage';
 
@@ -58,14 +57,15 @@ export const RecentImage: FunctionComponent<RecentImageProp> = ({
 				</div>
 			</div>
 			
-			<div className={styles.imageContainer}>
-				<ButtonContainerWidthWidth width="100%" onClick={() => onImageClick(imageId)}>
-					{isPortrait && (
+			<button
+				className={styles.imageContainer}
+				onClick={() => onImageClick(imageId)}
+			>
+				{isPortrait && (
 						<ImageFade className={styles.fillerImage} src={src} alt={imageId} />
 					)}
 					<AdaptedImage type={imageType} src={src} alt={imageId} />
-				</ButtonContainerWidthWidth>
-			</div>
+				</button>
 		</div>
 	);
 }

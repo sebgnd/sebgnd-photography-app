@@ -47,7 +47,8 @@ $transition-timing: .25s;
 		background-color: colors.$white;	
 
 		&:hover:enabled {
-			background-color: colors.$neutral_200;
+			border: 1px solid colors.$neutral_100;
+			background-color: colors.$neutral_100;
 		}
 	}
 
@@ -83,6 +84,10 @@ $transition-timing: .25s;
 
 	&.default {
 		color: colors.$neutral_700;
+
+		&:hover {
+			color: colors.$neutral_900;
+		}
 	}
 
 	&.round {

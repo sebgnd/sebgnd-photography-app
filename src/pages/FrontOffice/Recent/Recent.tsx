@@ -89,7 +89,7 @@ export const Recent: FunctionComponent = () => {
 							key={img.id}
 							date={img.createdAt}
 							src={getImageUrl(img.id, {
-								size: 'medium',
+								size: 'full',
 								thumbnail: false,
 							})}
 							imageId={img.id}
