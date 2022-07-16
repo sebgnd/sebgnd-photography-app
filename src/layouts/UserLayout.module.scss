@@ -1,11 +1,13 @@
+@use 'styling/colors';
+
 .userNavigationLayout {
 	padding: 10px 48px;
-	background-color: white;
+	background-color: colors.$white;
 };
 
 .userNavigationContainer {
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.10);
-	background-color: white;
+	background-color: colors.$white;
 }
 
 .item {

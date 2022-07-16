@@ -1,7 +1,9 @@
+@use 'styling/colors';
+
 .footer {
   width: 100%;
-  color: white;
-  background-color: #171717;
+  color: colors.$white;
+  background-color: colors.$neutral_900;
   height: 70px;
   display: flex;
   position: absolute;

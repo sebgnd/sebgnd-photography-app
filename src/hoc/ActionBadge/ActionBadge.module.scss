@@ -1,3 +1,5 @@
+@use 'styling/colors';
+
 .componentContainer {
 	margin: 5px;
 	position: relative;
@@ -8,7 +10,7 @@
 		height: 20px;
 		border-radius: 10px;
 		transition: transform .25s;
-		background-color: white;
+		background-color: colors.$white;
 		overflow: hidden;
 		top: -5px;
 		right: -5px;

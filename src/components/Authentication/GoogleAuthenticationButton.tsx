@@ -8,7 +8,7 @@ export type GoogleAuthenticationButtonProps = {
 
 export const GoogleAuthenticationButton: FunctionComponent<GoogleAuthenticationButtonProps> = ({ onSignIn, clientId }) => {
 	useLayoutEffect(() => {
-		// @ts-ignore Google sign in does not have an npm package
+		// @ts-ignore Google sign in does not have an npm package and is a global package
 		google.accounts.id.initialize({
 			client_id: clientId,
 			callback: (response) => onSignIn(response.credential),

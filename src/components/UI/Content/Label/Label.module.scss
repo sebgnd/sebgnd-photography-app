@@ -1,3 +1,5 @@
+@use 'styling/colors';
+
 .labelContainer {
   padding-left: 8px;
   padding-right: 8px;
@@ -8,10 +10,10 @@
   margin-right: 8px;
 
   &.default {
-    background-color: #F4F4F4;
+    background-color: colors.$neutral_300;
   }
 
   &.info {
-    background-color: #acbeff;
+    background-color: colors.$info_200;
   }
 }

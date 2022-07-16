@@ -1,9 +1,11 @@
+@use 'styling/colors';
+
 .modal {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: colors.$white;
   height: auto;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
   border-radius: 15px;

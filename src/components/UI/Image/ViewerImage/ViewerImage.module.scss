@@ -1,3 +1,5 @@
+@use 'styling/colors';
+
 .viewerImageWrapper {
   margin-right: 25px;
   margin-bottom: 25px;
@@ -16,7 +18,7 @@
 }
 
 .imageInfo {
-  background-color: white;
+  background-color: colors.$white;
   padding: 15px 50px;
   border-radius: 5px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);

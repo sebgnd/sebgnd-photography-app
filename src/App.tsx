@@ -18,6 +18,8 @@ import { AdminLayout } from 'layouts/AdminLayout';
 
 import { SocketContext } from 'contexts/SocketContext';
 
+import './styling/style.scss';
+
 export const App: FunctionComponent = () => {
 	const socket = useMemo(() => {
 		return io('localhost:8000')

@@ -31,7 +31,7 @@ export const ImageViewer: FunctionComponent<ImageViewerProps> = ({ imageId, exif
 
 		const { iso, shutterSpeed, aperture, focalLength } = exif;
 
-		return `ISO: ${iso}, ${shutterSpeed}, ${aperture}, ${focalLength}`;
+		return `ISO ${iso}, ${shutterSpeed}, ${aperture}, ${focalLength}`;
 	}, [exif])
 
 	return (

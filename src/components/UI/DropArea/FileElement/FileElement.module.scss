@@ -1,18 +1,20 @@
+@use 'styling/colors';
+
 .file {
   width: 125px;
   height: 125px;
-  border-color: #e1e1e1;
+  border-color: colors.$neutral_300;
   border-radius: 5px;
   border-width: 1px;
   border-style: solid;
-  background-color: white;
+  background-color: colors.$white;
   transition: opacity .25s;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   padding: 5px;
-  color: #7E7E7E,
+  color: colors.$neutral_700,
 }
 
 .filePreview {

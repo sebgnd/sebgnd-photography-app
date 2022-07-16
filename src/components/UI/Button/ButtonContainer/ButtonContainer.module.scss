@@ -1,3 +1,5 @@
+@use 'styling/colors';
+
 $transition-timing: .25s;
 
 .button {
@@ -23,30 +25,29 @@ $transition-timing: .25s;
 
 	&.success {
 		border: none;
-		background-color: #B6FFAD;
+		background-color: colors.$success_200;
 
 		&:hover:enabled {
-			background-color: #7eff6d;
+			background-color: colors.$success_500;
 		}
 	}
 
 	&.destructive {
 		border: none;
-		background-color: #FFCACA;
+		background-color: colors.$danger_200;
 
 		&:hover:enabled {
-			background-color: #ff6565;
+			background-color: colors.$danger_500;
 		}
 	}
 
 	&.default {
-		border: 1px solid #E7E7E7;
+		border: 1px solid colors.$neutral_300;
 		box-sizing: border-box;
-		background-color: white;	
+		background-color: colors.$white;	
 
 		&:hover:enabled {
-			border: 1px solid #f0f0f0;
-			background-color: #f0f0f0;
+			background-color: colors.$neutral_300;
 		}
 	}
 
@@ -73,15 +74,15 @@ $transition-timing: .25s;
 	background-color: transparent;
 
 	&.success {
-		color: #7eff6d;
+		color: colors.$success_500;
 	}
 
 	&.destructive {
-		color: #ff6565;
+		color: colors.$danger_500;
 	}
 
 	&.default {
-		color: #7E7E7E;
+		color: colors.$neutral_700;
 	}
 
 	&.round {

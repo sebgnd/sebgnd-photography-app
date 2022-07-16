@@ -1,3 +1,5 @@
+@use 'styling/colors';
+
 @keyframes spin {
 	0% { transform: rotate(0deg); }
 	100% { transform: rotate(360deg); }
@@ -20,8 +22,8 @@
 
 .spinner {
 	display: inline-block;
-	border: 5px solid #f3f3f3;
-	border-top-color: #6b6b6b;
+	border: 5px solid colors.$neutral_300;
+	border-top-color: colors.$neutral_700;
 	border-radius: 50%;
 	animation: spin 1s ease-in-out infinite;
 	margin: 15px;

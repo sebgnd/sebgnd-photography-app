@@ -9,7 +9,7 @@ import { login } from 'redux/slices/user/user.thunk';
 import { useAuthenticated } from 'hooks';
 
 import { Text } from 'components/UI/Content/Text/Text';
-import { GoogleAuthenticationButton } from 'components/Authentication/GoogleAuthenticationButton/GoogleAuthenticationButton';
+import { GoogleAuthenticationButton } from 'components/Authentication/GoogleAuthenticationButton';
 import { SilentTokenRefresh } from 'components/Authentication/SilentTokenRefresh';
 
 import styles from './Authentication.module.scss';
