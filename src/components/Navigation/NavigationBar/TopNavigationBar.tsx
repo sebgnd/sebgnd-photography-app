@@ -114,7 +114,10 @@ export const TopNavigationBar: FunctionComponent<TopNavigationBarProps> = ({
 								<NavigationGroup
 									items={items}
 									justifyContent="right"
-									itemClassName={styles.desktopItem}
+									itemClassName={combineClasses(
+										styles.desktopItem,
+										styles.navigationItem,
+									)}
 								/>
 							</>
 						)}
@@ -135,7 +138,10 @@ export const TopNavigationBar: FunctionComponent<TopNavigationBarProps> = ({
 								items={items}
 								direction="column"
 								justifyContent="center"
-								itemClassName={styles.mobileItem}
+								itemClassName={combineClasses(
+									styles.mobileItem,
+									styles.navigationItem
+								)}
 							/>
 						</div>
 					)}

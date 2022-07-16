@@ -42,12 +42,12 @@ $transition-timing: .25s;
 	}
 
 	&.default {
-		border: 1px solid colors.$neutral_300;
+		border: 1px solid colors.$neutral_200;
 		box-sizing: border-box;
 		background-color: colors.$white;	
 
 		&:hover:enabled {
-			background-color: colors.$neutral_300;
+			background-color: colors.$neutral_200;
 		}
 	}
 

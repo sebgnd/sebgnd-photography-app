@@ -1,3 +1,5 @@
+@use 'styling/colors';
+
 $animation-timing: 500ms;
 
 .navigationContainer {
@@ -34,6 +36,15 @@ $animation-timing: 500ms;
 .mobileItem {
 	margin-top: 16px;
 	margin-bottom: 16px;
+}
+
+.navigationItem {
+	color: colors.$neutral_600;
+	transition: color 250ms;
+
+	&:hover {
+		color: colors.$neutral_900;
+	}
 }
 
 .mobileContainer {
