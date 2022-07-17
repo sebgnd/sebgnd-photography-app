@@ -30,6 +30,7 @@ export const UserLayout: FunctionComponent = () => {
 				classNames={{
 					container: styles.userNavigationContainer,
 					layout: styles.userNavigationLayout,
+					active: styles.activeItem,
 				}}
 			/>
 			<div id="user" style={{ paddingTop: '81px', paddingBottom: '70px' }}>

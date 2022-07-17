@@ -10,10 +10,10 @@
 		height: 20px;
 		border-radius: 10px;
 		transition: transform .25s;
-		background-color: colors.$white;
 		overflow: hidden;
 		top: -5px;
 		right: -5px;
+		font-size: 0.75em;
 
 		.iconContainer {
 			height: 100%;
@@ -21,6 +21,21 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
+
+			&.success {
+				background-color: colors.$success_500;
+				color: colors.$white;
+			}
+
+			&.default {
+				background-color: colors.$neutral_50;
+				color: colors.$neutral_600;
+			}
+
+			&.danger {
+				background-color: colors.$danger_600;
+				color: colors.$white;
+			}
 		}
 	}
 
@@ -35,7 +50,6 @@
 				i {
 					margin: 0;
 					padding: 0;
-					font-size: 0.8em;
 				}
 			
 				&:hover {

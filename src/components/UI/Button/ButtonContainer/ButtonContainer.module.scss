@@ -24,20 +24,24 @@ $transition-timing: .25s;
 	transition: background-color $transition-timing;
 
 	&.success {
-		border: none;
-		background-color: colors.$success_200;
+		border: solid 1px colors.$success_700;
+		color: colors.$success_700;
+		background-color: colors.$success_50;
 
 		&:hover:enabled {
-			background-color: colors.$success_500;
+			color: colors.$white;
+			background-color: colors.$success_700;
 		}
 	}
 
 	&.destructive {
-		border: none;
-		background-color: colors.$danger_200;
+		border: solid 1px colors.$danger_700;
+		color: colors.$danger_700;
+		background-color: colors.$danger_50;
 
 		&:hover:enabled {
-			background-color: colors.$danger_500;
+			color: colors.$white;
+			background-color: colors.$danger_700;
 		}
 	}
 
@@ -70,7 +74,7 @@ $transition-timing: .25s;
 }
 
 .light {
-	font-weight: bold;
+	text-decoration: underline;
 	transition: color $transition-timing;
 	background-color: transparent;
 
@@ -96,6 +100,6 @@ $transition-timing: .25s;
 
 	&:disabled {
 		cursor: not-allowed;
-		opacity: .75;
+		opacity: .65;
 	}
 }

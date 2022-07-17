@@ -26,7 +26,11 @@ export const FileElement: FunctionComponent<FileProps> = ({
 	onBadgeClick,
 }) => {
 	return (
-		<ActionBadge iconName="times" onBadgeClick={onBadgeClick}>
+		<ActionBadge
+			iconName="times"
+			onBadgeClick={onBadgeClick}
+			variant="danger"
+		>
 			<div className={styles.file}>
 				<div className={styles.filePreview}>
 					<Icon size="2x-large" name={icons[extension]} />

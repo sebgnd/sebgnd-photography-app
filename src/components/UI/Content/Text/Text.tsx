@@ -23,13 +23,11 @@ export const Text: FunctionComponent<TextProps> = ({
   style,
   className,
   wrap = true,
-  bold = false,
   size = 'regular',
   type = 'regular',
   ellipsis = false,
 }) => {
   const textElementStyle = useMemo((): CSSProperties => {
-    const fontWeight = bold ? 'bold' : 'normal';
     const fontSize = contentSizes[size];
 
     return {
@@ -39,10 +37,9 @@ export const Text: FunctionComponent<TextProps> = ({
       lineClamp: lines ? lines : undefined,
       textOverflow: ellipsis ? 'ellipsis' : 'initial',
       whiteSpace: wrap ? 'normal' : 'nowrap',
-      fontWeight,
       fontSize,
     };
-  }, [bold, size, style, ellipsis, wrap, lines]);
+  }, [size, style, ellipsis, wrap, lines]);
 
   const props = {
     className,

@@ -18,4 +18,6 @@ export type NavigationLogoItem = {
 export type NavigationBarClassNames = {
 	container?: string,
 	layout?: string,
+	active?: string,
+	item?: string,
 }

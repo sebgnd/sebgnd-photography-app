@@ -1,5 +1,32 @@
 @use 'styling/colors';
 
+.navigationItem {
+	color: colors.$black;
+	transition: color 250ms, font-weight 250ms;
+
+	&:hover {
+		color: colors.$info_600;
+	}
+}
+
+.activeItem {
+	position: relative;
+	color: colors.$info_600;
+	font-weight: 600;
+
+	&:before {
+		width: 6px;
+		height: 6px;
+		border-radius: 3px;
+		background-color: colors.$info_600;
+		content: '';
+		position: absolute;
+		left: -12px;
+		top: 50%;
+    transform: translateY(-50%);
+	}
+}
+
 .navigationLayout {
 	background-color: colors.$white;
 	padding: 0 100px;

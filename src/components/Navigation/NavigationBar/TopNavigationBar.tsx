@@ -79,7 +79,7 @@ export const TopNavigationBar: FunctionComponent<TopNavigationBarProps> = ({
 		classNames.container,
 	), [
 		classNames.container
-	])
+	]);
 
 	useEffect(() => {
 		const newMobileNavigationStyle = mobileNavOpened
@@ -114,9 +114,11 @@ export const TopNavigationBar: FunctionComponent<TopNavigationBarProps> = ({
 								<NavigationGroup
 									items={items}
 									justifyContent="right"
+									activeClassName={classNames.active}
 									itemClassName={combineClasses(
 										styles.desktopItem,
 										styles.navigationItem,
+										classNames.item,
 									)}
 								/>
 							</>
@@ -138,9 +140,11 @@ export const TopNavigationBar: FunctionComponent<TopNavigationBarProps> = ({
 								items={items}
 								direction="column"
 								justifyContent="center"
+								activeClassName={classNames.active}
 								itemClassName={combineClasses(
 									styles.mobileItem,
-									styles.navigationItem
+									styles.navigationItem,
+									classNames.item,
 								)}
 							/>
 						</div>

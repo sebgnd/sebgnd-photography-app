@@ -47,6 +47,7 @@ export const SmallImage: FunctionComponent<SmallImageProps> = ({
 		<ActionBadge
 			iconName="check"
 			visible={selected}
+      variant="success"
 		>
 			<div className={className} onClick={handleClick}>
 				{(!placeholder && src && id)

@@ -1,9 +1,10 @@
-import { CSSProperties, useCallback } from 'react';
-import type { FunctionComponent } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import type { FunctionComponent, CSSProperties } from 'react';
 
 import { NavigationItem } from './NavigationItem';
 
 import styles from './styles/NavigationGroup.module.scss';
+import { combineClasses } from 'libs/css/css';
 
 export type NavigationGroupProps = {
 	items: ReadonlyArray<{
@@ -15,6 +16,7 @@ export type NavigationGroupProps = {
 	justifyContent: CSSProperties['justifyContent'],
 	direction?: 'row' | 'column',
 	itemClassName?: string,
+	activeClassName?: string,
 	onItemClick?: () => void,
 };
 
@@ -22,14 +24,31 @@ export const NavigationGroup: FunctionComponent<NavigationGroupProps> = ({
 	items,
 	itemClassName, 
 	justifyContent,
+	activeClassName,
 	onItemClick = () => {},
 	className = '',
 	direction = 'row',
 }) => {
-	const makeOnClickHandler = useCallback((additionnalOnClick = () => {}) => () => {
+	const [activeIndex, setActiveIndex] = useState(-1);
+
+	const makeOnClickHandler = useCallback((index: number, url?: string, additionnalOnClick = () => {}) => () => {
+		if (url) {
+			setActiveIndex(index);
+		}
+
 		additionnalOnClick();
 		onItemClick();
 	}, [onItemClick]);
+
+	useEffect(() => {
+		const activeItemIndex = items.findIndex((item) => {
+			return item.url === window.location.pathname;
+		});
+
+		if (activeItemIndex !== -1) {
+			setActiveIndex(activeItemIndex);
+		} 
+	}, [items]);
 
 	return (
 		<div
@@ -39,10 +58,15 @@ export const NavigationGroup: FunctionComponent<NavigationGroupProps> = ({
 				justifyContent
 			}}
 		>
-			{items.map(({ url, name, onClick }) => (
+			{items.map(({ url, name, onClick }, index) => (
 				<NavigationItem
-					onClick={makeOnClickHandler(onClick)}
-					className={itemClassName}
+					onClick={makeOnClickHandler(index, url, onClick)}
+					className={combineClasses(
+						itemClassName,
+						index === activeIndex
+							? activeClassName
+							: undefined
+					)}
 					key={`NavigationGroup-${name}`}
 					url={url}
 					name={name}

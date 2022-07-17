@@ -50,6 +50,10 @@ export const AdminLayout: FunctionComponent = () => {
 		}
 	}, [dispatch, navigate]);
 
+	const handleBackToWebsite = useCallback(() => {
+		navigate('/');
+	}, [navigate]);
+
 	useEffect(() => {
 		socket.on('image-processing:image-processed', handleImageProcessed);
 
@@ -84,11 +88,14 @@ export const AdminLayout: FunctionComponent = () => {
 				height={125}
 				items={[
 					...propsForNavigation.items,
+					{ name: 'Back to website', onClick: handleBackToWebsite },
 					{ name: 'Log out', onClick: handleLogout },
 				]}
 				logo={propsForNavigation.logo}
 				classNames={{
 					layout: styles.navigationLayout,
+					item: styles.navigationItem,
+					active: styles.activeItem,
 				}}
 			/>
 			<div id="admin" style={{paddingTop: '140px', paddingBottom: '70px' }}>

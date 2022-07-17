@@ -3,6 +3,10 @@ body, html {
   padding: 0;
 }
 
+h1, h2, h3, h4 {
+  font-weight: 600 !important;
+}
+
 html {
 	overflow-y: scroll;
 	overflow-y: overlay;

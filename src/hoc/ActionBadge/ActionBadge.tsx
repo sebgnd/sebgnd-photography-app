@@ -3,12 +3,15 @@ import { FunctionComponent, MouseEvent, ReactNode, useCallback, useMemo } from '
 import { Icon } from 'components/UI/Content/Icon/Icon';
 
 import styles from './ActionBadge.module.scss';
+import { combineClasses } from 'libs/css/css';
 
+export type ActionBadgeVariant = 'success' | 'danger' | 'default';
 export type ActionBadgeProps = {
 	iconName: string;
 	onBadgeClick?: (event: MouseEvent<HTMLDivElement>) => void,
 	children: ReactNode,
 	visible?: boolean,
+	variant?: ActionBadgeVariant,
 	backgroundColor?: string;
 	iconColor?: string;
 }
@@ -18,8 +21,7 @@ export const ActionBadge: FunctionComponent<ActionBadgeProps> = ({
 	onBadgeClick,
 	children,
 	visible = true,
-	backgroundColor = 'rgb(218 218 218)',
-	iconColor = 'black',
+	variant = 'default',
 }) => {
 	const handleClick = useCallback((event: MouseEvent<HTMLDivElement>) => {
 		if (onBadgeClick) {
@@ -44,13 +46,13 @@ export const ActionBadge: FunctionComponent<ActionBadgeProps> = ({
 			{visible && (
 				<div className={styles.badge}>
 					<div 
-						style={{ backgroundColor }} 
-						className={styles.iconContainer} 
+						className={combineClasses(
+							styles.iconContainer,
+							styles[variant],
+						)} 
 						onClick={handleClick}
 					>
-						<div style={{ color: iconColor }}>
-							<Icon name={iconName} />
-						</div>
+						<Icon name={iconName} />
 					</div>
 				</div>
 			)}
