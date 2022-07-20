@@ -8,9 +8,11 @@ import styles from './InformationMessage.module.scss';
 interface InformationMessageProps {
 	message: string;
 	messageType: 'error' | 'information';
-	color?: 'default' | 'white' | 'black';
-	size?: 'small' | 'medium';
 	noIcon?: boolean;
+	clickableMessage?: string;
+	size?: 'small' | 'medium';
+	color?: 'default' | 'white' | 'black';
+	onMessageClick?: () => void;
 }
 
 interface IconMap {
@@ -23,11 +25,13 @@ const icons: IconMap = {
 };
 
 export const InformationMessage: FunctionComponent<InformationMessageProps> = ({ 
+	color,
 	message, 
-	color, 
 	messageType,
+	clickableMessage,
 	size = 'medium',
-	noIcon = false
+	noIcon = false,
+	onMessageClick,
 }) => {
 	const colorHex = useMemo(() => {
 		switch (color) {
@@ -50,6 +54,16 @@ export const InformationMessage: FunctionComponent<InformationMessageProps> = ({
 				type="p"
 				text={message}
 			/>
+			{(clickableMessage && onMessageClick) && (
+				<div onClick={onMessageClick}>
+					<Text
+						type="p"
+						className={styles.clickableMessage}
+						size={contentSize}
+						text={clickableMessage}
+					/>
+				</div>
+			)}
 		</div>
 	);
 };

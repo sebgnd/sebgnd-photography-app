@@ -1,4 +1,5 @@
-import { FunctionComponent, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
+import type { FunctionComponent } from 'react';
 
 import { Modal } from 'components/UI/Modal/Modal';
 import { DropArea } from 'components/UI/DropArea/DropArea';
@@ -88,10 +89,12 @@ export const UploadModal: FunctionComponent<UploadModalProps> = ({
 			<div className={styles.dropAreaContainer}>
 				<DropArea
 					files={files}
-					textBeforeDrop="Drop your images here"
+					instructionText="Drop your images here"
+					chooseFilesText="or click here to select them"
 					loading={loading}
 					onFileDrop={handleDrop}
 					onFileDelete={handleDelete}
+					types={['jpg', 'png']}
 				/>
 			</div>
     </Modal>

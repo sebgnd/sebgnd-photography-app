@@ -1,17 +1,18 @@
-import { FunctionComponent, DragEvent, useState, useCallback, useEffect } from 'react';
+import { FunctionComponent, DragEvent, useState, useCallback, useEffect, useRef, ChangeEvent, useMemo } from 'react';
 
-import { getFileExtension } from 'libs/path/path';
+import { getFileExtension, getPossibleExtensionsByType } from 'libs/path/path';
+import type { FileExtension, FileType } from 'libs/path/path';
 
 import { Spinner } from 'components/UI/Spinner/Spinner';
 import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
-import { FileElement, FileExtension } from './FileElement/FileElement';
+
+import { FileElement } from './FileElement/FileElement';
 
 import { Centered } from 'hoc/Centered/Centered';
 
 import styles from './DropArea.module.scss';
 
 export type FileState = 'idle' | 'loading' | 'success';
-
 export type FileStatusMap = {
 	[name: string]: FileState;
 }
@@ -21,36 +22,38 @@ export type DropAreaProps = {
 	onFileDelete: (file: File) => void,
 	files: File[],
 	loading?: boolean,
-	textBeforeDrop?: string;
-	extensions?: FileExtension[];
+	instructionText?: string;
+	chooseFilesText?: string,
+	types?: FileType[];
 }
 
 export const DropArea: FunctionComponent<DropAreaProps> = ({
 	files,
-	extensions,
+	types,
+	chooseFilesText,
 	onFileDelete,
 	onFileDrop,
-	textBeforeDrop = 'Drop your files here',
+	instructionText = 'Drop your files here',
 	loading = false,
 }) => {
+	const fileInput = useRef<HTMLInputElement | null>(null);
+
 	const [inDropArea, setInDropArea] = useState<boolean>(false);
+
+	const extensions = useMemo(() => {
+		return types?.reduce((acc, type) => [
+			...acc,
+			...getPossibleExtensionsByType(type),
+		], [] as FileExtension[])
+	}, [types]);
 
 	const preventDefault = (event: DragEvent<HTMLDivElement>) => {
 		event.preventDefault();
 		event.stopPropagation();
 		event.persist();
-	}
+	};
 
-	const handleDrop = useCallback((event: DragEvent<HTMLDivElement>) => {
-		preventDefault(event);
-
-		if (loading) {
-			return;
-		}
-
-		const { dataTransfer } = event;
-		const droppedFiles = [...dataTransfer.files];
-
+	const handleNewFiles = useCallback((droppedFiles: File[]) => {
 		const filesWithExtension = droppedFiles.filter((file) => {
 			const { name } = file;
 
@@ -76,7 +79,33 @@ export const DropArea: FunctionComponent<DropAreaProps> = ({
 
 		onFileDrop(newFiles)
 		setInDropArea(false);
-	}, [files, onFileDrop, loading, extensions]);
+	}, [onFileDrop, extensions, files]);
+
+	const handleDrop = useCallback(
+		(event: DragEvent<HTMLDivElement>) => {
+			preventDefault(event);
+
+			if (loading) {
+				return;
+			}
+
+			const { dataTransfer } = event;
+
+			handleNewFiles([...dataTransfer.files]);
+		},
+		[handleNewFiles, loading]
+	);
+
+	const handleSelect = useCallback(
+		(event: ChangeEvent<HTMLInputElement>) => {
+			if (loading || !event.target.files) {
+				return;
+			}
+
+			handleNewFiles([...event.target.files]);
+		},
+		[loading, handleNewFiles]
+	)
 
 	const handleDragEnter = useCallback((event: DragEvent<HTMLDivElement>) => {
 		preventDefault(event);
@@ -96,6 +125,14 @@ export const DropArea: FunctionComponent<DropAreaProps> = ({
 		}
 	}, [inDropArea, loading]);
 
+	const handleInstructionMessageClick = useCallback(() => {
+		if (!fileInput.current) {
+			return;
+		}
+
+		fileInput.current.click();
+	}, []);
+
 	useEffect(() => {
 		onFileDrop(files)
 	}, [onFileDrop, files])
@@ -108,12 +145,24 @@ export const DropArea: FunctionComponent<DropAreaProps> = ({
 			onDragLeave={(event) => handleDragLeave(event)}
 			className={`${styles.dropArea} ${inDropArea ? styles.greenBorder : ''}`}
 		>
+			<input
+				style={{
+					display: 'none'
+				}}
+				type="file"
+				multiple
+				ref={fileInput}
+				accept={extensions?.join(',')}
+				onChange={handleSelect}
+			/>
 			{files.length === 0 && (
 				<Centered centerHorizontal centerVertical>
 					<InformationMessage 
-						message={textBeforeDrop} 
-						messageType="information" 
-					/> 
+						message={instructionText}
+						clickableMessage={chooseFilesText}
+						onMessageClick={handleInstructionMessageClick}
+						messageType="information"
+					/>
 				</Centered>
 			)}
 			{loading && (
