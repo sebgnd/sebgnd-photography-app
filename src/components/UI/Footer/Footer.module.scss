@@ -1,0 +1,24 @@
+@use 'styling/colors';
+
+.footer {
+  width: 100%;
+  color: colors.$white;
+  background-color: colors.$neutral_900;
+  height: 70px;
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.footerItems {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.text {
+  margin-left: 8px;
+}

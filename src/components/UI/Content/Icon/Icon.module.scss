@@ -1,0 +1,14 @@
+@use 'styling/colors';
+
+.icon {
+  color: inherit;
+  font-size: inherit;
+
+	&.default {
+		color: colors.$neutral_500
+	}
+
+	&.white {
+		color: colors.$white
+	}
+}

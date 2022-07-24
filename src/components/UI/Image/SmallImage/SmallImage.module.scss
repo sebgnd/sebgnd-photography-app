@@ -1,0 +1,23 @@
+.image {
+  width: 80px;
+  height: 80px;
+	border-radius: 5px;
+	overflow: hidden;
+
+	&.selected {
+		opacity: .75;
+	}
+
+  * {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.clickableImage {
+  cursor: pointer;
+
+  &:hover {
+    opacity: .75;
+  }
+}

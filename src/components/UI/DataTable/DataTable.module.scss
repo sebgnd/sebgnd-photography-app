@@ -1,0 +1,31 @@
+.dataTableHeader {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	direction: row;
+	width: 100%;
+}
+
+.arrowsContainer {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	direction: row;
+}
+
+.dataTableContainer {
+	width: 100%;
+}
+
+.noItemsContainer {
+	height: 400px;
+	width: 100%;
+	position: relative;
+}
+
+.listContainer {
+	width: 100%;
+	border: 1px solid #E7E7E7;
+	border-radius: 5px;
+	overflow: hidden;
+}

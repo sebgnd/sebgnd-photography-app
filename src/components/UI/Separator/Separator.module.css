@@ -1,0 +1,37 @@
+.separator {
+    height: 1px;
+    display: inline-block;
+    background-color: #E7E7E7;
+}
+
+.bigWidth {
+    width: 80%;
+}
+
+.mediumWidth {
+    width: 50%;
+}
+
+.smallWidth {
+    width: 30%;
+}
+
+.tinyWidth {
+    width: 15%;
+}
+
+.bigHeight {
+    height: 80%;
+}
+
+.mediumHeight {
+    height: 50%;
+}
+
+.smallHeight {
+    height: 30%;
+}
+
+.tinyHeight {
+    height: 15%;
+}

@@ -1,0 +1,13 @@
+.image {
+    width: auto;
+    height: 100%;
+    transition: opacity .5s linear;
+}
+
+.show {
+    opacity: 1;
+}
+
+.hide {
+    opacity: 0;
+}

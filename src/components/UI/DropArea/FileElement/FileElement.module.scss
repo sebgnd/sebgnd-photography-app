@@ -1,0 +1,40 @@
+@use 'styling/colors';
+
+.file {
+  width: 125px;
+  height: 140px;
+  border-color: colors.$neutral_200;
+  border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  background-color: colors.$white;
+  transition: opacity .25s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  color: colors.$neutral_700,
+}
+
+.filePreview {
+  position: relative;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform .25s;
+}
+
+.fileName {
+  height: 40%;
+  text-align: center; 
+  width: 100%;
+  padding: 0 7px;
+  box-sizing: border-box;
+  transition: transform .25s;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}

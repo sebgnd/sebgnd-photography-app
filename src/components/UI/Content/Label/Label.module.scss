@@ -1,0 +1,20 @@
+@use 'styling/colors';
+
+.labelContainer {
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-radius: 5px;
+  margin-left: 8px;
+  margin-right: 8px;
+
+  &.default {
+    background-color: colors.$neutral_200;
+  }
+
+  &.info {
+    color: colors.$white;
+    background-color: colors.$info_400;
+  }
+}

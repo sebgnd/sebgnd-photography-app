@@ -1,0 +1,15 @@
+.informationMessageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.informationMessage {
+  margin-left: 10px;
+}
+
+.clickableMessage {
+	margin-left: 0.25em;
+	text-decoration: underline;
+	cursor: pointer;
+}

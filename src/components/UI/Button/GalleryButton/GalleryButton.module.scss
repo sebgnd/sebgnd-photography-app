@@ -1,0 +1,65 @@
+@use 'styling/colors';
+
+.galleryButtonContainer{
+	margin: 10px;
+	display: inline-block;
+}
+
+.galleryButtonWrapper {
+	display: inline-block;
+	max-height: 300px;
+	min-height: 100px;
+	max-width: 300px;
+	min-width: 100px;
+	height: auto;
+	position: relative;
+
+	&:hover {
+		.galleryImage {
+			transform: scale(1.05);
+		}
+
+		.galleryName {
+			bottom: -35px;
+			transform: scale(1.05);
+		}
+	}
+}
+
+.galleryImage {
+	height: 100%;
+	width: 100%;
+	border-radius: 5px;
+	overflow: hidden;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+	display: flex;
+	transform: none;
+	transition: transform .5s, box-shadow .5s;
+}
+
+.image {
+	height: 100%;
+	width: 100%;
+}
+
+.galleryName {
+	display: inline-block;
+	background-color: colors.$white;
+	border-radius: 5px;
+	border: 1px solid colors.$neutral_200;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+	text-align: center;
+	width: 100%;
+	color: colors.$black;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	
+	position: absolute;
+	right: -25px;
+	bottom: -25px;
+	min-width: 65%;
+	max-width: 95px;
+
+	transform: none;
+	transition: transform .5s, bottom .5s, box-shadow .5s;
+}

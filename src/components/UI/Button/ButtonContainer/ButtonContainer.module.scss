@@ -1,0 +1,105 @@
+@use 'styling/colors';
+
+$transition-timing: .25s;
+
+.button {
+	border: none;
+	text-decoration: none;
+	transform: none;
+	margin: 5px;
+
+	font-size: inherit;
+
+	height: auto;
+	width: auto;
+	cursor: pointer;
+
+	&:focus {
+		outline: 0;
+	}
+}
+
+.classic {
+	box-sizing: border-box;
+	transition: background-color $transition-timing;
+
+	&.success {
+		border: solid 1px colors.$success_700;
+		color: colors.$success_700;
+		background-color: colors.$success_50;
+
+		&:hover:enabled {
+			color: colors.$white;
+			background-color: colors.$success_700;
+		}
+	}
+
+	&.destructive {
+		border: solid 1px colors.$danger_700;
+		color: colors.$danger_700;
+		background-color: colors.$danger_50;
+
+		&:hover:enabled {
+			color: colors.$white;
+			background-color: colors.$danger_700;
+		}
+	}
+
+	&.default {
+		border: 1px solid colors.$neutral_200;
+		box-sizing: border-box;
+		background-color: colors.$white;	
+
+		&:hover:enabled {
+			border: 1px solid colors.$neutral_100;
+			background-color: colors.$neutral_100;
+		}
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+		opacity: .75;
+	}
+
+	&.regular {
+		padding: 8px 16px;
+		border-radius: 5px;
+	}
+
+	&.round {
+		height: 30px;
+		width: 30px;
+		border-radius: 50%;
+	}
+}
+
+.light {
+	text-decoration: underline;
+	transition: color $transition-timing;
+	background-color: transparent;
+
+	&.success {
+		color: colors.$success_500;
+	}
+
+	&.destructive {
+		color: colors.$danger_500;
+	}
+
+	&.default {
+		color: colors.$neutral_700;
+
+		&:hover {
+			color: colors.$neutral_900;
+		}
+	}
+
+	&.round {
+		size: 1.25em;
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+		opacity: .65;
+	}
+}

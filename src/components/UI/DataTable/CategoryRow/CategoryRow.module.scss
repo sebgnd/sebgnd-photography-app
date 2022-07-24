@@ -1,0 +1,18 @@
+.categoryRowContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	padding: 16px;
+}
+
+.leftContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.categoryName {
+	margin-left: 16px;
+}
