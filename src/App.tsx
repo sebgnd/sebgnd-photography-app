@@ -22,7 +22,11 @@ import './styling/style.scss';
 
 export const App: FunctionComponent = () => {
 	const socket = useMemo(() => {
-		return io('localhost:8000')
+		if (!process.env.REACT_APP_SOCKET) {
+			throw new Error('Socket URL not set (REACT_APP_SOCKET)')
+		}
+
+		return io(process.env.REACT_APP_SOCKET);
 	}, []);
 
 	useEffect(() => {

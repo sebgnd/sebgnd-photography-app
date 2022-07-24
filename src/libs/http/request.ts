@@ -26,8 +26,12 @@ export type RefreshTokenInterceptorConfig = {
 	updateRefreshToken: () => Promise<void>,
 }
 
+if (!process.env.REACT_APP_API) {
+	throw new Error('api URL not set (REACT_APP_API)')
+}
+
 const instance = axios.create({
-	baseURL: 'http://localhost:8000/api/',
+	baseURL: process.env.REACT_APP_API,
 });
 
 export const buildAuthorizationHeader = (token: string) => `Bearer ${token}`;

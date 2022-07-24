@@ -97,7 +97,7 @@ export const uploadImages = createAsyncThunk<UploadImagesResponse, UploadImagesP
 export const deleteImage = createAsyncThunk<DeleteImageResponse, DeleteImagePayload>(
 	'gallery/deleteImage',
 	async ({ id }) => {
-		const response = await request(`http://localhost:8000/api/images/${id}`, {
+		const response = await request(`images/${id}`, {
 			method: 'DELETE',
 		});
 

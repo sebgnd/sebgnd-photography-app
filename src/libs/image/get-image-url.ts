@@ -16,7 +16,11 @@ export const getImageUrl = (id: string, config: ImageConfig) => {
 	const imageFormat = thumbnail ? 'thumbnail' : 'full';
 	const imageSize = IMAGE_SIZES[size];
 
-	return `http://localhost:8000/api/file/images/${imageFormat}/${imageSize}/${id}`;
+	if (!process.env.REACT_APP_API) {
+		throw new Error('API URL not set');
+	}
+
+	return `${process.env.REACT_APP_API}file/images/${imageFormat}/${imageSize}/${id}`;
 }
 
 export const getImageUrlOrUndefined = (id: string | null, config: ImageConfig) => {
