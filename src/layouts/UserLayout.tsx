@@ -15,7 +15,7 @@ const MAX_PIXEL_FOR_MOBILE = 850;
 
 export const UserLayout: FunctionComponent = () => {
 	const dispatch = useAppDispatch();
-	const { propsForNavigation } = useRouter('index', '/images/logo.png');
+	const { propsForNavigation } = useRouter('index');
 
 	useEffect(() => {
 		dispatch(fetchAllCategories())
@@ -33,7 +33,7 @@ export const UserLayout: FunctionComponent = () => {
 					active: styles.activeItem,
 				}}
 			/>
-			<div id="user" style={{ paddingTop: '81px', paddingBottom: '70px' }}>
+			<div id="user" style={{ paddingTop: '96px', paddingBottom: '70px' }}>
 				<Outlet />
 			</div>
 			<Footer />

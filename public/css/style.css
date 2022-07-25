@@ -9,7 +9,6 @@ h1, h2, h3, h4 {
 
 html {
 	overflow-y: scroll;
-	overflow-y: overlay;
 }
 
 body {
@@ -22,12 +21,6 @@ a {
   font-size: inherit;
   font-family: inherit;
   color: inherit;
-}
-
-.global {
-  padding-bottom: 82px;
-  padding-top: 81px;
-  overflow: hidden;
 }
 
 #root {

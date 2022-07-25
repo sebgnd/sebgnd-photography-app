@@ -6,8 +6,11 @@
 };
 
 .userNavigationContainer {
+	margin: 16px;
+	border-radius: 16px;
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.10);
 	background-color: colors.$white;
+	overflow: hidden;
 }
 
 .activeItem {

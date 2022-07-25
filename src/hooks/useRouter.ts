@@ -5,8 +5,8 @@ import type { TopNavigationBarProps } from 'components/Navigation/NavigationBar/
 
 export type RouteForTopNavigationBarProps = Pick<TopNavigationBarProps, 'logo' | 'items'>;
 
-const buildNavigationPropsFromRouteInfo = (info: RouteInfo, logoSrc: string): RouteForTopNavigationBarProps => {
-	const { routes } = info;
+const buildNavigationPropsFromRouteInfo = (info: RouteInfo): RouteForTopNavigationBarProps => {
+	const { routes, logo } = info;
 
 	/**
 	 * The index route will be used when clicking the logo in
@@ -16,7 +16,7 @@ const buildNavigationPropsFromRouteInfo = (info: RouteInfo, logoSrc: string): Ro
 
 	return {
 		logo: {
-			src: logoSrc,
+			src: logo,
 			url: indexRoute?.url || '',
 		},
 		/**
@@ -31,7 +31,7 @@ const buildNavigationPropsFromRouteInfo = (info: RouteInfo, logoSrc: string): Ro
 	}
 }
 
-export const useRouter = (path: string, logoSrc: string) => {
+export const useRouter = (path: string) => {
 	const routerContext = useContext(SebGndPhotographyRouterContext);
 	const routerInfo = routerContext.routes[path];
 
@@ -40,11 +40,8 @@ export const useRouter = (path: string, logoSrc: string) => {
 	}
 
 	const propsForNavigation = useMemo(() => (
-		buildNavigationPropsFromRouteInfo(
-			routerInfo,
-			logoSrc,
-		)
-	), [routerInfo, logoSrc]);
+		buildNavigationPropsFromRouteInfo(routerInfo)
+	), [routerInfo]);
 
 	return {
 		info: routerInfo,

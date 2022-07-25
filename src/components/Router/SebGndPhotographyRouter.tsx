@@ -20,6 +20,7 @@ type UnrestrictedPath = {
 
 type SubRouter = (RestrictedPath | UnrestrictedPath) & {
 	layout: JSX.Element,
+	logo: string,
 	routes: {
 		[subPath: string | 'index']: {
 			name?: string,
@@ -63,6 +64,7 @@ export const SebGndPhotographyRouter: FunctionComponent<SebGndPhotographyRouterP
 				...acc,
 				[path]: {
 					loginRoute: subRouter.restricted && buildRoute(path, subRouter.login.path),
+					logo: subRouter.logo,
 					routes: Object
 						.entries(subRouter.routes)
 						.map(([subPath, route]) => ({

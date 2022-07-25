@@ -2,6 +2,7 @@ import React from 'react';
 
 export type RouteInfo = {
 	loginRoute?: string,
+	logo: string,
 	routes: Array<{
 		url: string,
 		index: boolean,

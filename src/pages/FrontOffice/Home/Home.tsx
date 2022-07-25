@@ -54,8 +54,7 @@ export const Home: FunctionComponent = () => {
     return (
 			<>
 				<Parallax img="images/parallax-1.jpg" speed={0.5}>
-					<div className={styles.landingContainer}>
-					</div>
+					<div className={styles.landingContainer} />
 				</Parallax>
 				<div className={styles.galleriesPreviewContainer}>
 					<div className={styles.row}>

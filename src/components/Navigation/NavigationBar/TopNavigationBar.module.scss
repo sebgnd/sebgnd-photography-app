@@ -6,7 +6,8 @@ $animation-timing: 500ms;
 	z-index: 500;
 	position: fixed;
 	top: 0;
-	width: 100%;
+	left: 0;
+	right: 0;
 	transition: height $animation-timing;
 }
 
@@ -15,9 +16,7 @@ $animation-timing: 500ms;
 	display: flex;
 	align-items: center;
 	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
+	width: 100%;
 	z-index: 510;
 }
 

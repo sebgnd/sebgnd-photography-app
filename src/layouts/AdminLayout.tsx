@@ -10,8 +10,7 @@ import { fetchAllCategories } from 'redux/slices/gallery/gallery.thunk';
 import { actions as userActions } from 'redux/slices/user/user.slice';
 import { refreshToken, REFRESH_TOKEN_ENDPOINT } from 'redux/slices/user/user.thunk';
 
-import { useSocket } from 'hooks';
-import { useRouter } from 'hooks';
+import { useSocket, useRouter } from 'hooks';
 
 import { TopNavigationBar } from 'components/Navigation/NavigationBar/TopNavigationBar';
 
@@ -29,7 +28,7 @@ export const AdminLayout: FunctionComponent = () => {
 	const socket = useSocket();
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const { propsForNavigation } = useRouter('admin', '/images/logo.png');
+	const { propsForNavigation } = useRouter('admin');
 
 	const handleImageProcessed = useCallback(({ data }: ImageProcessedMessage) => {
 		dispatch(galleryActions.setImageProcessStatus({

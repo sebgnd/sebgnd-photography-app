@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { FunctionComponent } from 'react';
 import { io } from 'socket.io-client';
 
@@ -17,10 +17,15 @@ import { UserLayout } from 'layouts/UserLayout';
 import { AdminLayout } from 'layouts/AdminLayout';
 
 import { SocketContext } from 'contexts/SocketContext';
+import { GlobalStyleContext } from 'contexts/GlobalStyleContext';
 
 import './styling/style.scss';
 
 export const App: FunctionComponent = () => {
+	const [allowNavigationOverlay, setAllowNavigationOverlay] = useState(false);
+	const [footerSize, setFooterSize] = useState(0);
+	const [navigationBarSize, setNavigationBarSize] = useState(0);
+
 	const socket = useMemo(() => {
 		if (!process.env.REACT_APP_SOCKET) {
 			throw new Error('Socket URL not set (REACT_APP_SOCKET)')
@@ -37,36 +42,48 @@ export const App: FunctionComponent = () => {
 
 	return (
 		<SocketContext.Provider value={{ socket }}>
-			<SebGndPhotographyRouter
-				router={{
-					'index': {
-						restricted: false,
-						layout: <UserLayout />,
-						routes: {
-							'index': { name: 'Home', element: <FrontOfficeHome /> },
-							'galleries': { element: <Galleries />, name: 'Galleries' },
-							'gallery/:id': { element: <Gallery /> },
-							'recent': { element: <Recent />, name: 'Recent' },
-						},
-					},
-					'admin': {
-						restricted: true,
-						layout: <AdminLayout />,
-						login: {
-							path: 'login',
-							element: <Authentication />,
-						},
-						routes: {
-							'home': {
-								name: 'Home',
-								index: true,
-								element: <BackOfficeHome />,
-							},
-							'gallery-settings': { element: <GallerySettings />, name: 'Gallery settings' },
-						},
+			<GlobalStyleContext.Provider
+				value={{
+					layout: {
+						footerSize,
+						navigationBarSize,
+						allowNavigationOverlay,
 					},
 				}}
-			/>
+			>
+				<SebGndPhotographyRouter
+					router={{
+						'index': {
+							restricted: false,
+							layout: <UserLayout />,
+							logo: '/images/logo.png',
+							routes: {
+								'index': { name: 'Home', element: <FrontOfficeHome /> },
+								'galleries': { element: <Galleries />, name: 'Galleries' },
+								'gallery/:id': { element: <Gallery /> },
+								'recent': { element: <Recent />, name: 'Recent' },
+							},
+						},
+						'admin': {
+							restricted: true,
+							logo: '/images/logo.png',
+							layout: <AdminLayout />,
+							login: {
+								path: 'login',
+								element: <Authentication />,
+							},
+							routes: {
+								'home': {
+									name: 'Home',
+									index: true,
+									element: <BackOfficeHome />,
+								},
+								'gallery-settings': { element: <GallerySettings />, name: 'Gallery settings' },
+							},
+						},
+					}}
+				/>
+			</GlobalStyleContext.Provider>
 		</SocketContext.Provider>
 	);
 }

@@ -50,6 +50,9 @@ export const Gallery: FunctionComponent = () => {
 	const categoryError = useSelector(selectIsCategoryListFailed);
 	const imagesError = useSelector(selectIsImageListFailed);
 
+	const error = categoryError || imagesError;
+	const loading = categoryLoading || imagesLoading;
+
 	const canShowList = !categoryLoading
 		&& !imagesLoading
 		&& !categoryError
@@ -99,13 +102,21 @@ export const Gallery: FunctionComponent = () => {
 						)}
 					</div>
 				)}
-				{(categoryLoading || imagesLoading) && (
-					<Centered centerHorizontal centerVertical fullScreen>
+				{(loading) && (
+					<Centered centerHorizontal centerVertical insideContainer>
 						<Spinner />
 					</Centered>
 				)}
-				{(categoryError || imagesError) && (
-					<Centered centerHorizontal centerVertical fullScreen>
+				{(images.length === 0 && !loading && !error) && (
+					<Centered centerHorizontal centerVertical insideContainer>
+						<InformationMessage
+							messageType="information"
+							message="No images"
+						/>
+					</Centered>
+				)}
+				{(error && !loading) && (
+					<Centered centerHorizontal centerVertical insideContainer>
 						<InformationMessage
 							messageType="error"
 							message="Something went wrong"

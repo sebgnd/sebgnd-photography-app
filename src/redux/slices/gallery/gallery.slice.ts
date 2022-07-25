@@ -210,6 +210,11 @@ const gallerySlice = createSlice({
 			}
 		});
 
+		builder.addCase(fetchImagesPaginated.rejected, (state) => {
+			state.image.list.error = true;
+			state.image.list.loading = false;
+		});
+
 		builder.addCase(fetchImagesPaginated.fulfilled, (state, { payload }) => {
 			/**
 			 * For now, it only handles the pagination with all categories. Since the selected

@@ -19,10 +19,12 @@ import {
 	selectImageList,
 	selectCategoryMap,
 	selectTotalImageList,
+	selectIsImageListFailed,
 	selectIsImageListLoading,
 } from 'redux/slices/gallery/gallery.selector';
 
 import styles from './Recent.module.css';
+import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
 
 export const Recent: FunctionComponent = () => {
 	const dispatch = useAppDispatch();
@@ -40,6 +42,7 @@ export const Recent: FunctionComponent = () => {
 	const loading = useSelector(selectIsImageListLoading);
 	const images = useSelector(selectImageList);
 	const total = useSelector(selectTotalImageList);
+	const imagesError = useSelector(selectIsImageListFailed);
 
 	const reached = useEndPageReached();
 
@@ -48,7 +51,7 @@ export const Recent: FunctionComponent = () => {
 	}, [navigate]);
 
 	useEffect(() => {
-		if (images.length === total) {
+		if (images.length === total || imagesError) {
 			return;
 		}
 
@@ -60,7 +63,7 @@ export const Recent: FunctionComponent = () => {
 
 			canLoad.current = false
 		}
-	}, [dispatch, fetchNextPage, images, total, reached, loading, canLoad]);
+	}, [dispatch, fetchNextPage, images, total, reached, loading, canLoad, imagesError]);
 
 	useEffect(() => {
 		if (!loading) {
@@ -107,6 +110,22 @@ export const Recent: FunctionComponent = () => {
 						<Spinner />
 					</Centered>
 				</div>
+			)}
+			{(images.length === 0 && !loading && !imagesError) && (
+				<Centered centerHorizontal centerVertical insideContainer>
+					<InformationMessage
+						messageType="information"
+						message="No images"
+					/>
+				</Centered>
+			)}
+			{(imagesError && !loading) && (
+				<Centered centerHorizontal centerVertical insideContainer>
+					<InformationMessage
+						messageType="error"
+						message="Something went wrong"
+					/>
+				</Centered>
 			)}
 			{selection && (
 				<ImageViewer
