@@ -3,7 +3,6 @@ import type {
 	CSSProperties,
 	MouseEvent,
 	ReactNode,
-	FunctionComponent,
 	DetailedHTMLProps,
 	PropsWithChildren,
 	ButtonHTMLAttributes,
@@ -30,16 +29,23 @@ export type ButtonContainerProps = {
 
 type BaseButtonProps = PropsWithChildren<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>>;
 
-export const BaseButtonContainer: FunctionComponent<BaseButtonProps> = ({ children, className, ...props }) => {
-	return ( 
-		<button
-			className={combineClasses(styles.baseButton, className)}
-			{...props }
-		>
-			{children}
-		</button>
-	)
-};
+export const BaseButtonContainer = forwardRef<HTMLButtonElement, BaseButtonProps>(
+	function BaseButtonContainer({
+		children,
+		className,
+		...props
+	}, ref) {
+		return ( 
+			<button
+				className={combineClasses(styles.baseButton, className)}
+				ref={ref}
+				{...props }
+			>
+				{children}
+			</button>
+		)
+	}
+);
 
 export const ButtonContainer = forwardRef<HTMLButtonElement, ButtonContainerProps>(
 	function ButtonContainer({
