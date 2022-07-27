@@ -1,5 +1,15 @@
 import { useMemo, forwardRef } from 'react';
-import type { CSSProperties, MouseEvent, ReactNode } from 'react';
+import type {
+	CSSProperties,
+	MouseEvent,
+	ReactNode,
+	FunctionComponent,
+	DetailedHTMLProps,
+	PropsWithChildren,
+	ButtonHTMLAttributes,
+} from 'react';
+
+import { combineClasses } from 'libs/css/css';
 
 import styles from './ButtonContainer.module.scss';
 
@@ -16,12 +26,22 @@ export type ButtonContainerProps = {
 	onClick: (event: MouseEvent) => void;
 	style?: CSSProperties,
 	children?: ReactNode,
-}
+};
+
+type BaseButtonProps = PropsWithChildren<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>>;
+
+export const BaseButtonContainer: FunctionComponent<BaseButtonProps> = ({ children, className, ...props }) => {
+	return ( 
+		<button
+			className={combineClasses(styles.baseButton, className)}
+			{...props }
+		>
+			{children}
+		</button>
+	)
+};
 
 export const ButtonContainer = forwardRef<HTMLButtonElement, ButtonContainerProps>(
-	/**
-	 * Use named function to keep `displayName` because `forwardRef` removes it
-	 */
 	function ButtonContainer({
 		color,
 		variant,
@@ -45,7 +65,7 @@ export const ButtonContainer = forwardRef<HTMLButtonElement, ButtonContainerProp
 		}, [variant, color, type, className]);
 
 		return (
-			<button
+			<BaseButtonContainer
 				ref={ref}
 				disabled={disabled}
 				className={finalClassName}
@@ -53,7 +73,7 @@ export const ButtonContainer = forwardRef<HTMLButtonElement, ButtonContainerProp
 				onClick={onClick}
 			>
 				{children}
-			</button>
+			</BaseButtonContainer>
 		);
 	}
 );

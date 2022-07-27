@@ -10,7 +10,6 @@ import { useImageSelection } from 'hooks/gallery';
 
 import { Text } from 'components/UI/Content/Text/Text';
 import { SingleImage } from 'components/UI/Image';
-import { FlexContainer } from 'components/Styled/container';
 import { ImageViewer } from 'components/ImageViewer/ImageViewer';
 import { InformationMessage } from 'components/UI/InformationMessage/InformationMessage';
 import { Spinner } from 'components/UI/Spinner/Spinner';
@@ -74,12 +73,7 @@ export const Gallery: FunctionComponent = () => {
 				{canShowList && (
 					<div>
 						<Text className={style.title} bold size="2x-large" text={selectedCategory?.displayName || ''} />
-						<FlexContainer
-							className={style.imageList}
-							alignItems="center"
-							justifyContent="center"
-							wrap={true}
-						>
+						<div className={style.imageList}>
 							{images.map((img) => (
 								<SingleImage
 									src={getImageUrl(img.id, {
@@ -92,7 +86,7 @@ export const Gallery: FunctionComponent = () => {
 									categoryId={img.categoryId}
 								/>
 							))}
-						</FlexContainer>
+						</div>
 						{selection && (
 							<ImageViewer
 								onBackdropClick={resetSelection}

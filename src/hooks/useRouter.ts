@@ -1,4 +1,4 @@
-import { useContext, useMemo } from 'react'
+import { useContext, useMemo } from 'react';
 
 import { RouteInfo, SebGndPhotographyRouterContext } from 'contexts/SebGndPhotographyRouterContext';
 import type { TopNavigationBarProps } from 'components/Navigation/NavigationBar/TopNavigationBar';

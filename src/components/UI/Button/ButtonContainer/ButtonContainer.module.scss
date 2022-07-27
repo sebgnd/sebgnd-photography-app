@@ -2,6 +2,21 @@
 
 $transition-timing: .25s;
 
+.baseButton {
+	text-decoration: none;
+	border: none;
+	padding: 0;
+	background-color: transparent;
+
+	&:focus {
+		outline: 0;
+	}
+
+	&:hover {
+		cursor: pointer;
+	}
+}
+
 .button {
 	border: none;
 	text-decoration: none;

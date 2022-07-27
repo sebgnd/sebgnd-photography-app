@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 
-import { ButtonContainer } from '../../../Styled/container';
-import { ImageFade } from '../ImageFade/ImageFade';
+import { BaseButtonContainer } from 'components/UI/Button';
+import { ImageFade } from 'components/UI/Image/ImageFade/ImageFade';
 
 import styles from './SingleImage.module.css';
 
@@ -21,11 +21,11 @@ export const SingleImage: FunctionComponent<SingleImageProp> = ({ src, imageId, 
 
 	return (
 		<div className={styles.singleImageContainer}>
-			<ButtonContainer onClick={handleClick}>
+			<BaseButtonContainer onClick={handleClick}>
 				<div className={styles.imageContainer}>
 					<ImageFade className={styles.image} src={src} alt={imageId}/>
 				</div>
-			</ButtonContainer>
+			</BaseButtonContainer>
 		</div>
 	);
 }

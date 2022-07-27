@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 
 import { Text } from 'components/UI/Content/Text/Text';
-import { ButtonContainer } from 'components/Styled/container';
+import { BaseButtonContainer } from 'components/UI/Button';
 import { ImageFade } from 'components/UI/Image/ImageFade/ImageFade';
 
 import styles from './GalleryButton.module.scss';
@@ -18,7 +18,7 @@ export const GalleryButton: FunctionComponent<GalleryButtonProp> = ({ src, image
 	return (
 		<div className={styles.galleryButtonContainer}>
 			<div className={styles.galleryButtonWrapper}>
-				<ButtonContainer onClick={() => onClick()}>
+				<BaseButtonContainer onClick={() => onClick()}>
 					<div className={styles.galleryImage}>
 						{(imageId && src) ? (
 							<ImageFade
@@ -34,7 +34,7 @@ export const GalleryButton: FunctionComponent<GalleryButtonProp> = ({ src, image
 					<div id="gallery-name" className={styles.galleryName}>
 						<Text text={categoryDisplayName} />
 					</div>
-				</ButtonContainer>
+				</BaseButtonContainer>
 			</div>
 		</div>
 	);

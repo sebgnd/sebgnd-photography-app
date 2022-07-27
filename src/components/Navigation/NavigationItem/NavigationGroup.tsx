@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { FunctionComponent, CSSProperties } from 'react';
 
+import { combineClasses } from 'libs/css/css';
+
 import { NavigationItem } from './NavigationItem';
 
 import styles from './styles/NavigationGroup.module.scss';
-import { combineClasses } from 'libs/css/css';
 
 export type NavigationGroupProps = {
 	items: ReadonlyArray<{

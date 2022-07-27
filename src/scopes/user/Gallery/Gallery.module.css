@@ -5,6 +5,10 @@
 }
 
 .imageList {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
 	margin-bottom: 32px !important;
 	max-width: 1950px;
 	margin: auto;
