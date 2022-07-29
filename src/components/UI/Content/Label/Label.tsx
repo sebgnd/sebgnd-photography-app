@@ -18,4 +18,4 @@ export const Label: FunctionComponent<LabelProps> = ({ text, color = 'default' }
       <Text size="small" text={text} />
     </div>
   );
-}
+};

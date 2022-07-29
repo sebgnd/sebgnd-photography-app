@@ -17,35 +17,35 @@ const HEADER_SIZE = 113;
 const FOOTER_SIZE = 70;
 
 export const UserLayout: FunctionComponent = () => {
-	const dispatch = useAppDispatch();
-	const location = useLocation();
+  const dispatch = useAppDispatch();
+  const location = useLocation();
 
-	const { propsForNavigation } = useRouter('index');
+  const { propsForNavigation } = useRouter('index');
 
-	useEffect(() => {
-		dispatch(fetchAllCategories())
-	}, [dispatch]);
-	
-	return (
-		<>
-			<TopNavigationBar
-				{...propsForNavigation}
-				height={81}
-				maxPixelForMobile={MAX_PIXEL_FOR_MOBILE}
-				classNames={{
-					container: styles.userNavigationContainer,
-					layout: styles.userNavigationLayout,
-					active: styles.activeItem,
-				}}
-			/>
-			<LayoutContainer
-				headerSize={HEADER_SIZE}
-				footerSize={FOOTER_SIZE}
-				allowImmersiveHeader={location.pathname === '/'}
-			>
-				<Outlet />
-			</LayoutContainer>
-			<Footer />
-		</>
-	);
-}
+  useEffect(() => {
+    dispatch(fetchAllCategories());
+  }, [dispatch]);
+
+  return (
+    <>
+      <TopNavigationBar
+        {...propsForNavigation}
+        height={81}
+        maxPixelForMobile={MAX_PIXEL_FOR_MOBILE}
+        classNames={{
+          container: styles.userNavigationContainer,
+          layout: styles.userNavigationLayout,
+          active: styles.activeItem,
+        }}
+      />
+      <LayoutContainer
+        headerSize={HEADER_SIZE}
+        footerSize={FOOTER_SIZE}
+        allowImmersiveHeader={location.pathname === '/'}
+      >
+        <Outlet />
+      </LayoutContainer>
+      <Footer />
+    </>
+  );
+};

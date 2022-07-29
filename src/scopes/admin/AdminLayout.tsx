@@ -18,88 +18,88 @@ import styles from './AdminLayout.module.scss';
 import { selectUserToken } from 'redux/slices/user/user.selector';
 
 type ImageProcessedMessage = {
-	data: {
-		id: string,
-		processed: boolean,
-	}
+  data: {
+    id: string,
+    processed: boolean,
+  }
 };
 
 export const AdminLayout: FunctionComponent = () => {
-	const socket = useSocket();
-	const navigate = useNavigate();
-	const dispatch = useAppDispatch();
-	const { propsForNavigation } = useRouter('admin');
+  const socket = useSocket();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { propsForNavigation } = useRouter('admin');
 
-	const handleImageProcessed = useCallback(({ data }: ImageProcessedMessage) => {
-		dispatch(galleryActions.setImageProcessStatus({
-			id: data.id,
-			status: data.processed ? 'valid' : 'processing'
-		}))
-	}, [dispatch]);
+  const handleImageProcessed = useCallback(({ data }: ImageProcessedMessage) => {
+    dispatch(galleryActions.setImageProcessStatus({
+      id: data.id,
+      status: data.processed ? 'valid' : 'processing',
+    }));
+  }, [dispatch]);
 
-	const handleLogout = useCallback(async () => {
-		const response = await request('iam/logout', {
-			method: 'POST',
-			credentials: true,
-		});
+  const handleLogout = useCallback(async () => {
+    const response = await request('iam/logout', {
+      method: 'POST',
+      credentials: true,
+    });
 
-		if (response.status === 204) {
-			dispatch(userActions.clearAuthenticationToken())
-			navigate('/admin/login');
-		}
-	}, [dispatch, navigate]);
+    if (response.status === 204) {
+      dispatch(userActions.clearAuthenticationToken());
+      navigate('/admin/login');
+    }
+  }, [dispatch, navigate]);
 
-	const handleBackToWebsite = useCallback(() => {
-		navigate('/');
-	}, [navigate]);
+  const handleBackToWebsite = useCallback(() => {
+    navigate('/');
+  }, [navigate]);
 
-	useEffect(() => {
-		socket.on('image-processing:image-processed', handleImageProcessed);
+  useEffect(() => {
+    socket.on('image-processing:image-processed', handleImageProcessed);
 
-		return () => {
-			socket.off('image-processing:image-processed');
-		}
-	}, [handleImageProcessed, socket]);
+    return () => {
+      socket.off('image-processing:image-processed');
+    };
+  }, [handleImageProcessed, socket]);
 
-	useEffect(() => {
-		const interceptorId = initializeAuthorizationInterceptor({
-			refreshTokenEndpoint: REFRESH_TOKEN_ENDPOINT,
-			updateRefreshToken: async () => {
-				await dispatch(refreshToken())
-			},
-			getAuthorizationToken: () => selectUserToken(store.getState()),
-		});
+  useEffect(() => {
+    const interceptorId = initializeAuthorizationInterceptor({
+      refreshTokenEndpoint: REFRESH_TOKEN_ENDPOINT,
+      updateRefreshToken: async () => {
+        await dispatch(refreshToken());
+      },
+      getAuthorizationToken: () => selectUserToken(store.getState()),
+    });
 
-		/**
-		 * Neither dispatch or router info should change, so it's ok
-		 * to fetch the categories in the useEffect.
-		 */
-		 dispatch(fetchAllCategories());
+    /**
+     * Neither dispatch or router info should change, so it's ok
+     * to fetch the categories in the useEffect.
+     */
+    dispatch(fetchAllCategories());
 
-		return () => {
-			ejectInterceptor(interceptorId);
-		};
-	}, [dispatch])
+    return () => {
+      ejectInterceptor(interceptorId);
+    };
+  }, [dispatch]);
 
-	return (
-		<>
-			<TopNavigationBar
-				height={125}
-				items={[
-					...propsForNavigation.items,
-					{ name: 'Back to website', onClick: handleBackToWebsite },
-					{ name: 'Log out', onClick: handleLogout },
-				]}
-				logo={propsForNavigation.logo}
-				classNames={{
-					layout: styles.navigationLayout,
-					item: styles.navigationItem,
-					active: styles.activeItem,
-				}}
-			/>
-			<div id="admin" style={{paddingTop: '140px', paddingBottom: '70px' }}>
-				<Outlet />
-			</div>
-		</>
-	);
-}
+  return (
+    <>
+      <TopNavigationBar
+        height={125}
+        items={[
+          ...propsForNavigation.items,
+          { name: 'Back to website', onClick: handleBackToWebsite },
+          { name: 'Log out', onClick: handleLogout },
+        ]}
+        logo={propsForNavigation.logo}
+        classNames={{
+          layout: styles.navigationLayout,
+          item: styles.navigationItem,
+          active: styles.activeItem,
+        }}
+      />
+      <div id="admin" style={{ paddingTop: '140px', paddingBottom: '70px' }}>
+        <Outlet />
+      </div>
+    </>
+  );
+};

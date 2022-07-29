@@ -38,10 +38,10 @@ export const SelectThumbnailModal: FunctionComponent<SelectThumbnailModalProps> 
     onSelect(selectedId);
   }, [onSelect, selectedId]);
 
-	const handleCancel = useCallback(() => {
-		setSelectedId(null);
-		onCancel();
-	}, [onCancel]);
+  const handleCancel = useCallback(() => {
+    setSelectedId(null);
+    onCancel();
+  }, [onCancel]);
 
   return (
     <Modal
@@ -63,7 +63,7 @@ export const SelectThumbnailModal: FunctionComponent<SelectThumbnailModalProps> 
                 src={src}
                 placeholder={false}
                 onClick={handleImageSelection}
-								selected={id === selectedId}
+                selected={id === selectedId}
               />
             </div>
           ))

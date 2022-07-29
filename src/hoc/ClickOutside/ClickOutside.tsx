@@ -4,35 +4,35 @@ import type { FunctionComponent, ReactNode } from 'react';
 import { useEventListener } from 'hooks';
 
 export type ClickOutsideProps = {
-	children: ReactNode,
-	containerClassName?: string,
-	onClickOutside: () => void,
+  children: ReactNode,
+  containerClassName?: string,
+  onClickOutside: () => void,
 };
 
 export const ClickOutside: FunctionComponent<ClickOutsideProps> = ({
-	children,
-	onClickOutside,
-	containerClassName,
+  children,
+  onClickOutside,
+  containerClassName,
 }) => {
-	const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
-	const handleClickOutside = useCallback((event: Event) => {
-		if (!ref.current) {
-			return;
-		}
-	
-		const outsideDropdown = !ref.current.contains(event.target as Node);
+  const handleClickOutside = useCallback((event: Event) => {
+    if (!ref.current) {
+      return;
+    }
 
-		if (outsideDropdown) {
-			onClickOutside();
-		}
-	}, [onClickOutside]);
+    const outsideDropdown = !ref.current.contains(event.target as Node);
 
-	useEventListener('mousedown', handleClickOutside);
+    if (outsideDropdown) {
+      onClickOutside();
+    }
+  }, [onClickOutside]);
 
-	return (
-		<div className={containerClassName} ref={ref}>
-			{children}
-		</div>
-	)
-}
+  useEventListener('mousedown', handleClickOutside);
+
+  return (
+    <div className={containerClassName} ref={ref}>
+      {children}
+    </div>
+  );
+};

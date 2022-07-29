@@ -31,17 +31,17 @@ interface TextFieldProps {
   form?: string;
 }
 
-const TextField: FunctionComponent<TextFieldProps> = ({ 
-  id, 
-  name, 
-  label, 
-  placeholder, 
-  hideContent, 
-  hasError, 
-  onBlur, 
-  onChange, 
-  inputType, 
-  errorMessage 
+const TextField: FunctionComponent<TextFieldProps> = ({
+  id,
+  name,
+  label,
+  placeholder,
+  hideContent,
+  hasError,
+  onBlur,
+  onChange,
+  inputType,
+  errorMessage,
 }) => {
   const getFieldType = () => {
     if (TYPES.includes(inputType)) {
@@ -63,22 +63,22 @@ const TextField: FunctionComponent<TextFieldProps> = ({
         )}
       </LabelErrorContainer>
       {getFieldType() === TYPES[0] && (
-        <StyledInput 
-          name={name} 
-          id={id || name} 
-          error={hasError ? hasError : false} 
-          placeholder={placeholder} 
-          type={hideContent ? "password" : "text"} 
-          onBlur={onBlur} 
+        <StyledInput
+          name={name}
+          id={id || name}
+          error={hasError ? hasError : false}
+          placeholder={placeholder}
+          type={hideContent ? 'password' : 'text'}
+          onBlur={onBlur}
           onChange={onChange}
         />
       )}
       {getFieldType() === TYPES[1] && (
-        <StyledTextArea 
-          name={name} 
-          id={id || name} 
-          error={hasError ? hasError : false} 
-          placeholder={placeholder} 
+        <StyledTextArea
+          name={name}
+          id={id || name}
+          error={hasError ? hasError : false}
+          placeholder={placeholder}
           onBlur={onBlur}
           onChange={onChange}
         />

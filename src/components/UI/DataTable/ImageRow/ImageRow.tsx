@@ -1,4 +1,4 @@
-import { FunctionComponent, useCallback,useMemo } from 'react';
+import { FunctionComponent, useCallback, useMemo } from 'react';
 
 import { getImageUrl } from 'libs/image/get-image-url';
 
@@ -14,14 +14,14 @@ export type ImageRowProps = {
   imageId: string,
   thumbnail: boolean,
   selected: boolean,
-	status: 'error' | 'processing' | 'valid' | 'unknown',
+  status: 'error' | 'processing' | 'valid' | 'unknown',
   onDelete: (id: string) => void,
 }
 
 export const ImageRow: FunctionComponent<ImageRowProps> = ({
   imageId,
   thumbnail,
-	status,
+  status,
   onDelete,
 }) => {
   const handleDelete = useCallback(() => {
@@ -51,23 +51,23 @@ export const ImageRow: FunctionComponent<ImageRowProps> = ({
         )}
       </div>
       <div className={styles.sideContainer}>
-				{status === 'processing' && (
-					<div className={styles.processing}>
-						<Spinner size="tiny" />
-						<Text size="small" text="Processing ..." />
-					</div>
-				)}
+        {status === 'processing' && (
+          <div className={styles.processing}>
+            <Spinner size="tiny" />
+            <Text size="small" text="Processing ..." />
+          </div>
+        )}
         <div className={styles.deleteButton}>
           <IconButton
             icon="times"
             color="destructive"
             variant="light"
             disabled={thumbnail}
-						confirmationText="Delete this image ?"
+            confirmationText="Delete this image ?"
             onClick={handleDelete}
           />
         </div>
       </div>
     </div>
   );
-}; 
+};

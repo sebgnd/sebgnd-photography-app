@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const StyledTextArea = styled('textarea')<{ error: boolean }>`
-  border: ${props => props.error ? '1px solid red' : 'none'};
-  background-color: ${props => props.error ? 'rgb(255, 242, 242)' : 'white'};
+  border: ${(props) => props.error ? '1px solid red' : 'none'};
+  background-color: ${(props) => props.error ? 'rgb(255, 242, 242)' : 'white'};
   display: block;
   padding: 15px;
   height: 230px;
@@ -24,11 +24,11 @@ export const StyledTextArea = styled('textarea')<{ error: boolean }>`
   ::placeholder {
     font-family: "CooperHewitt Medium";
   }
-`
+`;
 
 export const StyledInput = styled('input')<{ error: boolean }>`
-  border: ${props => props.error ? '1px solid red' : 'none'};
-  background-color: ${props => props.error ? 'rgb(255, 242, 242)' : 'white'};
+  border: ${(props) => props.error ? '1px solid red' : 'none'};
+  background-color: ${(props) => props.error ? 'rgb(255, 242, 242)' : 'white'};
   display: block;
   padding: 15px;
   height: 50px;
@@ -48,17 +48,17 @@ export const StyledInput = styled('input')<{ error: boolean }>`
   ::placeholder {
       font-family: "CooperHewitt Medium";
   }
-`
+`;
 
 export const TextFieldContainer = styled('div')`
   display: block;
   margin: 50px;
-`
+`;
 
 export const LabelContainer = styled('div')`
   margin-bottom: 10px;
   margin-left: 5px;
-`
+`;
 
 export const ErrorContainer = styled('p')`
   color: red;
@@ -66,10 +66,10 @@ export const ErrorContainer = styled('p')`
   margin-top: 0;
   margin-bottom: 10px;
   margin-left: 5px;
-`
+`;
 
 export const LabelErrorContainer = styled('div')`
   display: flex;
   flex-direction: row;
   align-items: center;
-`
+`;
