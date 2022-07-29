@@ -68,6 +68,8 @@ export const UploadModal: FunctionComponent<UploadModalProps> = ({
     setDropdownLabel(DEFAULT_DROPDOWN_LABEL);
   }, []);
 
+	const disabledConfirmButton = files.length === 0 || selectedCategoryId === null;
+
   return (
     <Modal
       isOpen={isOpen}
@@ -76,6 +78,7 @@ export const UploadModal: FunctionComponent<UploadModalProps> = ({
       confirmText="Upload"
       onClose={onClose}
       onConfirm={handleConfirm}
+			disableConfirmButton={disabledConfirmButton}
       onCloseAnimationFinished={handleClearingFilesAfterClose}
     >
 			<div className={styles.dropdownContainer}>
@@ -91,6 +94,8 @@ export const UploadModal: FunctionComponent<UploadModalProps> = ({
 					files={files}
 					instructionText="Drop your images here"
 					chooseFilesText="or click here to select them"
+					errorText="Invalid image,"
+					chooseFilesTextOnError="select another one"
 					loading={loading}
 					onFileDrop={handleDrop}
 					onFileDelete={handleDelete}

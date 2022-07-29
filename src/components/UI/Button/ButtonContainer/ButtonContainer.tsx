@@ -4,7 +4,6 @@ import type {
 	MouseEvent,
 	ReactNode,
 	DetailedHTMLProps,
-	PropsWithChildren,
 	ButtonHTMLAttributes,
 } from 'react';
 
@@ -27,7 +26,9 @@ export type ButtonContainerProps = {
 	children?: ReactNode,
 };
 
-type BaseButtonProps = PropsWithChildren<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>>;
+type BaseButtonProps = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & {
+	children: ReactNode,
+};
 
 export const BaseButtonContainer = forwardRef<HTMLButtonElement, BaseButtonProps>(
 	function BaseButtonContainer({

@@ -16,6 +16,10 @@
   border-color: colors.$success_500 !important;
 }
 
+.redBorder {
+	border-color: colors.$danger_500 !important;
+}
+
 .filesContainer {
   display: flex;
   flex-direction: row;

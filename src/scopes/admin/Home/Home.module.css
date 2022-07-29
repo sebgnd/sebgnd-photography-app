@@ -23,13 +23,6 @@
 	width: 100%;
 }
 
-.temp {
-	height: 750px;
-	width: 100%;
-	border-radius: 10px;
-	background-color: red;
-}
-
 @media (max-width: 1000px) {
 	.homeContainer {
 		width: 100%;

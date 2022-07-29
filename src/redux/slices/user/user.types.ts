@@ -4,7 +4,8 @@ export type UserState = {
 	authorization: {
 		token: string,
 		error: boolean,
-	}
+		loading: boolean,
+	},
 };
 
 export type SetTokenPayload = PayloadAction<{

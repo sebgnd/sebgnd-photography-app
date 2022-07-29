@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import type { FunctionComponent, CSSProperties } from 'react';
 
 import { combineClasses } from 'libs/css/css';
@@ -30,26 +31,23 @@ export const NavigationGroup: FunctionComponent<NavigationGroupProps> = ({
 	className = '',
 	direction = 'row',
 }) => {
+	const location = useLocation();
 	const [activeIndex, setActiveIndex] = useState(-1);
 
-	const makeOnClickHandler = useCallback((index: number, url?: string, additionnalOnClick = () => {}) => () => {
-		if (url) {
-			setActiveIndex(index);
-		}
-
+	const makeOnClickHandler = useCallback((additionnalOnClick = () => {}) => () => {
 		additionnalOnClick();
 		onItemClick();
 	}, [onItemClick]);
 
 	useEffect(() => {
 		const activeItemIndex = items.findIndex((item) => {
-			return item.url === window.location.pathname;
+			return item.url === location.pathname;
 		});
 
 		if (activeItemIndex !== -1) {
 			setActiveIndex(activeItemIndex);
 		} 
-	}, [items]);
+	}, [location, items])
 
 	return (
 		<div
@@ -61,7 +59,7 @@ export const NavigationGroup: FunctionComponent<NavigationGroupProps> = ({
 		>
 			{items.map(({ url, name, onClick }, index) => (
 				<NavigationItem
-					onClick={makeOnClickHandler(index, url, onClick)}
+					onClick={makeOnClickHandler(onClick)}
 					className={combineClasses(
 						itemClassName,
 						index === activeIndex

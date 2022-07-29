@@ -11,6 +11,7 @@ import { FileElement } from './FileElement/FileElement';
 import { Centered } from 'hoc/Centered/Centered';
 
 import styles from './DropArea.module.scss';
+import { combineClasses } from 'libs/css/css';
 
 export type FileState = 'idle' | 'loading' | 'success';
 export type FileStatusMap = {
@@ -24,6 +25,8 @@ export type DropAreaProps = {
 	loading?: boolean,
 	instructionText?: string;
 	chooseFilesText?: string,
+	errorText?: string,
+	chooseFilesTextOnError?: string,
 	types?: FileType[];
 }
 
@@ -31,14 +34,17 @@ export const DropArea: FunctionComponent<DropAreaProps> = ({
 	files,
 	types,
 	chooseFilesText,
+	chooseFilesTextOnError,
 	onFileDelete,
 	onFileDrop,
 	instructionText = 'Drop your files here',
+	errorText = 'Wrong files',
 	loading = false,
 }) => {
 	const fileInput = useRef<HTMLInputElement | null>(null);
 
 	const [inDropArea, setInDropArea] = useState<boolean>(false);
+	const [error, setError] = useState(false);
 
 	const extensions = useMemo(() => {
 		return types?.reduce((acc, type) => [
@@ -54,6 +60,8 @@ export const DropArea: FunctionComponent<DropAreaProps> = ({
 	};
 
 	const handleNewFiles = useCallback((droppedFiles: File[]) => {
+		setError(false);
+
 		const filesWithExtension = droppedFiles.filter((file) => {
 			const { name } = file;
 
@@ -76,6 +84,16 @@ export const DropArea: FunctionComponent<DropAreaProps> = ({
 		const newFiles = [...files, ...filesWithExtension.filter(({ name }) => {
 			return !currentFileNames.has(name);
 		})];
+
+		if (filesWithExtension.length === 0) {
+			setError(true);
+
+			if (files.length !== 0) {
+				setTimeout(() => {
+					setError(false);
+				}, 3000)
+			}
+		}
 
 		onFileDrop(newFiles)
 		setInDropArea(false);
@@ -143,7 +161,11 @@ export const DropArea: FunctionComponent<DropAreaProps> = ({
 			onDragOver={(event) => handleDragOver(event)}
 			onDragEnter={(event) => handleDragEnter(event)}
 			onDragLeave={(event) => handleDragLeave(event)}
-			className={`${styles.dropArea} ${inDropArea ? styles.greenBorder : ''}`}
+			className={combineClasses(
+				styles.dropArea,
+				(error && !inDropArea) ? styles.redBorder : undefined,
+				inDropArea ? styles.greenBorder : undefined,
+			)}
 		>
 			<input
 				style={{
@@ -155,7 +177,7 @@ export const DropArea: FunctionComponent<DropAreaProps> = ({
 				accept={extensions?.join(',')}
 				onChange={handleSelect}
 			/>
-			{files.length === 0 && (
+			{(files.length === 0 && !error) && (
 				<Centered centerHorizontal centerVertical>
 					<InformationMessage 
 						message={instructionText}
@@ -165,7 +187,17 @@ export const DropArea: FunctionComponent<DropAreaProps> = ({
 					/>
 				</Centered>
 			)}
-			{loading && (
+			{(files.length === 0 && error) && (
+				<Centered centerHorizontal centerVertical>
+					<InformationMessage 
+						message={errorText}
+						messageType="error"
+						clickableMessage={chooseFilesTextOnError}
+						onMessageClick={handleInstructionMessageClick}
+					/>
+				</Centered>
+			)}
+			{(loading) && (
 				<div className={styles.loadingBlocker}>
 					<div className={styles.spinerContainer}>
 						<Centered centerHorizontal centerVertical insideContainer>

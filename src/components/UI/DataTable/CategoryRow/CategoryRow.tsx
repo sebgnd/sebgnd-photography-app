@@ -29,7 +29,7 @@ export const CategoryRow: FunctionComponent<CategoryRowProps> = ({
 					src={thumbnailUrl}
 				/>
 				<div className={styles.categoryName}>
-					<Text type="h3" size="regular" text={categoryName} />
+					<Text type="p" size="regular" text={categoryName} />
 				</div>
 			</div>
 			<Button

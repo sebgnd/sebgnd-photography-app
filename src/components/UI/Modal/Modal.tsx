@@ -18,6 +18,7 @@ export type ModalProps = {
 	size?: ModalSize;
 	loading?: boolean;
 	children: ReactNode,
+	disableConfirmButton?: boolean,
 	onConfirm?: (e?: MouseEvent) => void;
 	onClose?: (e?: MouseEvent) => void;
 	onCancel?: (e?: MouseEvent) => void;
@@ -34,6 +35,7 @@ export const Modal: FunctionComponent<ModalProps> = ({
 	cancelText = 'Cancel',
 	confirmText = 'Confirm',
 	size = 'medium',
+	disableConfirmButton = false,
 	onClose,
 	onCancel,
 	onConfirm,
@@ -98,8 +100,8 @@ export const Modal: FunctionComponent<ModalProps> = ({
 						)}
 						{onConfirm && (
 							<div className={styles.footerButton}>
-								<Button 
-									disabled={loading}
+								<Button
+									disabled={loading || disableConfirmButton}
 									fullWidth
 									variant="classic"
 									color="success"
