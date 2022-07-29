@@ -8,15 +8,15 @@ interface CheckboxProps {
 }
 
 export const Checkbox: FunctionComponent<CheckboxProps> = ({
-    label,
-    checked,
-    onToggle,
+  label,
+  checked,
+  onToggle,
 }) => {
   return (
     <div className={styles.checkbox}>
-      <input 
+      <input
         type="checkbox"
-        checked={checked} 
+        checked={checked}
         onChange={onToggle}
       />
       {label && (
@@ -26,4 +26,4 @@ export const Checkbox: FunctionComponent<CheckboxProps> = ({
       )}
     </div>
   );
-}
+};

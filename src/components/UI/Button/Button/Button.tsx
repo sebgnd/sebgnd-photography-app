@@ -7,33 +7,33 @@ import { ButtonContainer, ButtonVariant, ButtonColor } from 'components/UI/Butto
 import styles from './Button.module.scss';
 
 export type ButtonProp = {
-	onClick: (event: MouseEvent) => void;
-	label: string;
-	disabled?: boolean;
-	fullWidth?: boolean;
-	color?: ButtonColor;
-	variant?: ButtonVariant;
+  onClick: (event: MouseEvent) => void;
+  label: string;
+  disabled?: boolean;
+  fullWidth?: boolean;
+  color?: ButtonColor;
+  variant?: ButtonVariant;
 }
 
 
-export const Button: FunctionComponent<ButtonProp> = ({ 
-	label,
-	onClick, 
-	disabled = false,
-	fullWidth = false,
-	color = 'default',
-	variant = 'classic', 
+export const Button: FunctionComponent<ButtonProp> = ({
+  label,
+  onClick,
+  disabled = false,
+  fullWidth = false,
+  color = 'default',
+  variant = 'classic',
 }) => {
-	return (
-		<ButtonContainer
-			type="regular"
-			variant={variant}
-			color={color}
-			disabled={disabled}
-			className={fullWidth ? styles.fullWidth : ''}
-			onClick={onClick}
-		>
-			<Text text={label} />
-		</ButtonContainer>
-	);
-}
+  return (
+    <ButtonContainer
+      type="regular"
+      variant={variant}
+      color={color}
+      disabled={disabled}
+      className={fullWidth ? styles.fullWidth : ''}
+      onClick={onClick}
+    >
+      <Text text={label} />
+    </ButtonContainer>
+  );
+};

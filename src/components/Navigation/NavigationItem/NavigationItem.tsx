@@ -10,18 +10,18 @@ import styles from './styles/NavigationItem.module.scss';
 export type NavigationItemProps = {
   name: string;
   url?: string;
-	onClick?: () => void,
+  onClick?: () => void,
   className?: string,
 }
 
 export const NavigationItem: FunctionComponent<NavigationItemProps> = ({ name, url, className, onClick }) => {
-	if (url) {
-		return (
-			<Link onClick={onClick} className={className} to={url}>
-				<Text text={name} />
-			</Link>
-		);
-	}
+  if (url) {
+    return (
+      <Link onClick={onClick} className={className} to={url}>
+        <Text text={name} />
+      </Link>
+    );
+  }
 
   return (
     <div onClick={onClick} className={combineClasses(className, styles.clickable)}>

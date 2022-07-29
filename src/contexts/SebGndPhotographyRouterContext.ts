@@ -1,21 +1,21 @@
 import React from 'react';
 
 export type RouteInfo = {
-	loginRoute?: string,
-	logo: string,
-	routes: Array<{
-		url: string,
-		index: boolean,
-		name?: string,
-	}>,
+  loginRoute?: string,
+  logo: string,
+  routes: Array<{
+    url: string,
+    index: boolean,
+    name?: string,
+  }>,
 };
 
 export type SebGndPhotographyRouterContextType = {
-	routes: {
-		[path: string]: RouteInfo,
-	},
+  routes: {
+    [path: string]: RouteInfo,
+  },
 };
 
 export const SebGndPhotographyRouterContext = React.createContext<SebGndPhotographyRouterContextType>({
-	routes: {},
+  routes: {},
 });

@@ -7,9 +7,9 @@ const ParallaxContainer = styled('div')<{ backgroundImage: string, opacity: numb
     background-size: cover;
     background-position-y: 40px;
     position: relative;
-    opacity: ${props => props.opacity};
-    background-image: url(${props => props.backgroundImage});
+    opacity: ${(props) => props.opacity};
+    background-image: url(${(props) => props.backgroundImage});
     transition: opacity 0.5s linear
-`
+`;
 
 export default ParallaxContainer;

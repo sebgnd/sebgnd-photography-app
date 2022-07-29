@@ -7,27 +7,27 @@ import { useAuthenticated } from 'hooks';
 import { refreshToken } from 'redux/slices/user/user.thunk';
 
 export const SilentTokenRefresh: FunctionComponent<PropsWithChildren> = ({ children }) => {
-	const dispatch = useAppDispatch();
-	const isAuthenticated = useAuthenticated();
-	const [refreshingToken, setRefreshingToken] = useState(true);
+  const dispatch = useAppDispatch();
+  const isAuthenticated = useAuthenticated();
+  const [refreshingToken, setRefreshingToken] = useState(true);
 
-	useEffect(() => {
-		const refreshAuthorizationToken = async () => {
-			if (!isAuthenticated) {
-				await dispatch(refreshToken());
-			}
+  useEffect(() => {
+    const refreshAuthorizationToken = async () => {
+      if (!isAuthenticated) {
+        await dispatch(refreshToken());
+      }
 
-			setRefreshingToken(false);
-		};
+      setRefreshingToken(false);
+    };
 
-		refreshAuthorizationToken();
-	}, [isAuthenticated, dispatch]);
+    refreshAuthorizationToken();
+  }, [isAuthenticated, dispatch]);
 
-	if (refreshingToken) {
-		return null;
-	}
+  if (refreshingToken) {
+    return null;
+  }
 
-	return (
-		<>{children}</>
-	);
+  return (
+    <>{children}</>
+  );
 };

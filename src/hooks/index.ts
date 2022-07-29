@@ -8,6 +8,6 @@ export * from './useEventListener';
 export * from './useRouter';
 
 export {
-	useToggle,
-	usePrevious,
-}
+  useToggle,
+  usePrevious,
+};

@@ -9,12 +9,12 @@ export const getFileExtension = (name: string) => {
   }
 
   return `.${nameElements[nameElements.length - 1].toLowerCase()}`;
-}
+};
 
 export const getPossibleExtensionsByType = (type: FileType): FileExtension[] => {
-	switch (type) {
-		case 'jpg': return ['.jpg', '.jpeg'];
-		case 'png': return ['.png'];
-		default: throw new Error('Unknown file type');
-	}
-}
+  switch (type) {
+  case 'jpg': return ['.jpg', '.jpeg'];
+  case 'png': return ['.png'];
+  default: throw new Error('Unknown file type');
+  }
+};

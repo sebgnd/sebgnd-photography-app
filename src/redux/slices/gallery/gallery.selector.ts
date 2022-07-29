@@ -5,11 +5,11 @@ import { RootState } from 'redux/store';
 import { categoryAdapter, imageAdapter } from './gallery.slice';
 
 const categorySelectors = categoryAdapter.getSelectors<RootState>(
-	({ gallery }) => gallery.category.list.items
+  ({ gallery }) => gallery.category.list.items,
 );
 const imageSelectors = imageAdapter.getSelectors<RootState>(
-	({ gallery }) => gallery.image.list.items
-)
+  ({ gallery }) => gallery.image.list.items,
+);
 
 export const selectCategoryList = categorySelectors.selectAll;
 export const selectCategoryById = categorySelectors.selectById;
@@ -17,16 +17,16 @@ export const selectCategoryMap = categorySelectors.selectEntities;
 export const selectImageList = imageSelectors.selectAll;
 
 export const selectFirstThreeCategory = createSelector(
-	selectCategoryList,
-	(categories) => {
-		return categories.slice(0, 3);
-	}
-)
+  selectCategoryList,
+  (categories) => {
+    return categories.slice(0, 3);
+  },
+);
 export const selectCategoryThumbnailIds = createSelector(
-	selectCategoryList,
-	(categories) => {
-		return categories.map(({ thumbnailId }) => thumbnailId)
-	}
+  selectCategoryList,
+  (categories) => {
+    return categories.map(({ thumbnailId }) => thumbnailId);
+  },
 );
 export const selectIsCategoryListLoading = ({ gallery }: RootState) => gallery.category.list.loading;
 export const selectIsCategoryListFailed = ({ gallery }: RootState) => gallery.category.list.error;

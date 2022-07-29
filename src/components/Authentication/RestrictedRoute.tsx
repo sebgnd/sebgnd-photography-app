@@ -8,20 +8,20 @@ import { SilentTokenRefresh } from './SilentTokenRefresh';
 import type { FunctionComponent, PropsWithChildren } from 'react';
 
 export type RestrictedRouteProps = PropsWithChildren & {
-	fallback: string,
+  fallback: string,
 }
 
 export const RestrictedRoute: FunctionComponent<RestrictedRouteProps> = ({ children, fallback }) => {
-	const isAuthenticated = useAuthenticated();
+  const isAuthenticated = useAuthenticated();
 
-	return  (
-		<SilentTokenRefresh>
-			{isAuthenticated && (
-				<>{children}</>
-			)}
-			{!isAuthenticated && (
-				<Navigate to={fallback} />
-			)}
-		</SilentTokenRefresh>
-	);
+  return (
+    <SilentTokenRefresh>
+      {isAuthenticated && (
+        <>{children}</>
+      )}
+      {!isAuthenticated && (
+        <Navigate to={fallback} />
+      )}
+    </SilentTokenRefresh>
+  );
 };

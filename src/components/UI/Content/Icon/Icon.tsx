@@ -1,4 +1,4 @@
-import { CSSProperties, FunctionComponent, useMemo } from 'react'
+import { CSSProperties, FunctionComponent, useMemo } from 'react';
 
 import { ContentSize } from '../types';
 import { contentSizes } from '../constant';
@@ -12,27 +12,27 @@ export type IconProps = {
   name: string,
   size?: ContentSize
   variant?: IconVariant,
-	color?: IconColor,
+  color?: IconColor,
 };
 
 export const Icon: FunctionComponent<IconProps> = ({
   name,
   size = 'regular',
   variant = 'solid',
-	color,
+  color,
 }) => {
-	const className = useMemo(() => combineClasses(
-		`fa-${variant}`,
-		`fa-${name}`,
-		styles.icon,
-		color
-			? styles[color]
-			: undefined,
-	),[
-		variant,
-		name,
-		color,
-	]);
+  const className = useMemo(() => combineClasses(
+    `fa-${variant}`,
+    `fa-${name}`,
+    styles.icon,
+    color ?
+      styles[color] :
+      undefined,
+  ), [
+    variant,
+    name,
+    color,
+  ]);
 
   const style: CSSProperties = {
     fontSize: contentSizes[size],

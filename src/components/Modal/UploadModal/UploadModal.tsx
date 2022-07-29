@@ -10,11 +10,11 @@ import styles from './UploadModal.module.scss';
 export type UploadModalProps = {
   isOpen: boolean,
   loading: boolean,
-	categoriesDropdownOptions: Array<{
-		label: string,
-		value: string,
+  categoriesDropdownOptions: Array<{
+    label: string,
+    value: string,
     default?: boolean,
-	}>, 
+  }>,
   onClose: () => void,
   onUpload: (files: File[], categoryId: string) => void,
 }
@@ -24,13 +24,13 @@ const DEFAULT_DROPDOWN_LABEL = 'Select a category';
 export const UploadModal: FunctionComponent<UploadModalProps> = ({
   isOpen,
   loading,
-	categoriesDropdownOptions,
+  categoriesDropdownOptions,
   onClose,
   onUpload,
 }) => {
   const [files, setFiles] = useState<File[]>([]);
-	const [selectedCategoryId, setSelectedCategoryId] = useState<null | string>(null);
-	const [dropdownLabel, setDropdownLabel] = useState(DEFAULT_DROPDOWN_LABEL);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<null | string>(null);
+  const [dropdownLabel, setDropdownLabel] = useState(DEFAULT_DROPDOWN_LABEL);
 
   const handleDelete = useCallback((file: File) => {
     setFiles((prevFiles) => {
@@ -40,24 +40,24 @@ export const UploadModal: FunctionComponent<UploadModalProps> = ({
     });
   }, []);
 
-	const handleDropdownClick = useCallback((categoryId: string) => {
-		const option = categoriesDropdownOptions.find((option) => {
-			return option.value === categoryId
-		});
-		const label = option?.label || DEFAULT_DROPDOWN_LABEL;
+  const handleDropdownClick = useCallback((categoryId: string) => {
+    const option = categoriesDropdownOptions.find((option) => {
+      return option.value === categoryId;
+    });
+    const label = option?.label || DEFAULT_DROPDOWN_LABEL;
 
-		setSelectedCategoryId(categoryId);
-		setDropdownLabel(label)
-	}, [categoriesDropdownOptions]);
+    setSelectedCategoryId(categoryId);
+    setDropdownLabel(label);
+  }, [categoriesDropdownOptions]);
 
   const handleDrop = useCallback((files: File[]) => {
-    setFiles(files)
+    setFiles(files);
   }, []);
 
   const handleConfirm = useCallback(() => {
-		if (!selectedCategoryId) {
-			return;
-		}
+    if (!selectedCategoryId) {
+      return;
+    }
 
     onUpload(files, selectedCategoryId);
   }, [onUpload, selectedCategoryId, files]);
@@ -68,7 +68,7 @@ export const UploadModal: FunctionComponent<UploadModalProps> = ({
     setDropdownLabel(DEFAULT_DROPDOWN_LABEL);
   }, []);
 
-	const disabledConfirmButton = files.length === 0 || selectedCategoryId === null;
+  const disabledConfirmButton = files.length === 0 || selectedCategoryId === null;
 
   return (
     <Modal
@@ -78,30 +78,30 @@ export const UploadModal: FunctionComponent<UploadModalProps> = ({
       confirmText="Upload"
       onClose={onClose}
       onConfirm={handleConfirm}
-			disableConfirmButton={disabledConfirmButton}
+      disableConfirmButton={disabledConfirmButton}
       onCloseAnimationFinished={handleClearingFilesAfterClose}
     >
-			<div className={styles.dropdownContainer}>
-				<DropdownButton
-					options={categoriesDropdownOptions}
-					label={dropdownLabel}
-					onClick={handleDropdownClick}
-					fullWidth
-				/>
-			</div>
-			<div className={styles.dropAreaContainer}>
-				<DropArea
-					files={files}
-					instructionText="Drop your images here"
-					chooseFilesText="or click here to select them"
-					errorText="Invalid image,"
-					chooseFilesTextOnError="select another one"
-					loading={loading}
-					onFileDrop={handleDrop}
-					onFileDelete={handleDelete}
-					types={['jpg', 'png']}
-				/>
-			</div>
+      <div className={styles.dropdownContainer}>
+        <DropdownButton
+          options={categoriesDropdownOptions}
+          label={dropdownLabel}
+          onClick={handleDropdownClick}
+          fullWidth
+        />
+      </div>
+      <div className={styles.dropAreaContainer}>
+        <DropArea
+          files={files}
+          instructionText="Drop your images here"
+          chooseFilesText="or click here to select them"
+          errorText="Invalid image,"
+          chooseFilesTextOnError="select another one"
+          loading={loading}
+          onFileDrop={handleDrop}
+          onFileDelete={handleDelete}
+          types={['jpg', 'png']}
+        />
+      </div>
     </Modal>
   );
 };

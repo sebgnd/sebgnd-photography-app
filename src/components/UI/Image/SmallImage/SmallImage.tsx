@@ -28,11 +28,11 @@ export const SmallImage: FunctionComponent<SmallImageProps> = ({
       const classNames = [styles.image];
 
       if (clickable) classNames.push(styles.clickableImage);
-			if (selected) classNames.push(styles.selected);
+      if (selected) classNames.push(styles.selected);
 
       return classNames.join(' ');
     },
-    [clickable, selected]
+    [clickable, selected],
   );
 
   const handleClick = useCallback(() => {
@@ -44,24 +44,24 @@ export const SmallImage: FunctionComponent<SmallImageProps> = ({
   }, [onClick, id, clickable]);
 
   return (
-		<ActionBadge
-			iconName="check"
-			visible={selected}
+    <ActionBadge
+      iconName="check"
+      visible={selected}
       variant="success"
-		>
-			<div className={className} onClick={handleClick}>
-				{(!placeholder && src && id)
-					? (
-						<img
-							src={src}
-							alt={id}
-						/>
-					)
-					: (
-						<Svg name="processing-image" />
-					)
-				}
-			</div>
-		</ActionBadge>
+    >
+      <div className={className} onClick={handleClick}>
+        {(!placeholder && src && id) ?
+          (
+            <img
+              src={src}
+              alt={id}
+            />
+          ) :
+          (
+            <Svg name="processing-image" />
+          )
+        }
+      </div>
+    </ActionBadge>
   );
 };

@@ -11,35 +11,35 @@ import { selectSelectedImage } from 'redux/slices/gallery/gallery.selector';
 import { useScrolling } from '../useScrolling';
 
 export const useImageSelection = (urlParam: string = 'image') => {
-	const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-	const [search, setSearch] = useSearchParams();
-	const [, setScroll] = useScrolling();
+  const [search, setSearch] = useSearchParams();
+  const [, setScroll] = useScrolling();
 
-	const selectedImage = useSelector(selectSelectedImage);
+  const selectedImage = useSelector(selectSelectedImage);
 
-	const resetSelection = useCallback(() => {
-		dispatch(actions.clearImageSelection());
-		setScroll(true);
-		setSearch({});
-	}, [dispatch, setScroll, setSearch]);
+  const resetSelection = useCallback(() => {
+    dispatch(actions.clearImageSelection());
+    setScroll(true);
+    setSearch({});
+  }, [dispatch, setScroll, setSearch]);
 
-	const selectImage = useCallback((imageId: string) => {
-		setSearch({ [urlParam]: imageId });
-	}, [urlParam, setSearch]);
+  const selectImage = useCallback((imageId: string) => {
+    setSearch({ [urlParam]: imageId });
+  }, [urlParam, setSearch]);
 
-	useEffect(() => {
-		const imageId = search.get(urlParam);
+  useEffect(() => {
+    const imageId = search.get(urlParam);
 
-		if (imageId) {
-			setScroll(false);
-			dispatch(fetchImage(imageId));
-		}
-	}, [search, dispatch, urlParam, setScroll]);
+    if (imageId) {
+      setScroll(false);
+      dispatch(fetchImage(imageId));
+    }
+  }, [search, dispatch, urlParam, setScroll]);
 
-	return {
-		selection: selectedImage,
-		resetSelection, 
-		selectImage,
-	};
-}
+  return {
+    selection: selectedImage,
+    resetSelection,
+    selectImage,
+  };
+};
