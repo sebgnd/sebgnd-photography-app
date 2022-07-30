@@ -3,6 +3,7 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import type { FunctionComponent } from 'react';
 
 import { RestrictedRoute } from 'components/Authentication/RestrictedRoute';
+import { IconName } from 'components/UI/Content/Svg/icons';
 
 import { SebGndPhotographyRouterContext } from 'contexts/SebGndPhotographyRouterContext';
 
@@ -20,7 +21,7 @@ type UnrestrictedPath = {
 
 type SubRouter = (RestrictedPath | UnrestrictedPath) & {
   layout: JSX.Element,
-  logo: string,
+  logo: string | IconName,
   routes: {
     [subPath: string | 'index']: {
       name?: string,

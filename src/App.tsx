@@ -43,7 +43,7 @@ export const App: FunctionComponent = () => {
           'index': {
             restricted: false,
             layout: <UserLayout />,
-            logo: '/images/logo.png',
+            logo: 'logo',
             routes: {
               'index': { name: 'Home', element: <FrontOfficeHome /> },
               'galleries': { element: <Galleries />, name: 'Galleries' },
@@ -53,7 +53,7 @@ export const App: FunctionComponent = () => {
           },
           'admin': {
             restricted: true,
-            logo: '/images/logo.png',
+            logo: 'logo',
             layout: <AdminLayout />,
             login: {
               path: 'login',

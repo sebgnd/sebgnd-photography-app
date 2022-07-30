@@ -1,5 +1,10 @@
-import { FunctionComponent } from 'react';
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
+
+import type { FunctionComponent } from 'react';
+
+import { Svg, isValidSvgName } from 'components/UI/Content/Svg/Svg';
+import { IconName } from 'components/UI/Content/Svg/icons';
 
 export type NavigationLogoProps = {
   src: string;
@@ -7,9 +12,15 @@ export type NavigationLogoProps = {
 }
 
 export const NavigationLogo: FunctionComponent<NavigationLogoProps> = ({ src, url }) => {
+  const isLogoSvg = useMemo(() => isValidSvgName(src), [src]);
+
   return (
     <Link to={url}>
-      <img src={src} alt="logo" />
+      {isLogoSvg ? (
+        <Svg name={src as IconName} size={50} />
+      ) : (
+        <img src={src} alt="logo" />
+      )}
     </Link>
   );
 };
