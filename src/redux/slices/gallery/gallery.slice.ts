@@ -99,7 +99,10 @@ const gallerySlice = createSlice({
       const { id, status } = payload;
       const { image } = state;
 
-      image.edition.statuses[id] = status;
+      image.edition.statuses = {
+        ...image.edition.statuses,
+        [id]: status,
+      };
     },
   },
   extraReducers: (builder) => {
