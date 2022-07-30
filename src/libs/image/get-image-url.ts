@@ -20,7 +20,7 @@ export const getImageUrl = (id: string, config: ImageConfig) => {
     throw new Error('API URL not set');
   }
 
-  return `${process.env.REACT_APP_API}file/images/${imageFormat}/${imageSize}/${id}`;
+  return `${process.env.REACT_APP_API}/file/images/${imageFormat}/${imageSize}/${id}`;
 };
 
 export const getImageUrlOrUndefined = (id: string | null, config: ImageConfig) => {
