@@ -14,7 +14,7 @@ export const Footer: FunctionComponent = () => {
           <Text
             type="p"
             className={styles.text}
-            text="Copyright 2020 - Sebastien Gnd. All Rights Reserved"
+            text="Copyright 2022 - Sebastien Gnd. All Rights Reserved"
           />
         </div>
       </div>

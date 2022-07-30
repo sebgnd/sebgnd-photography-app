@@ -17,6 +17,12 @@
   align-items: center;
   justify-content: center;
   flex-direction: row;
+
+  @media (max-width: 500px) {
+    p {
+      font-size: 0.75em !important;
+    }
+  }
 }
 
 .text {
