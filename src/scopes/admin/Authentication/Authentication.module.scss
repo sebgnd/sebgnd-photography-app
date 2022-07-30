@@ -22,7 +22,15 @@
 }
 
 .logo {
-	margin-bottom: 32px;
+	margin-bottom: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .iconContainer {
+    margin-bottom: 16px;
+  }
 }
 
 .error {
