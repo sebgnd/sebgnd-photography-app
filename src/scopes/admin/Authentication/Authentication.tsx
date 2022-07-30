@@ -17,6 +17,7 @@ import { Spinner } from 'components/UI/Spinner/Spinner';
 
 import styles from './Authentication.module.scss';
 import { combineClasses } from 'libs/css/css';
+import { Svg } from 'components/UI/Content/Svg/Svg';
 
 export const Authentication: FunctionComponent = () => {
   const dispatch = useAppDispatch();
@@ -43,9 +44,15 @@ export const Authentication: FunctionComponent = () => {
     <SilentTokenRefresh>
       <div className={styles.wrapper}>
         <div className={styles.container}>
-          {/* TODO: Update with real logo */}
           <div className={styles.logo}>
-            <Text text="SebGND Photography - Administration panel" />
+            <div className={styles.iconContainer}>
+              <Svg name="logo" size={128}/>
+            </div>
+            <Text
+              type="h1"
+              size="large"
+              text='SebGND Photography - Administration Panel'
+            />
           </div>
           <div className={styles.buttonContainer}>
             <GoogleAuthenticationButton

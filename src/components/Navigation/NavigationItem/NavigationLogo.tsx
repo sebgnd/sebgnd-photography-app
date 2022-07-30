@@ -6,6 +6,8 @@ import type { FunctionComponent } from 'react';
 import { Svg, isValidSvgName } from 'components/UI/Content/Svg/Svg';
 import { IconName } from 'components/UI/Content/Svg/icons';
 
+import styles from './styles/NavigationLogo.module.scss';
+
 export type NavigationLogoProps = {
   src: string;
   url: string;
@@ -15,7 +17,7 @@ export const NavigationLogo: FunctionComponent<NavigationLogoProps> = ({ src, ur
   const isLogoSvg = useMemo(() => isValidSvgName(src), [src]);
 
   return (
-    <Link to={url}>
+    <Link className={styles.logo} to={url}>
       {isLogoSvg ? (
         <Svg name={src as IconName} size={50} />
       ) : (
