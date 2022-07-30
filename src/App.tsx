@@ -15,6 +15,7 @@ import { Authentication } from 'scopes/admin/Authentication/Authentication';
 
 import { UserLayout } from 'scopes/user/UserLayout';
 import { AdminLayout } from 'scopes/admin/AdminLayout';
+import { NotFound } from 'scopes/NotFound';
 
 import { SocketContext } from 'contexts/SocketContext';
 
@@ -68,6 +69,7 @@ export const App: FunctionComponent = () => {
             },
           },
         }}
+        fallback={<NotFound />}
       />
     </SocketContext.Provider>
   );

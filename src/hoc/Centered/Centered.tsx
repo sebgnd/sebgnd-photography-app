@@ -53,7 +53,7 @@ export const Centered: FunctionComponent<CenteredProps> = ({
           {children}
         </div>
       ) : (
-        { children }
+        children
       )}
     </>
   );

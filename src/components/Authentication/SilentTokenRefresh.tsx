@@ -4,6 +4,10 @@ import type { FunctionComponent, PropsWithChildren } from 'react';
 import { useAppDispatch } from 'redux/store';
 import { useAuthenticated } from 'hooks';
 
+import { Centered } from 'hoc/Centered/Centered';
+
+import { Spinner } from 'components/UI/Spinner/Spinner';
+
 import { refreshToken } from 'redux/slices/user/user.thunk';
 
 export const SilentTokenRefresh: FunctionComponent<PropsWithChildren> = ({ children }) => {
@@ -24,7 +28,15 @@ export const SilentTokenRefresh: FunctionComponent<PropsWithChildren> = ({ child
   }, [isAuthenticated, dispatch]);
 
   if (refreshingToken) {
-    return null;
+    return (
+      <Centered
+        centerHorizontal
+        centerVertical
+        fullScreen
+      >
+        <Spinner size="normal" />
+      </Centered>
+    );
   }
 
   return (

@@ -33,7 +33,8 @@ type SubRouter = (RestrictedPath | UnrestrictedPath) & {
 export type SebGndPhotographyRouterProps = {
   router: {
     [path: string | 'index']: SubRouter,
-  }
+  },
+  fallback?: JSX.Element,
 };
 
 const getPath = (path: string) => path === 'index' ? '*' : path;
@@ -56,7 +57,10 @@ const getLayout = (subRouter: SubRouter) => {
   );
 };
 
-export const SebGndPhotographyRouter: FunctionComponent<SebGndPhotographyRouterProps> = ({ router }) => {
+export const SebGndPhotographyRouter: FunctionComponent<SebGndPhotographyRouterProps> = ({
+  router,
+  fallback,
+}) => {
   const routerInfo = useMemo(() => Object
     .entries(router)
     .reduce((acc, [path, subRouter]) => {
@@ -111,6 +115,10 @@ export const SebGndPhotographyRouter: FunctionComponent<SebGndPhotographyRouterP
                     element={getLayout(subRouter)}
                   >
                     {routeElements}
+                    <Route
+                      path="*"
+                      element={fallback}
+                    />
                   </Route>
                 </Fragment>
               );
