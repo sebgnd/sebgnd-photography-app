@@ -1,0 +1,39 @@
+.listBoundary {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.listContainer {
+	width: 65%;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: flex-start;
+
+  @media (max-width: 1920px) {
+    width: 85%;
+  }
+
+  @media (max-width: 1400px) {
+    width: 95%;
+  }
+}
+
+.galleryButtonContainer {
+	flex-basis: 33%;
+	display: flex;
+	justify-content: center;
+  padding: 8px;
+  box-sizing: border-box;
+
+  @media (max-width: 1000px) {
+    flex-basis: 50%;
+  }
+
+  @media (max-width: 600px) {
+    flex-basis: 100%;
+  }
+}

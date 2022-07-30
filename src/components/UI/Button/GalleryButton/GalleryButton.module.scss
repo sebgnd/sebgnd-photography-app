@@ -1,7 +1,8 @@
 @use 'styling/colors';
 
-.galleryButtonContainer{
-	margin: 10px;
+.galleryButtonContainer {
+  margin-right: 16px;
+  margin-bottom: 16px;
 	display: inline-block;
 }
 
@@ -9,8 +10,7 @@
 	display: inline-block;
 	max-height: 300px;
 	min-height: 100px;
-	max-width: 300px;
-	min-width: 100px;
+	aspect-ratio: 1 / 1;
 	height: auto;
 	position: relative;
 
@@ -47,18 +47,19 @@
 	background-color: colors.$white;
 	border-radius: 5px;
 	border: 1px solid colors.$neutral_200;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 	text-align: center;
-	width: 100%;
 	color: colors.$black;
+
 	padding-top: 12px;
 	padding-bottom: 12px;
+  padding-left: 8px;
+  padding-right: 8px;
 	
 	position: absolute;
-	right: -25px;
-	bottom: -25px;
+	right: -16px;
+	bottom: -16px;
 	min-width: 65%;
-	max-width: 95px;
+	max-width: 95%;
 
 	transform: none;
 	transition: transform .5s, bottom .5s, box-shadow .5s;

@@ -18,7 +18,7 @@ import {
   selectIsCategoryListLoading,
 } from 'redux/slices/gallery/gallery.selector';
 
-import styles from './Galleries.module.css';
+import styles from './Galleries.module.scss';
 
 export const getThumbnailUrl = (imageId: string | null) => {
   return getImageUrlOrUndefined(imageId, {
@@ -48,36 +48,38 @@ export const Galleries: FunctionComponent = () => {
   }, [categories]);
 
   return (
-    <div className={styles.listContainer}>
-      {(loading) && (
-        <Centered centerHorizontal centerVertical fullScreen>
-          <Spinner />
-        </Centered>
-      )}
-      {(error) && (
-        <Centered centerHorizontal centerVertical fullScreen>
-          <InformationMessage
-            message="Something went wrong"
-            messageType="error"
-          />
-        </Centered>
-      )}
-      {(!loading && !error) && (
-        <>
-          {thumbnails.map(({ imageId, categoryId, galleryName }) => {
-            return (
-              <div key={categoryId} className={styles.galleryButtonContainer}>
-                <GalleryButton
-                  src={getThumbnailUrl(imageId)}
-                  imageId={imageId || undefined}
-                  onClick={navigateToGalleryPage(categoryId)}
-                  categoryDisplayName={galleryName}
-                />
-              </div>
-            );
-          })}
-        </>
-      )}
+    <div className={styles.listBoundary}>
+      <div className={styles.listContainer}>
+        {(loading) && (
+          <Centered centerHorizontal centerVertical fullScreen>
+            <Spinner />
+          </Centered>
+        )}
+        {(error) && (
+          <Centered centerHorizontal centerVertical fullScreen>
+            <InformationMessage
+              message="Something went wrong"
+              messageType="error"
+            />
+          </Centered>
+        )}
+        {(!loading && !error) && (
+          <>
+            {thumbnails.map(({ imageId, categoryId, galleryName }) => {
+              return (
+                <div key={categoryId} className={styles.galleryButtonContainer}>
+                  <GalleryButton
+                    src={getThumbnailUrl(imageId)}
+                    imageId={imageId || undefined}
+                    onClick={navigateToGalleryPage(categoryId)}
+                    categoryDisplayName={galleryName}
+                  />
+                </div>
+              );
+            })}
+          </>
+        )}
+      </div>
     </div>
   );
 };

@@ -32,14 +32,10 @@
 }
 
 .galleryButtonContainer {
-  margin: 0 4vw;
-
-  @media (max-width: 2000px) {
-    margin: 0 2vw;
-  }
+  margin: 8px 16px;
 
   @media (max-width: 1000px) {
-    margin: 0 10px;
+    margin: 8pxc 8px;
   }
 
   @media (max-width: 850px) {
