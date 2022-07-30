@@ -1,5 +1,8 @@
-import { FunctionComponent, MouseEvent, ReactNode, useEffect } from 'react';
+import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { CSSTransition } from 'react-transition-group';
+
+import type { FunctionComponent, MouseEvent, ReactNode } from 'react';
 
 import { Icon } from 'components/UI/Content/Icon/Icon';
 import { Text } from 'components/UI/Content/Text/Text';
@@ -55,7 +58,7 @@ export const Modal: FunctionComponent<ModalProps> = ({
     return () => {};
   }, [onCloseAnimationFinished, isOpen]);
 
-  return (
+  return createPortal(
     <>
       <CSSTransition
         timeout={ANIMATION_DURATION}
@@ -118,6 +121,7 @@ export const Modal: FunctionComponent<ModalProps> = ({
         zIndex={599}
         onClick={!loading ? onClose : undefined}
       />
-    </>
+    </>,
+    document.getElementById('root')!,
   );
 };
