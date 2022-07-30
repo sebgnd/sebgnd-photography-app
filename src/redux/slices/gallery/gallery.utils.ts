@@ -15,11 +15,15 @@ export const reduceImageStatuses = (
   items: ReadonlyArray<ItemWithAnyStatus>,
 ) => {
   return items.reduce((acc, item) => {
+    const receivedStatus = isImageStatus(item.status)?
+      item.status :
+      'unknown';
+
     return {
       ...acc,
-      [item.id]: isImageStatus(item.status) ?
-        item.status :
-        'unknown',
+      [item.id]: statuses[item.id] ?
+        statuses[item.id] :
+        receivedStatus,
     };
   }, statuses);
 };
