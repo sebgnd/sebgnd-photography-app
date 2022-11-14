@@ -29,6 +29,7 @@
 
 .small {
   width: 650px;
+  max-height: 60%;
 
   @media (max-width: 650px) {
     width: 100vw;
@@ -37,6 +38,7 @@
 
 .medium {
   width: 950px;
+  max-height: 75%;
 
   @media (max-width: 950px) {
     width: 95vw;
@@ -45,6 +47,7 @@
 
 .big {
   width: 1350px;
+  max-height: 90%;
 
   @media (max-width: 1350px) {
     width: 100vw;
@@ -54,6 +57,7 @@
 .modalBody {
   display: block;
   width: 100%;
+  overflow-y: auto;
 }
 
 .modalFooter {
